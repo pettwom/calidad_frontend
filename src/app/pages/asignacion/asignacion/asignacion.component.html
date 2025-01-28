@@ -1,0 +1,159 @@
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Inicio / </span> Asingación de Carga
+</h4>
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h4>Filtrar Cuestionarios</h4>
+    </div>
+    <div class="card-body">
+      <div class="contenedor">
+        <span> <i class="fa-solid fa-magnifying-glass"></i> Buscar para asignar</span>
+        <div class="filtro">
+          <div class="form-check form-check-info">
+            <input name="customRadioInfo" class="form-check-input" type="radio" value="depto" id="depto"
+              (change)="radioValue($event)" checked="">
+            <label class="form-check-label" for="customRadioInfo"> Departamento </label>
+          </div>
+          <div class="form-check form-check-info">
+            <input name="customRadioInfo" class="form-check-input" type="radio" value="mpio" id="mpio"
+              (change)="radioValue($event)">
+            <label class="form-check-label" for="customRadioInfo"> Municipio </label>
+          </div>
+          <div class="form-check form-check-info">
+            <input name="customRadioInfo" class="form-check-input" type="radio" value="ag" id="ag"
+              (change)="radioValue($event)">
+            <label class="form-check-label" for="customRadioInfo"> Area Agropecuaria </label>
+          </div>
+          <div class="form-check form-check-info">
+            <input name="customRadioInfo" class="form-check-input" type="radio" value="ae" id="ae"
+              (change)="radioValue($event)">
+            <label class="form-check-label" for="customRadioInfo"> Area Enumerada </label>
+          </div>
+        </div>
+
+
+        <details id="details">
+
+          <summary> Buscar por: </summary>
+          <hr>
+          <!-- <div class="row" style="padding: 15px 10px; display: flex; flex-wrap: wrap;gap: 0.3em"> -->
+          <div class="row">
+
+            <div class="col-md-3">
+              <div class="form-floating form-floating-outline">
+                <select class="form-select" id="deptoSel" [(ngModel)]="deptoModel" (change)="getMpio()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Departamento ==</option>
+                  <option *ngFor="let a of deptoOption" value="{{a.cod_depto}}">{{a.depto}}</option>
+                </select>
+                <label for="floatingSelect">Departamento</label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-floating form-floating-outline" *ngIf="visibleMpio">
+                <select class="form-select" id="mpioSel" [(ngModel)]="mpioModel" (change)="getAg()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Municipio ==</option>
+                  <option *ngFor="let a of mpioResult" value="{{a.cod_municipio}}">{{a.mpio}}</option>
+                </select>
+                <label for="floatingSelect">Municipio</label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-floating form-floating-outline" *ngIf="visibleAg">
+                <select class="form-select" id="agSel" [(ngModel)]="agModel" (change)="getAe()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Área Agropecuaria ==</option>
+                  <option *ngFor="let a of agResult" value="{{a.ag_unico}}">{{a.ag_unico}}</option>
+                </select>
+                <label for="floatingSelect">Área Agropecuaria</label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-floating form-floating-outline" *ngIf="visibleAe">
+                <select class="form-select" id="aeSel" [(ngModel)]="aeModel" (change)="getEmp()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Área Enumerada ==</option>
+                  <option *ngFor="let a of aeResult" value="{{a.ae_unico}}">{{a.ae_unico}}</option>
+                </select>
+                <label for="floatingSelect">Área Enumerada</label>
+              </div>
+            </div>
+            <hr>
+            <div class="col-sm-2">
+              <div class="btn btn-primary" (click)="searchValidador()">
+                <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCAR
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="btn btn-info" (click)="limiarDatos()">
+                <i class="fa fa-solid fa-broom"></i>&nbsp;&nbsp; LIMPIAR
+              </div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h4>Asignación</h4>
+    </div>
+    <div class="card-body">
+      <div class="contenedor">
+        <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios Técnicos de datos </span>
+        <br>
+        <div class="form-floating form-floating-outline">
+          <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled"
+            id="select2" aria-label="Floating label select example" multiple="multiple">
+            <option disabled>== Seleccionar Usuario ==</option>
+            <option *ngFor="let a of listUser" value="{{a.id_usuario}}">{{a.nombres}} </option>
+          </select>
+          <!-- <label for="floatingSelect">Seleccionar Usuario</label> -->
+        </div>
+        <hr>
+        <button class="btn btn-info" [disabled]="btnDisabled" pTooltip="Asignar Usuarios" tooltipPosition="top">
+          <img class="img-button" src="assets/icon/asignacion.png" alt=""> &nbsp;&nbsp; Asignar
+        </button>
+      </div>
+      <hr>
+      <div class="table-responsive">
+        <table *ngIf="listCuest.length > 1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-border table-striped">
+          <thead>
+            <tr>
+              <th><input type="checkbox" (change)="selectAll($event)" /></th>
+              <th>Nro</th>
+              <th>Departamento</th>
+              <th>Municipio</th>
+              <th>Área Agropecuaria</th>
+              <th>Área Enumerada</th>
+              <th>Cuestionario</th>
+              <th>Empadronador</th>
+              <th>Asignado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of listCuest">
+              <td><input type="checkbox" [(ngModel)]="a.selected" (change)="onSelectRow(a, i)" /></td> <!-- Checkbox por fila -->
+              <td>{{a.nro}}</td>
+              <td>{{a.depto}}</td>
+              <td>{{a.mpio}}</td>
+              <td>{{a.ag_unico}}</td>
+              <td>{{a.ae_unico}}</td>
+              <td>{{a.cod_cuest}}</td>
+              <td>{{a.empadronador}}</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

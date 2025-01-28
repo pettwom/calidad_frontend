@@ -1,0 +1,38 @@
+.select2-container .select2-selection--multiple {
+  height: 45px !important;
+}
+.contenedor{
+  border-left: 3px solid rgb(94, 157, 69);
+  border-radius: 5px ;
+  padding: 18px 20px;
+  background-color: rgba(130, 173, 130, 0.1);
+  box-shadow: 1px 3px 3px rgba(0,0,0,.1);
+}
+.filtro{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  width: 100%;
+  /* border: 1px solid red; */
+  padding: 10px;
+}
+
+.contenedor span{
+  position: absolute;
+  top: 80px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 1px solid rgba(228, 228, 228, 1);
+  box-shadow: 1px 3px 3px rgba(0,0,0,.1);
+}
+
+details{
+  display: flex;
+  gap: 0.3em;
+  flex-direction: column;
+}
+.img-button{
+  filter: invert() hue-rotate(20deg) saturate(1000%);
+  width: 20px;
+}
