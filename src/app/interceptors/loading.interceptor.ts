@@ -18,7 +18,7 @@ export class LoadingInterceptor implements HttpInterceptor {
      const isWebSocketRequest = request.url.includes('notificacion') || request.url.startsWith('ws://') || request.url.startsWith('wss://');
 
      if (isWebSocketRequest) {
-       console.log('Solicitud WebSocket excluida del interceptor:', request.url);
+      //  console.log('Solicitud WebSocket excluida del interceptor:', request.url);
        return next.handle(request); // Ignorar esta solicitud
      }
 

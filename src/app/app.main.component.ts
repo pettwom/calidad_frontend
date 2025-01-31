@@ -86,19 +86,19 @@ export class AppMainComponent implements OnInit, OnDestroy {
     // console.log(localStorage.length == 0, '<==== id_usuario verificar');
     setInterval(() => {
       if (localStorage.length != 0) {
-        console.log(localStorage.length != 0);
+        // console.log(localStorage.length != 0);
         this.listadoNotificaciones();
         this.notificationSub = this.socketService
           .onNotification()
           .subscribe((notification) => {
-            console.log('Notificación recibida:', notification);
+            // console.log('Notificación recibida:', notification);
             this.notifications.push(notification);
           });
 
         // Cargar notificaciones iniciales desde REST
 
         this.serviceService.get(`/dashboard/notificacion`).subscribe((data) => {
-          console.log(data, '<===data app.main.compopnents');
+          // console.log(data, '<===data app.main.compopnents');
           this.observaciones = this.notificaciones.concat(data);
         });
       }
@@ -153,7 +153,7 @@ export class AppMainComponent implements OnInit, OnDestroy {
         this.observaciones[0].descripcion_larga =
           this.observaciones[0].descripcion_larga.substring(0, 30) + '...';
         this.tam = res.length;
-        console.log(this.tam);
+        // console.log(this.tam);
       } else {
         this.tam = 0;
       }

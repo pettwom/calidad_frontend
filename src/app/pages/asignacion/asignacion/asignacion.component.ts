@@ -51,6 +51,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   seleccionados: any = [''];
   eventSelect = $(".select_user");
   selectDisabled: boolean=true;
+  formAsignar: any = {};
   constructor(
     private serviceService: ServicesService,
     private element: ElementRef
@@ -72,10 +73,10 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
         };
 
     this.getDepto();
-    this.deptoModel = [''];
-    this.mpioModel = [''];
-    this.agModel = [''];
-    this.aeModel = [''];
+    this.deptoModel = '';
+    this.mpioModel = '';
+    this.agModel = '';
+    this.aeModel = '';
     this.empSelect = [''];
     this.depto = document.getElementById('deptoSel');
     this.listCuest = [''];
@@ -88,21 +89,15 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     const isChecked = event.target.checked;
     this.listCuest.forEach((item) => {
       item.selected = isChecked;// Marcar todas las filas según el estado del checkbox
-      console.log(item)
-      this.seleccionados.push(item);
+      this.seleccionados.push(item.rep_id);
     });
   }
   onSelectRow(row: any, index: number): void {
     this.seleccionados.push(row.rep_id)
-    console.log(row.rep_id);
-    // Aquí puedes agregar más lógica si quieres hacer algo con la fila seleccionada.
   }
   getSelectedRows(): any[] {
-    console.log(this.listCuest.filter((item) => item.selected));
     return this.listCuest.filter((item) => item.selected); // Filtrar las filas seleccionadas
   }
-
-
   ngAfterViewInit(): void {
     if (typeof $.fn.select2 !== 'undefined') {
       ($('#select2') as any).select2({
@@ -192,6 +187,42 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
         this.empResult = res.data;
       });
   }
+  asignar(){
+    // console.log(this.seleccionados, '<== asignar')
+    let variable = $("#select2 option:selected").val()
+    variable = variable.toString().split("'")[1]
+    // console.log(variable, 'variable');
+Swal.fire({
+  title: '¿Estás seguro?',
+  text: "Esta acción puede modificar la información del validador",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+}).then((resultado) => {
+  if(resultado.isConfirmed){
+    this.formAsignar = {
+      'rep_id': this.seleccionados,
+      'user_id': variable,
+      'depto_id': this.depto.value,
+      'mpio_id': this.mpios.value,
+      'fecha_asignacion': new Date(),
+    }
+    this.serviceService.post(`/validar/saveAsignar`, this.formAsignar)
+    .subscribe((res:any) => {
+        this.searchValidador()
+        Swal.fire({
+          icon:res.icon,
+          title: res.title,
+          text: res.text,
+          showConfirmButton: false,
+          timer: 2000,
+        })
+    })
+    this.seleccionados = [];
+  }
+})
+
+  }
   limiarDatos() {}
   radioValue(e) {
     document.getElementById('details').setAttribute('open', '');
@@ -202,22 +233,19 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
         this.visibleAe = false;
         this.mpioModel = '';
         this.agModel = '';
-        this.aeModel = '';
-        this.empModel = '';
+
         break;
       case 'mpio':
         this.visibleMpio = true;
         this.visibleAg = false;
         this.visibleAe = false;
         this.agModel = '';
-        this.aeModel = '';
         this.empModel = '';
         break;
       case 'ag':
         this.visibleMpio = true;
         this.visibleAg = true;
         this.visibleAe = false;
-        this.aeModel = '';
         this.empModel = '';
         break;
       case 'ae':
@@ -233,21 +261,18 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.mpioModel = this.mpioModel ? this.mpioModel : null;
     this.agModel = this.agModel ? this.agModel : null;
     this.aeModel = this.aeModel ? this.aeModel : null;
-    this.empModel = this.empModel ? this.empModel : null;
+console.log(this.deptoModel,this.mpioModel,this.agModel,this.aeModel);
+
     this.listCuest = [''];
     this.serviceService
-      .get(
-        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.agModel}/${this.aeModel}/${this.empModel}`
-      )
+      .get(`/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.agModel}/${this.aeModel}`)
       .subscribe((res: any) => {
         this.selectDisabled = false;
         this.listCuest = res.data;
         console.log(this.listCuest);
 
-      });
-  }
-  asignar(id){
 
+      });
   }
 
   listasUsuarios() {

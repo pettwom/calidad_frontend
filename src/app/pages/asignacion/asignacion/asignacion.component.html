@@ -111,24 +111,30 @@
         <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios Técnicos de datos </span>
         <br>
         <div class="form-floating form-floating-outline">
-          <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled"
-            id="select2" aria-label="Floating label select example" multiple="multiple">
+          <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled" id="select2"
+            aria-label="Floating label select example" multiple="multiple">
             <option disabled>== Seleccionar Usuario ==</option>
             <option *ngFor="let a of listUser" value="{{a.id_usuario}}">{{a.nombres}} </option>
           </select>
           <!-- <label for="floatingSelect">Seleccionar Usuario</label> -->
         </div>
         <hr>
-        <button class="btn btn-info" [disabled]="btnDisabled" pTooltip="Asignar Usuarios" tooltipPosition="top">
+        <button class="btn btn-info" (click)="asignar()" [disabled]="btnDisabled" pTooltip="Asignar Usuarios" tooltipPosition="top">
           <img class="img-button" src="assets/icon/asignacion.png" alt=""> &nbsp;&nbsp; Asignar
         </button>
       </div>
       <hr>
       <div class="table-responsive">
-        <table *ngIf="listCuest.length > 1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-border table-striped">
+        <table *ngIf="listCuest.length > 1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          class="table table-border table-striped">
           <thead>
             <tr>
-              <th><input type="checkbox" (change)="selectAll($event)" /></th>
+              <th>
+                <div class="form-check mt-3">
+                  <input type="checkbox" class="form-check-input" (change)="selectAll($event)" />
+                  <label class="form-check-label" for="defaultCheck1"><i class="fa-solid fa-check-double"></i></label>
+                </div>
+              </th>
               <th>Nro</th>
               <th>Departamento</th>
               <th>Municipio</th>
@@ -137,11 +143,20 @@
               <th>Cuestionario</th>
               <th>Empadronador</th>
               <th>Asignado</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let a of listCuest">
-              <td><input type="checkbox" [(ngModel)]="a.selected" (change)="onSelectRow(a, i)" /></td> <!-- Checkbox por fila -->
+              <td>
+                <div class="form-check mt-3" *ngIf="a.estado_id != 2 && a.estado_id !=3" >
+                <input type="checkbox" class="form-check-input"  [(ngModel)]="a.selected" (change)="onSelectRow(a, i)" />
+                <label class="form-check-label" for="defaultCheck1"></label>
+              </div>
+              </td>
+              <!-- Checkbox por fila -->
               <td>{{a.nro}}</td>
               <td>{{a.depto}}</td>
               <td>{{a.mpio}}</td>
@@ -149,7 +164,20 @@
               <td>{{a.ae_unico}}</td>
               <td>{{a.cod_cuest}}</td>
               <td>{{a.empadronador}}</td>
-              <td></td>
+              <td>
+                <span class="badge bg-info" *ngIf="a.nombre != '  '">
+                  {{a.nombre}}
+                </span>
+              </td>
+              <td>{{a.fecha_asig}}</td>
+              <td>
+                <span *ngIf="a.estado_id == 2" class="badge bg-success">
+                  {{a.estado}}
+                </span>
+                <span *ngIf="a.estado_id == 3" class="badge bg-warning">
+                  {{a.estado}}
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
