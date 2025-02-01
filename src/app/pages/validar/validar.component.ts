@@ -55,7 +55,6 @@ export class ValidarComponent implements OnInit {
     this.mpioSelect = [''];
     this.agSelect = [''];
     this.aeSelect = [''];
-    this.empSelect = [''];
     this.depto = document.getElementById('deptoSel');
     this.listaSearch = [];
   }
@@ -132,7 +131,6 @@ limiarDatos() {}
         this.mpioModel = '';
         this.agModel = '';
         this.aeModel = '';
-        this.empModel = '';
         break;
       case 'mpio':
         this.visibleMpio = true;
@@ -140,20 +138,17 @@ limiarDatos() {}
         this.visibleAe = false;
         this.agModel = '';
         this.aeModel = '';
-        this.empModel = '';
         break;
       case 'ag':
         this.visibleMpio = true;
         this.visibleAg = true;
         this.visibleAe = false;
         this.aeModel = '';
-        this.empModel = '';
         break;
       case 'ae':
         this.visibleMpio = true;
         this.visibleAg = true;
         this.visibleAe = true;
-        this.empModel = '';
         break;
     }
   }
@@ -163,14 +158,15 @@ limiarDatos() {}
       this.mpioModel = this.mpioModel?this.mpioModel:null;
       this.agModel= this.agModel?this.agModel:null;
       this.aeModel=this.aeModel?this.aeModel:null;
-      this.empModel=this.empModel?this.empModel:null;
     this.listaSearch = [];
     this.serviceService
       .get(
-        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.agModel}/${this.aeModel}/${this.empModel}`
+        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.agModel}/${this.aeModel}`
       )
       .subscribe((res: any) => {
         this.listaSearch = res.data;
+        console.log(this.listaSearch,'<=== datos');
+
       });
   }
 

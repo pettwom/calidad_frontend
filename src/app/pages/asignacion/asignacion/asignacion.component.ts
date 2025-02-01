@@ -240,19 +240,16 @@ Swal.fire({
         this.visibleAg = false;
         this.visibleAe = false;
         this.agModel = '';
-        this.empModel = '';
         break;
       case 'ag':
         this.visibleMpio = true;
         this.visibleAg = true;
         this.visibleAe = false;
-        this.empModel = '';
         break;
       case 'ae':
         this.visibleMpio = true;
         this.visibleAg = true;
         this.visibleAe = true;
-        this.empModel = '';
         break;
     }
   }
