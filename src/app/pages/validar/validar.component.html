@@ -1,11 +1,12 @@
 <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Inicio / </span> Validar Cuestionarios
 </h4>
-<div class="row">
+
+<!--  <div class="row">
   <div class="card">
     <div class="card-header">
       <h2>Validación</h2>
-      <!-- <div class=" btn-migrar-contenedor">
+       <div class=" btn-migrar-contenedor">
         <div  class=" btn-migrar">
           <button style="width: 21%;
           position: absolute;
@@ -16,7 +17,7 @@
             <i class="fa-solid fa-cloud-arrow-down"></i>&nbsp;&nbsp;Migrar datos
           </button>
         </div>
-      </div> -->
+      </div>
       <br>
     </div>
     <br>
@@ -99,7 +100,7 @@
               </div>
             </div>
             <hr>
-            <!-- <div class="col-md-4">
+            <div class="col-md-4">
               <div class="form-floating form-floating-outline">
                 <select class="form-select" id="empSel" [(ngModel)]="empModel"
                   aria-label="Floating label select example">
@@ -108,7 +109,7 @@
                 </select>
                 <label for="floatingSelect">Empadronador</label>
               </div>
-            </div> -->
+            </div>
             <hr>
             <div class="col-sm-2">
               <div class="btn btn-primary" (click)="searchValidador()">
@@ -126,14 +127,19 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<!-- divisiones -->
 <br>
+<div class="btn btn-primary" (click)="searchValidador()">
+  <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; VER BANDEJA
+</div>
 <div class="row">
   <div class="card">
     <div class="card-header">
-      <h3>Resultado</h3>
+      <h3>Resultado de asignación</h3>
     </div>
-    <div class="card-body">
+<div class="card-body">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover" style="width: 100%;"
           *ngIf="listaSearch.length  > 0">
@@ -170,7 +176,12 @@
               </td>
               <td>{{a.observacion}}</td>
               <td>
-                <button class="btn btn-icon btn-label-success" (click)="validarCuest(a.rep_id)"
+                <button class="btn btn-icon btn-label-success" (click)="verCuest(a.rep_id)"
+                  pTooltip="Ver Cuestionario" tooltipPosition="left">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+
+              <!--  <button class="btn btn-icon btn-label-success" (click)="validarCuest(a.rep_id)"
                   pTooltip="Validar Cuestionario" tooltipPosition="left">
                   <i class="fa-solid fa-list-check"></i>
                 </button>
@@ -178,6 +189,7 @@
                   pTooltip="Observar Cuestionario" tooltipPosition="right">
                   <i class="fa-solid fa-clipboard-question"></i>
                 </button>
+                -->
               </td>
             </tr>
           </tbody>
@@ -186,6 +198,85 @@
     </div>
   </div>
 </div>
+<p-dialog header="Ver Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
+  [style]="{'width': '700px'}">
+  <hr>
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h3>Resultado de asignación</h3>
+      </div>
+  <div class="card-body">
+        <div class="table-responsive">
+          <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover" style="width: 100%;"
+            *ngIf="listaSearch.length  > 0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Departamento</th>
+                <th>Municipio</th>
+                <th>Área Agropecuaria</th>
+                <th>Área Enumerada</th>
+                <th>Empadronador</th>
+                <th>Tipo Cuest.</th>
+                <th>Cod. Cuest</th>
+                <th>Estado</th>
+                <th>Observación</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of listaSearch">
+                <td>{{a.nro}}</td>
+                <td>{{a.depto}}</td>
+                <td>{{a.mpio}}</td>
+                <td>{{a.ag_unico}}</td>
+                <td>{{a.ae_unico}}</td>
+                <td>{{a.empadronador}}</td>
+                <td>{{a.cue_titulo}}</td>
+                <td>{{a.cod_cuest}}</td>
+                <td>
+                  <span class="badge bg-label-primary" style="width: 100%;" *ngIf="a.id_estado == '8'">{{a.estado}}</span>
+                  <span class="badge bg-label-danger" style="width: 100%;" *ngIf="a.id_estado == '4'">{{a.estado}}</span>
+                  <span class="badge bg-label-secondary" *ngIf="a.id_estado == null">SIN PROCESAR</span>
+
+                </td>
+                <td>{{a.observacion}}</td>
+                <td>
+                  <button class="btn btn-icon btn-label-success" (click)="verCuest(a.rep_id)"
+                    pTooltip="Ver Cuestionario" tooltipPosition="left">
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+
+                <!--  <button class="btn btn-icon btn-label-success" (click)="validarCuest(a.rep_id)"
+                    pTooltip="Validar Cuestionario" tooltipPosition="left">
+                    <i class="fa-solid fa-list-check"></i>
+                  </button>
+                  <button class="btn btn-icon btn-label-danger" (click)="observarCuest(a.rep_id)"
+                    pTooltip="Observar Cuestionario" tooltipPosition="right">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                  </button>
+                  -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-floating form-floating-outline mb-4">
+    <textarea class="form-control h-px-100" [(ngModel)]="textValidar" id="detalleVerificacion" placeholder="Comentar Aqui..."></textarea>
+    <label for="detalleVerificacion">Detalle de Verificación</label>
+  </div>
+  <br>
+  <hr>
+  <br>
+  <button class="btn btn-success" (click)="almacenarValidacion('val')"><i class="fa-regular fa-floppy-disk" ></i>&nbsp;&nbsp;Validar</button>
+  <button class="btn btn-success" (click)="almacenarValidacion('val')"><i class="fa-regular fa-floppy-disk" ></i>&nbsp;&nbsp;Validar</button>
+  <button class="btn btn-success" (click)="almacenarValidacion('val')"><i class="fa-regular fa-floppy-disk" ></i>&nbsp;&nbsp;Validar</button>
+</p-dialog>
+
 
 <p-dialog header="Validar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
   [style]="{'width': '700px'}">

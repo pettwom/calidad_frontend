@@ -169,7 +169,18 @@ limiarDatos() {}
 
       });
   }
-
+  verCuest(id) {
+    console.log(id, '<=== rep_id');
+    this.rep_id = id;
+    this.visibleValidar = true;
+    this.textValidar = '';
+    this.serviceService
+      .get(`/validar/getValidar/${id}`)
+      .subscribe((res: any) => {
+        console.log(res.data);
+        this.textValidar = res.data[0].observacion;
+      });
+  }
   validarCuest(id) {
     console.log(id, '<=== rep_id');
     this.rep_id = id;
