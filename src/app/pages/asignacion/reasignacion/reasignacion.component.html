@@ -1,1 +1,105 @@
-<p>reasignacion works!</p>
+<h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Inicio / </span> Lista de usuarios y cuestionarios asignados
+</h4>
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <h3>Cuestionarios asignados al usuario</h3>
+        </div>
+        <div class="card-body">
+            <div class="contenedor">
+                <span> <i class="fa-solid fa-magnifying-glass"></i> Seleccione usuario </span>
+                <br>
+                <div class="form-floating form-floating-outline">
+                    <select [(ngModel)]="userIdModel" class="select_user form-control" id="select"
+                        aria-label="Floating label select example" (change)="optionSelect()">
+                        <option value="" selected disabled>== Seleccionar Usuario ==</option>
+                        <option *ngFor="let a of listUser" value="{{a.id_usuario}}">{{a.nombres}} </option>
+                    </select>
+                </div>
+                <hr>                
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover" style="width: 100%;"
+                    *ngIf="listaSearch.length  > 0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check mt-3">
+                                    <input type="checkbox" class="form-check-input" (change)="selectAll($event)" />
+                                    <label class="form-check-label" for="defaultCheck1"><i
+                                            class="fa-solid fa-check-double"></i></label>
+                                </div>
+                            </th>
+                            <th>#</th>
+                            <th>Departamento</th>
+                            <th>Municipio</th>
+                            <th>Área agropecuaria</th>
+                            <th>Área enumerada</th>
+                            <th>Cuestionario</th>
+                            <th>Empadronador</th>
+                            <th>Fecha asignación</th>
+                            <th>Fecha reasignación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of listaSearch">
+                            <td>
+                                <div class="form-check mt-3" *ngIf="a.estado_id != 2 && a.estado_id !=3">
+                                    <input type="checkbox" class="form-check-input" [(ngModel)]="a.selected"
+                                        (change)="onSelectRow(a, i)" />
+                                    <label class="form-check-label" for="defaultCheck1"></label>
+                                </div>
+                            </td>
+                            <td>{{a.nro}}</td>
+                            <td>{{a.depto}}</td>
+                            <td>{{a.mpio}}</td>
+                            <td>{{a.ag_unico}}</td>
+                            <td>{{a.ae_unico}}</td>
+                            <td>{{a.cod_cuest}}</td>
+                            <td>{{a.empadronador}}</td>
+                            <td>{{a.fecha_asignacion}}</td>
+                            <td>{{a.fecha_reasignacion}}</td>
+                            <td>{{a.estado}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="card">
+        <div class="card-header">
+            <h3>Reasignar los cuestionarios seleccionados al usuario:</h3>
+        </div>
+        <div class="card-body">
+            <div class="contenedor">
+                <span> <i class="fa-solid fa-magnifying-glass"></i> Seleccione usuario para reasignar </span>
+                <br>
+                <div class="form-floating form-floating-outline">
+                    <select [(ngModel)]="reasigModel" class="select_user form-control"
+                        aria-label="Floating label select example" (change)="optionSelect2()">
+                        <option value="" selected disabled>== Seleccionar usuario a reasignar ==</option>
+                        <option *ngFor="let a of listUser" value="{{a.id_usuario}}">{{a.nombres}} </option>
+                    </select>
+                </div>
+                <hr>
+                <button class="btn btn-info" (click)="reasignacion()" [disabled]="btnDisabled"
+                    pTooltip="Reasignar usuario" tooltipPosition="top">
+                    <img class="img-button" src="assets/icon/asignacion.png" alt=""> &nbsp;&nbsp; Reasignar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
