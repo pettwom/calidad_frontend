@@ -75,7 +75,7 @@ export class AppMainComponent implements OnInit, OnDestroy {
     this.visibleMenuOpciones = false;
     // console.log(localStorage.getItem('grupo'), 'grupo');
 
-    this.grupoUsuario = localStorage.getItem('grupo');
+    this.grupoUsuario = localStorage.getItem('grupo')?localStorage.getItem('grupo'):'';
     this.nombreUsuario = localStorage.getItem('nombre');
     this.inicialUsuario = localStorage.getItem('inicial');
     this.id_usuario = localStorage.getItem('id_usuario');

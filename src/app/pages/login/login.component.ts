@@ -173,7 +173,7 @@ export class LoginComponent implements OnInit {
           timer: 3500,
         });
 
-console.log(res.menu);
+// console.log(res.menu);
 
         localStorage.setItem('id', JSON.stringify(res.users.id_usuario));
         localStorage.setItem('token', res.token);

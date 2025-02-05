@@ -799,7 +799,7 @@
               <li style="font-size: 11px;width: 150px; text-align: right;">
                 <span>{{nombreUsuario}}</span>
                 <br>
-                <b style="font-size: 12px;" class="text-primary">{{grupoUsuario}}</b>
+                <b style="font-size: 12px;" class="text-primary">{{grupoUsuario==null?grupoUsuario:''}}</b>
 
               </li>
 
@@ -822,7 +822,7 @@
                         </div>
                         <div class="flex-grow-1">
                           <span class="fw-medium d-block">{{nombreUsuario}}</span>
-                          <small class="text-muteD8">{{grupoUsuario}}</small>
+                          <small class="text-muteD8">{{grupoUsuario==null?grupoUsuario:''}}</small>
                         </div>
                       </div>
                     </a>
@@ -842,9 +842,9 @@
                       <span class="align-middle">Configuraciones</span>
                     </a>
                   </li> -->
-                  <li>
+                  <!-- <li>
                     <div class="dropdown-divider"></div>
-                  </li>
+                  </li> -->
                   <li>
                     <a class="dropdown-item" (click)="cerrarSesion()" title="Finalizar Sesion" style="cursor: pointer;">
                       <i class="mdi mdi-logout me-2"></i>

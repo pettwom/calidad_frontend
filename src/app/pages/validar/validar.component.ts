@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./validar.component.css'],
 })
 export class ValidarComponent implements OnInit {
+  [x: string]: any;
   //variables
   deptoSelect: any;
   mpioSelect: any;
@@ -35,12 +36,17 @@ export class ValidarComponent implements OnInit {
   empResult: any;
   listaSearch: any=[];
   dtOptions = {};
+  dtOptionsAlert = {};
   visibleValidar: boolean = false;
   visibleObservar: boolean = false;
   modal_cargando: boolean = false;
   textValidar: any;
   rep_id: any;
   textObservar: any;
+alertasModal: boolean;
+  resUbicacion: any;
+  preguntas: any;
+  respuestas: any;
   // construnctor
   constructor(private serviceService: ServicesService) {}
   // funcion inicial
@@ -49,7 +55,81 @@ export class ValidarComponent implements OnInit {
       paging: true,
       processing: true,
       language: LanguageApp.spanish_datatables,
+      searching: true
+    };
+    this.respuesta = []
+    this.dtOptionsAlert = {
+      paging: true,
+      processing: true,
+      language: LanguageApp.spanish_datatables,
       searching: true,
+      dom: 'Bfrtip', // Para incluir los botones
+      buttons: [
+        {
+          extend: 'print',
+          text: '<i class="fa-solid fa-print"></i> Imprimir',
+          className: 'btn btn-warning',
+        },
+
+        {
+          extend: 'excel',
+          text: '<i class="fa-solid fa-file-excel"></i> Descargar Excel',
+          title: 'Reporte de Alertas',
+          className: 'btn btn-info',
+          exportOptions: {
+            // Especificar las columnas que quieres exportar por índice
+            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Solo exportar las columnas "Nombre" (índice 0) y "Edad" (índice 1)
+          },
+          customize: function (xlsx) {
+            let sheet = xlsx.xl.worksheets['sheet1.xml'];
+            // Modificar el fondo de los encabezados
+            const headers = sheet
+              .getElementsByTagName('row')[0]
+              .getElementsByTagName('c');
+            for (let i = 0; i < headers.length; i++) {
+              const header = headers[i];
+              // Agregar fondo color gris claro a los encabezados
+              header.setAttribute('s', '30'); // 's' hace referencia al estilo en Excel (fondo de celda)
+            }
+
+            // Cambiar el tamaño de las fuentes y poner en negrita los encabezados
+            const rows = sheet.getElementsByTagName('row');
+            for (let row of rows) {
+              const cells = row.getElementsByTagName('c');
+              for (let cell of cells) {
+                const style = cell.getAttribute('s');
+                if (style && style === '30') {
+                  // Si el estilo es de los encabezados, hacemos que el texto sea negrita
+                  cell.setAttribute('t', 'inlineStr');
+                  const istring = document.createElement('is');
+                  const t = document.createElement('t');
+                  t.textContent = cell.textContent; // el valor del título de la celda
+                  istring.appendChild(t);
+                  cell.textContent = '';
+                  cell.appendChild(istring);
+                  // Aplicamos estilo de texto negrita a los encabezados
+                  cell.setAttribute('s', '2'); // '2' es el estilo en Excel para texto en negrita
+                }
+              }
+            }
+            // Comprobar si ya existe el filtro y agregarlo si no está presente
+            // Comprobar si ya existe el filtro y agregarlo si no está presente
+            const autofilter = sheet.getElementsByTagName('autoFilter');
+            if (autofilter.length === 0) {
+              const autoFilter = document.createElement('autoFilter');
+              autoFilter.setAttribute('ref', 'A2:H2'); // Definir el rango de columnas para el filtro
+
+              // Asegúrate de insertarlo en la estructura correcta del XML (dentro de <worksheet>).
+              let worksheetNode = sheet.getElementsByTagName('worksheet')[0];
+
+              // Insertamos el filtro en el lugar correcto
+              if (worksheetNode) {
+                worksheetNode.appendChild(autoFilter);
+              }
+            }
+          },
+        },
+      ],
     };
     this.deptoSelect = [''];
     this.mpioSelect = [''];
@@ -57,155 +137,57 @@ export class ValidarComponent implements OnInit {
     this.aeSelect = [''];
     this.depto = document.getElementById('deptoSel');
     this.listaSearch = [];
+    this.searchValidador();
   }
 
   // funciones
-  getMpio() {
-    this.mpioResult = '';
-    this.serviceService
-      .get(`/validar/getMpio/${this.depto.value}`)
-      .subscribe((res: any) => {
-        this.mpioResult = res.data;
-        this.mpios = document.getElementById('mpioSel');
-        this.consulta(this.depto.value, null, null, null);
-      });
-  }
-  getAg() {
-    this.agResult = '';
-    this.serviceService
-      .get(`/validar/getAg/${this.depto.value}/${this.mpios.value}`)
-      .subscribe((res: any) => {
-        this.agResult = res.data;
-        this.ag = document.getElementById('agSel');
-        this.consulta(this.depto.value, this.mpios.value, null, null);
-      });
-  }
-  getAe() {
-    this.aeResult = '';
-    this.serviceService
-      .get(
-        `/validar/getAe/${this.depto.value}/${this.mpios.value}/${this.ag.value}`
-      )
-      .subscribe((res: any) => {
-        this.aeResult = res.data;
-        this.ae = document.getElementById('aeSel');
-        this.consulta(this.depto.value, this.mpios.value, this.ag.value, null);
-      });
-  }
-  getEmp() {
-    this.consulta(
-      this.depto.value,
-      this.mpios.value,
-      this.ag.value,
-      this.ae.value
-    );
-  }
+g
 limiarDatos() {}
-  consulta(depto = null, mpio = null, ag = null, ae = null) {
-    this.listaSearch = [];
-    this.empResult = '';
-    this.serviceService
-      .get(`/validar/getEmp/${depto}/${mpio}/${ag}/${ae}`)
-      .subscribe((res: any) => {
-        console.log('>>>>>>>>', res);
-        if(res.data == false) {
-          Swal.fire({
-            icon: 'info',
-            title: 'Información',
-            text:res.text,
-            showConfirmButton:false,
-            timer:2000
-          })
-        }
-        this.empResult = res.data;
-      });
-  }
 
-  radioValue(e) {
-    document.getElementById('details').setAttribute('open', '');
-    switch (e.target.value) {
-      case 'depto':
-        this.visibleMpio = false;
-        this.visibleAg = false;
-        this.visibleAe = false;
-        this.mpioModel = '';
-        this.agModel = '';
-        this.aeModel = '';
-        break;
-      case 'mpio':
-        this.visibleMpio = true;
-        this.visibleAg = false;
-        this.visibleAe = false;
-        this.agModel = '';
-        this.aeModel = '';
-        break;
-      case 'ag':
-        this.visibleMpio = true;
-        this.visibleAg = true;
-        this.visibleAe = false;
-        this.aeModel = '';
-        break;
-      case 'ae':
-        this.visibleMpio = true;
-        this.visibleAg = true;
-        this.visibleAe = true;
-        break;
-    }
-  }
   searchValidador() {
-
-      this.deptoModel = this.deptoModel?this.deptoModel:null;
-      this.mpioModel = this.mpioModel?this.mpioModel:null;
-      this.agModel= this.agModel?this.agModel:null;
-      this.aeModel=this.aeModel?this.aeModel:null;
     this.listaSearch = [];
     this.serviceService
       .get(
-        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.agModel}/${this.aeModel}`
+        `/validar/getListadoCuest/`
       )
       .subscribe((res: any) => {
         this.listaSearch = res.data;
-        console.log(this.listaSearch,'<=== datos');
-
       });
   }
   verCuest(id) {
-    console.log(id, '<=== rep_id');
+    this.alertasModal = true;
+    // console.log(id, '<=== rep_id');
     this.rep_id = id;
-    this.visibleValidar = true;
     this.textValidar = '';
     this.serviceService
-      .get(`/validar/getValidar/${id}`)
+      .get(`/validar/getAlertas/${id}`)
       .subscribe((res: any) => {
-        console.log(res.data);
-        this.textValidar = res.data[0].observacion;
+        this.respuesta = res.data.rows
       });
   }
   validarCuest(id) {
-    console.log(id, '<=== rep_id');
+    // console.log(id, '<=== rep_id');
     this.rep_id = id;
-    this.visibleValidar = true;
+    this.alertasModal = true;
     this.textValidar = '';
     this.serviceService
       .get(`/validar/getValidar/${id}`)
       .subscribe((res: any) => {
-        console.log(res.data);
         this.textValidar = res.data[0].observacion;
       });
   }
   observarCuest(id) {
-    console.log(id, '<=== rep_id');
+    // console.log(id, '<=== rep_id');
     this.visibleObservar = true;
     this.textObservar = '';
     this.serviceService
       .get(`/validar/getValidar/${id}`)
       .subscribe((res: any) => {
-        console.log(res.data);
         this.textValidar = res.data[0].observacion;
       });
   }
   almacenarValidacion(tipo) {
-    console.log(this.rep_id);
+    // console.log(this.rep_id);
     if(tipo == 'val'){
       this.visibleValidar = false;
     }else{
@@ -221,7 +203,7 @@ limiarDatos() {}
       confirmButtonText: 'Si, continuar'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(this.rep_id);
+        // console.log(this.rep_id);
 
         this.serviceService
           .post(`/validar/saveValidar`, {
