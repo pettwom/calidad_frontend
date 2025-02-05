@@ -69,7 +69,7 @@ export class ReasignacionComponent implements OnInit, AfterViewInit {
   }
 
   optionSelect() {
-    console.log("Usuarios seleccionados:", this.userIdModel);
+    // console.log("Usuarios seleccionados:", this.userIdModel);
     this.listaSearch = [];
     if (this.userIdModel) {
       this.usuarioAsignado = this.userIdModel;
@@ -140,9 +140,9 @@ export class ReasignacionComponent implements OnInit, AfterViewInit {
 
   listasUsuarios() {
     this.serviceService.get(`/asignar/getUser`).subscribe((res: any) => {
-      console.log(res.data.length);
+      // console.log(res.data.length);
       this.listUser = res.data;
-      console.log(this.listUser);
+      // console.log(this.listUser);
     });
   }
 

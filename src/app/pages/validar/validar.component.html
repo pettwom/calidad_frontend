@@ -94,11 +94,11 @@
 </p-dialog>
 
 
-<p-dialog header="Validar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
+<!-- <p-dialog header="Validar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
   [style]="{'width': '700px'}">
   <hr>
   <div class="form-floating form-floating-outline mb-4">
-    <textarea class="form-control h-px-100" [(ngModel)]="textValidar" id="detalleVerificacion" placeholder="Comentar Aqui..."></textarea>
+    <textarea class="form-control h-px-100" name="textValidar" [(ngModel)]="textValidar" id="detalleVerificacion" placeholder="Comentar Aqui..."></textarea>
     <label for="detalleVerificacion">Detalle de Verificación</label>
   </div>
   <br>
@@ -111,14 +111,14 @@
 <p-dialog header="Observar Cuestionario" [(visible)]="visibleObservar" [(ngModel)]="textObservar" [modal]="true" [maximizable]="true"
   [style]="{'width':  '700px'}">
   <div class="form-floating form-floating-outline mb-4">
-    <textarea class="form-control h-px-100" id="observacionCuest" placeholder="Comentar aqui ... "></textarea>
+    <textarea class="form-control h-px-100" name="observacionCuest" id="observacionCuest" placeholder="Comentar aqui ... "></textarea>
     <label for="observacionCuest">Observación</label>
   </div>
 
   <hr>
 
   <button class="btn btn-danger" (click)="almacenarValidacion('obs')"><i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp; Almacenar</button>
-</p-dialog>
+</p-dialog> -->
 
 <!-- MODAL LOADING
 <div class="contenedor-modal" *ngIf="modal_cargando ? true : false">

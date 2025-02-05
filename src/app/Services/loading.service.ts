@@ -9,7 +9,7 @@ export class LoadingService {
   public readonly loading$ = this._loading.asObservable();
 
   show(): void {
-    console.log(localStorage.getItem('id_usuario'));
+    // console.log(localStorage.getItem('id_usuario'));
     this._loading.next(true);
   }
 

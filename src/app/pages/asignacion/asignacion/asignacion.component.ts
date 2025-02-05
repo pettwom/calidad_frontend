@@ -3,6 +3,7 @@ import { ServicesService } from 'src/app/Services/services.sevice';
 import * as $ from 'jquery';
 import 'select2';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
 
 @Component({
@@ -11,6 +12,7 @@ import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
   styleUrls: ['./asignacion.component.css'],
 })
 export class AsignacionComponent implements OnInit, AfterViewInit {
+  dtTrigger: Subject<any> = new Subject<any>();
   listUser: any;
   userId: any;
   deptoOption: any;
@@ -45,7 +47,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   rep_id: any;
   textObservar: any;
   listCuest: any;
-  dtTrigger: any;
+  // dtTrigger: any;
   btnDisabled: boolean=true;
   i: number;
   seleccionados: any = [''];
@@ -82,7 +84,9 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.listCuest = [''];
     this.listUser = [''];
     this.listasUsuarios();
-    this.dtTrigger.next();
+    if (this.dtTrigger) {
+      this.dtTrigger.next(null);
+    }
 
   }
   selectAll(event: any): void {
@@ -122,13 +126,13 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   }
   getDepto(){
     this.serviceService.get(`/validar/getDeptos`).subscribe((res:any)=>{
-      console.log(res.data);
+      // console.log(res.data);
       this.deptoOption = res.data
     })
   }
   getMpio() {
     this.mpioResult = '';
-    console.log(this.depto.value, 'depto');
+    // console.log(this.depto.value, 'depto');
 
     this.serviceService
       .get(`/validar/getMpio/${this.depto.value}`)
@@ -174,7 +178,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.serviceService
       .get(`/validar/getEmp/${depto}/${mpio}/${ag}/${ae}`)
       .subscribe((res: any) => {
-        console.log('>>>>>>>>', res);
+        // console.log('>>>>>>>>', res);
         if (res.data == false) {
           Swal.fire({
             icon: 'info',
@@ -258,7 +262,7 @@ Swal.fire({
     this.mpioModel = this.mpioModel ? this.mpioModel : null;
     this.agModel = this.agModel ? this.agModel : null;
     this.aeModel = this.aeModel ? this.aeModel : null;
-console.log(this.deptoModel,this.mpioModel,this.agModel,this.aeModel);
+// console.log(this.deptoModel,this.mpioModel,this.agModel,this.aeModel);
 
     this.listCuest = [''];
     this.serviceService
@@ -266,7 +270,7 @@ console.log(this.deptoModel,this.mpioModel,this.agModel,this.aeModel);
       .subscribe((res: any) => {
         this.selectDisabled = false;
         this.listCuest = res.data;
-        console.log(this.listCuest);
+        // console.log(this.listCuest);
 
 
       });
@@ -274,10 +278,10 @@ console.log(this.deptoModel,this.mpioModel,this.agModel,this.aeModel);
 
   listasUsuarios() {
     this.serviceService.get(`/asignar/getUser`).subscribe((res: any) => {
-      console.log(res.data.length);
+      // console.log(res.data.length);
         this.listUser = res.data;
 
-      console.log(this.listUser);
+      // console.log(this.listUser);
     });
   }
 }
