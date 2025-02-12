@@ -45,6 +45,8 @@ export class ReasignacionComponent implements OnInit, AfterViewInit {
         },
       ],
     };
+    this.userIdModel= '';
+    this.reasigModel= '';
     this.listasUsuarios();
   }
 
