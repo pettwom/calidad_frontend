@@ -68,6 +68,7 @@
         <th>CUESTIONARIO</th>
         <th>TIPO CUEST.</th>
         <th>NRO PREGUNTA</th>
+        <!-- <th>PREGUNTA</th> -->
         <th>OBSERVACIONES</th>
         <th>JUSTIFICACION</th>
         <th>OPCIONES</th>
@@ -80,7 +81,16 @@
         <td>{{a.mpio}}</td>
         <td>{{a.cuestionario}}</td>
         <td>{{a.cue_titulo}}</td>
-        <td>{{a.pre_numero_pregunta}}</td>
+        <td>
+          <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
+            {{a.pre_numero_pregunta}}
+          </div>
+        </td>
+        <!-- <td>
+          <div class="badge bg-label-dark">
+            {{a.pre_pregunta}}
+          </div>
+        </td> -->
         <td>
           <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
           <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>

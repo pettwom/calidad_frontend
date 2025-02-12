@@ -156,7 +156,7 @@ limiarDatos() {}
   }
   verCuest(id) {
     this.alertasModal = true;
-    // console.log(id, '<=== rep_id');
+    console.log(id, '<=== rep_id');
     this.rep_id = id;
     this.textValidar = '';
     this.serviceService

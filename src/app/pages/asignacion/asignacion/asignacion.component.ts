@@ -97,6 +97,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     });
   }
   onSelectRow(row: any, index: number): void {
+    console.log(row);
+    
     this.seleccionados.push(row.rep_id)
   }
   getSelectedRows(): any[] {
@@ -194,6 +196,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   asignar(){
     // console.log(this.seleccionados, '<== asignar')
     let variable = $("#select2 option:selected").val()
+    console.log(this.seleccionados, '<=== variable');
+    
     variable = variable.toString().split("'")[1]
     // console.log(variable, 'variable');
 Swal.fire({
@@ -211,6 +215,8 @@ Swal.fire({
       'mpio_id': this.mpios.value,
       'fecha_asignacion': new Date(),
     }
+    console.log(this.formAsignar,'<==== Asignar');
+    
     this.serviceService.post(`/validar/saveAsignar`, this.formAsignar)
     .subscribe((res:any) => {
         this.searchValidador()
