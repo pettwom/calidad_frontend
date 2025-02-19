@@ -34,7 +34,7 @@ export class ValidarComponent implements OnInit {
   agResult: any;
   aeResult: any;
   empResult: any;
-  listaSearch: any=[];
+  listaSearch: any = [];
   dtOptions = {};
   dtOptionsAlert = {};
   visibleValidar: boolean = false;
@@ -43,12 +43,12 @@ export class ValidarComponent implements OnInit {
   textValidar: any;
   rep_id: any;
   textObservar: any;
-alertasModal: boolean;
+  alertasModal: boolean;
   resUbicacion: any;
   preguntas: any;
   respuestas: any;
   // construnctor
-  constructor(private serviceService: ServicesService) {}
+  constructor(private serviceService: ServicesService) { }
   // funcion inicial
   ngOnInit(): void {
     this.dtOptions = {
@@ -141,8 +141,6 @@ alertasModal: boolean;
   }
 
   // funciones
-g
-limiarDatos() {}
 
   searchValidador() {
     this.listaSearch = [];
@@ -154,6 +152,7 @@ limiarDatos() {}
         this.listaSearch = res.data;
       });
   }
+  
   verCuest(id) {
     this.alertasModal = true;
     console.log(id, '<=== rep_id');
@@ -165,6 +164,7 @@ limiarDatos() {}
         this.respuesta = res.data.rows
       });
   }
+
   validarCuest(id) {
     // console.log(id, '<=== rep_id');
     this.rep_id = id;
@@ -176,27 +176,35 @@ limiarDatos() {}
         this.textValidar = res.data[0].observacion;
       });
   }
+
   observarCuest(id) {
-    // console.log(id, '<=== rep_id');
     this.visibleObservar = true;
     this.textObservar = '';
-    this.serviceService
-      .get(`/validar/getValidar/${id}`)
-      .subscribe((res: any) => {
-        this.textValidar = res.data[0].observacion;
-      });
+    this.rep_id = id;
+    //this.almacenarValidacion(id, 'observar')
+    // this.serviceService
+    //   .get(`/validar/getValidar/${id}`)
+    //   .subscribe((res: any) => {
+    //     this.textValidar = res.data[0].observacion;
+    //   }); 
   }
-  almacenarValidacion(tipo) {
+
+  almacenarValidacion(ids: number, tipo) {
     // console.log(this.rep_id);
-    if(tipo == 'val'){
+    let texto
+    if (tipo == 'validar') {
       this.visibleValidar = false;
-    }else{
+      texto = 'Desea validar este cuestionario ?';
+      this.rep_id = ids;
+    } else {
       this.visibleObservar = false;
+      texto = 'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
     }
+
     Swal.fire({
-      title: '¿Estás seguro?',
+      title: '¿Está seguro?',
       icon: 'info',
-      text: 'Desea validar este cuestionario ???',
+      text: `${texto}`,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -204,13 +212,11 @@ limiarDatos() {}
     }).then((result) => {
       if (result.isConfirmed) {
         // console.log(this.rep_id);
-
         this.serviceService
-          .post(`/validar/saveValidar`, {
+          .post(`/validar/save-validar`, {
             tipo: tipo,
             ids: this.rep_id,
-            dato: this.textValidar,
-            categoria: 1
+            dato: this.textObservar
           })
           .subscribe((res: any) => {
             Swal.fire({
@@ -221,15 +227,17 @@ limiarDatos() {}
               showConfirmButton: false,
             });
           });
-      }else{
-        if(tipo == 'val'){
+          this.searchValidador();
+      } else {
+        if (tipo == 'validar') {
           this.visibleValidar = false;
-        }else{
+        } else {
           this.visibleObservar = false;
         }
       }
     });
   }
+
   migrarDatos() {
     this.modal_cargando = true;
     this.serviceService.get(`/validar/migrarDatos`).subscribe((res: any) => {

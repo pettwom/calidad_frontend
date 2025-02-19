@@ -1,17 +1,14 @@
 <h4 class="fw-bold py-3 mb-4">
   <span class="text-muted fw-light">Inicio / </span> Validar Cuestionarios
 </h4>
-
-<br>
-
 <div class="row">
   <div class="card">
     <div class="card-header">
-      <h3>Resultado de Asignación</h3>
+      <h3>Cuestionarios asignados</h3>
     </div>
-<div class="card-body">
+    <div class="card-body">
       <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" class="table table-bordered table-hover" style="width: 100%;"
+        <table datatable [dtOptions]="dtOptions" class="table table-hover" style="width: 100%;"
           *ngIf="listaSearch.length  > 0">
           <thead>
             <tr>
@@ -39,12 +36,25 @@
                 <span class="badge bg-label-primary" style="width: 100%;" *ngIf="a.estado_id == '8'">{{a.estado}}</span>
                 <span class="badge bg-label-danger" style="width: 100%;" *ngIf="a.estado_id == '4'">{{a.estado}}</span>
                 <span class="badge bg-label-info" style="width: 100%;" *ngIf="a.estado_id == '3'">{{a.estado}}</span>
+                <span class="badge bg-label-info" style="width: 100%;" *ngIf="a.estado_id == '5'">{{a.estado}}</span>
                 <span class="badge bg-label-secondary" *ngIf="a.estado_id == null">SIN PROCESAR</span>
               </td>
               <td>
-                <button class="btn btn-icon btn-label-success" (click)="verCuest(a.rep_id)"
-                  pTooltip="Ver Cuestionario" tooltipPosition="left">
+                <button class="btn btn-icon btn-label-twitter" (click)="verCuest(a.rep_id)" pTooltip="Ver Cuestionario"
+                  tooltipPosition="top">
                   <i class="fa-regular fa-eye"></i>
+                </button>
+                <button class="btn btn-icon btn-label-success" (click)="almacenarValidacion(a.rep_id, 'validar')"
+                  pTooltip="Aprobar Cuestionario" tooltipPosition="top">
+                  <i class="fa-regular fa-check-square"></i>
+                </button>
+                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id)"
+                  pTooltip="Observar Cuestionario" tooltipPosition="top">
+                  <i class="fa-regular fa-exclamation-triangle"></i>
+                </button>
+                <button class="btn btn-label-slack" (click)="observarCuest(a.rep_id)" pTooltip="Enviar a jefatura"
+                  tooltipPosition="top" style="font-size: xx-small; width: 50px;">Enviar a jefatura
+                  <i class="fa-regular"></i>
                 </button>
               </td>
             </tr>
@@ -58,77 +68,79 @@
 <p-dialog header="Ver Cuestionario" [(visible)]="alertasModal" [modal]="true" [maximizable]="true"
   [style]="{'width': '1200px'}">
   <hr>
-<div class="table-responsive" *ngIf="respuesta.length >0" >
-  <table datatable [dtOptions]="dtOptionsAlert"  class="table table-striped table-border border-hover">
-    <thead>
-      <tr>
-        <th>NRO</th>
-        <th>DEPARTAMENTO</th>
-        <th>MUNICIPIO</th>
-        <th>CUESTIONARIO</th>
-        <th>TIPO CUEST.</th>
-        <th>NRO PREGUNTA</th>
-        <!-- <th>PREGUNTA</th> -->
-        <th>OBSERVACIONES</th>
-        <th>JUSTIFICACION</th>
-        <th>OPCIONES</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let a of respuesta; let i = index">
-        <td>{{i+1}}</td>
-        <td>{{a.depto}}</td>
-        <td>{{a.mpio}}</td>
-        <td>{{a.cuestionario}}</td>
-        <td>{{a.cue_titulo}}</td>
-        <td>
-          <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
-            {{a.pre_numero_pregunta}}
-          </div>
-        </td>
-        <!-- <td>
+  <div class="table-responsive" *ngIf="respuesta.length >0">
+    <table datatable [dtOptions]="dtOptionsAlert" class="table table-striped table-border border-hover">
+      <thead>
+        <tr>
+          <th>NRO</th>
+          <th>DEPARTAMENTO</th>
+          <th>MUNICIPIO</th>
+          <th>CUESTIONARIO</th>
+          <th>TIPO CUEST.</th>
+          <th>NRO PREGUNTA</th>
+          <!-- <th>PREGUNTA</th> -->
+          <th>OBSERVACIONES</th>
+          <th>JUSTIFICACION</th>
+          <th>OPCIONES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of respuesta; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{a.depto}}</td>
+          <td>{{a.mpio}}</td>
+          <td>{{a.cuestionario}}</td>
+          <td>{{a.cue_titulo}}</td>
+          <td>
+            <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
+              {{a.pre_numero_pregunta}}
+            </div>
+          </td>
+          <!-- <td>
           <div class="badge bg-label-dark">
             {{a.pre_pregunta}}
           </div>
         </td> -->
-        <td>
-          <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
-          <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
-        </td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+          <td>
+            <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
+            <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </p-dialog>
 
 
-<!-- <p-dialog header="Validar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
+<p-dialog header="Aprobar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
   [style]="{'width': '700px'}">
   <hr>
   <div class="form-floating form-floating-outline mb-4">
-    <textarea class="form-control h-px-100" name="textValidar" [(ngModel)]="textValidar" id="detalleVerificacion" placeholder="Comentar Aqui..."></textarea>
+    <textarea class="form-control h-px-100" name="textValidar" [(ngModel)]="textValidar" id="detalleVerificacion"
+      placeholder="Comentar Aqui..."></textarea>
     <label for="detalleVerificacion">Detalle de Verificación</label>
   </div>
   <br>
   <hr>
   <br>
-  <button class="btn btn-success" (click)="almacenarValidacion('val')"><i class="fa-regular fa-floppy-disk" ></i>&nbsp;&nbsp;Validar</button>
+  <button class="btn btn-success" (click)="almacenarValidacion(a.rep_id,'validar')"><i
+      class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;Validar</button>
 </p-dialog>
 
 
-<p-dialog header="Observar Cuestionario" [(visible)]="visibleObservar" [(ngModel)]="textObservar" [modal]="true" [maximizable]="true"
+<p-dialog header="Observar Cuestionario" [(visible)]="visibleObservar" [modal]="true" [maximizable]="true"
   [style]="{'width':  '700px'}">
   <div class="form-floating form-floating-outline mb-4">
-    <textarea class="form-control h-px-100" name="observacionCuest" id="observacionCuest" placeholder="Comentar aqui ... "></textarea>
-    <label for="observacionCuest">Observación</label>
+    <textarea class="form-control h-px-100" name="observacionCuest" [(ngModel)]="textObservar" id="observacionCuest"
+      placeholder="Comentar aqui ... "></textarea>
+    <label for="observacionCuest">Introduzca las observaciones para el cuestionario</label>
   </div>
-
   <hr>
-
-  <button class="btn btn-danger" (click)="almacenarValidacion('obs')"><i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp; Almacenar</button>
-</p-dialog> -->
+  <button class="btn btn-danger" [disabled]="!textObservar || textObservar.trim() === ''"
+    (click)="almacenarValidacion(id,'observar')"><i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp; Observar</button>
+</p-dialog>
 
 <!-- MODAL LOADING
 <div class="contenedor-modal" *ngIf="modal_cargando ? true : false">

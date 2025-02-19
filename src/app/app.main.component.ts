@@ -97,10 +97,10 @@ export class AppMainComponent implements OnInit, OnDestroy {
 
         // Cargar notificaciones iniciales desde REST
 
-        this.serviceService.get(`/dashboard/notificacion`).subscribe((data) => {
-          // console.log(data, '<===data app.main.compopnents');
-          this.observaciones = this.notificaciones.concat(data);
-        });
+        // this.serviceService.get(`/dashboard/notificacion`).subscribe((data) => {
+        //   // console.log(data, '<===data app.main.compopnents');
+        //   this.observaciones = this.notificaciones.concat(data);
+        // });
       }
     }, 10000);
 
@@ -144,20 +144,20 @@ export class AppMainComponent implements OnInit, OnDestroy {
 
   listadoNotificaciones() {
     // if (localStorage.getItem('id_rol') != '5') {
-    this.serviceService.get(`/dashboard/notificacion`).subscribe((res: any) => {
-      // console.log(res[0].descripcion_larga, '<==== DATOS TAMAÑO');
+    // this.serviceService.get(`/dashboard/notificacion`).subscribe((res: any) => {
+    //   // console.log(res[0].descripcion_larga, '<==== DATOS TAMAÑO');
 
-      this.observaciones = res;
-      if (this.observaciones.length > 0) {
-        // console.log(this.observaciones[0].descripcion_larga, 'descripcion');
-        this.observaciones[0].descripcion_larga =
-          this.observaciones[0].descripcion_larga.substring(0, 30) + '...';
-        this.tam = res.length;
-        // console.log(this.tam);
-      } else {
-        this.tam = 0;
-      }
-    });
+    //   this.observaciones = res;
+    //   if (this.observaciones.length > 0) {
+    //     // console.log(this.observaciones[0].descripcion_larga, 'descripcion');
+    //     this.observaciones[0].descripcion_larga =
+    //       this.observaciones[0].descripcion_larga.substring(0, 30) + '...';
+    //     this.tam = res.length;
+    //     // console.log(this.tam);
+    //   } else {
+    //     this.tam = 0;
+    //   }
+    // });
     // }
   }
   notificacionModal(id) {
