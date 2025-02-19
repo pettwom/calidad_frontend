@@ -9,23 +9,38 @@
     <div class="card-body">
       <div class="contenedor">
         <span> <i class="fa-solid fa-magnifying-glass"></i> Buscar para asignar</span>
-        <div class="filtro">
-          <div class="form-check form-check-info">
+        <div class="filtro row">
+          <!-- <div class="form-check custom-option custom-option-label custom-option-basic checked">
+            <label class="form-check-label custom-option-content" for="customRadioTemp5">
+              <input name="customRadioTemp" class="form-check-input" type="radio" value="" id="customRadioTemp5" checked="">
+              <input name="customRadioInfo" class="form-check-input" type="radio" value="depto" id="depto"
+              (change)="radioValue($event)" checked="">
+              <span class="custom-option-header">
+                <span class="h6 mb-0">Departamento</span>
+              </span>
+            </label>
+          </div> -->
+          <div class="form-check form-check-dark col-md-2">
             <input name="customRadioInfo" class="form-check-input" type="radio" value="depto" id="depto"
               (change)="radioValue($event)" checked="">
             <label class="form-check-label" for="customRadioInfo"> Departamento </label>
           </div>
-          <div class="form-check form-check-info">
+          <div class="form-check form-check-info col-md-2">
             <input name="customRadioInfo" class="form-check-input" type="radio" value="mpio" id="mpio"
               (change)="radioValue($event)">
             <label class="form-check-label" for="customRadioInfo"> Municipio </label>
           </div>
-          <div class="form-check form-check-info">
+          <div class="form-check form-check-warning col-md-2">
+            <input name="customRadioInfo" class="form-check-input" type="radio" value="com" id="com"
+              (change)="radioValue($event)">
+            <label class="form-check-label" for="customRadioInfo"> Comunidad </label>
+          </div>
+          <div class="form-check form-check-primary col-md-2">
             <input name="customRadioInfo" class="form-check-input" type="radio" value="ag" id="ag"
               (change)="radioValue($event)">
             <label class="form-check-label" for="customRadioInfo"> Area Agropecuaria </label>
           </div>
-          <div class="form-check form-check-info">
+          <div class="form-check form-check-danger col-md-2">
             <input name="customRadioInfo" class="form-check-input" type="radio" value="ae" id="ae"
               (change)="radioValue($event)">
             <label class="form-check-label" for="customRadioInfo"> Area Enumerada </label>
@@ -40,7 +55,7 @@
           <!-- <div class="row" style="padding: 15px 10px; display: flex; flex-wrap: wrap;gap: 0.3em"> -->
           <div class="row">
 
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-floating form-floating-outline">
                 <select class="form-select" id="deptoSel" [(ngModel)]="deptoModel" (change)="getMpio()"
                   aria-label="Floating label select example">
@@ -50,17 +65,29 @@
                 <label for="floatingSelect">Departamento</label>
               </div>
             </div>
-            <div class="col-md-3">
+
+            <div class="col-md-2">
               <div class="form-floating form-floating-outline" *ngIf="visibleMpio">
-                <select class="form-select" id="mpioSel" [(ngModel)]="mpioModel" (change)="getAg()"
+                <select class="form-select" id="mpioSel" [(ngModel)]="mpioModel" (change)="getCom()"
                   aria-label="Floating label select example">
                   <option value="" selected disabled>== Municipio ==</option>
-                  <option *ngFor="let a of mpioResult" value="{{a.cod_municipio}}">{{a.mpio}}</option>
+                  <option *ngFor="let a of (mpioResult|| [])" value="{{a.cod_municipio}}">{{a.mpio}}</option>
                 </select>
                 <label for="floatingSelect">Municipio</label>
               </div>
             </div>
-            <div class="col-md-3">
+
+            <div class="col-md-2">
+              <div class="form-floating form-floating-outline" *ngIf="visibleCom">
+                <select class="form-select" id="comSel" [(ngModel)]="comModel" (change)="getAg()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Comunidad ==</option>
+                  <option *ngFor="let a of comResult" value="{{a.cod_com}}">{{a.comunidad}}</option>
+                </select>
+                <label for="floatingSelect">Comunidad</label>
+              </div>
+            </div>
+            <div class="col-md-2">
               <div class="form-floating form-floating-outline" *ngIf="visibleAg">
                 <select class="form-select" id="agSel" [(ngModel)]="agModel" (change)="getAe()"
                   aria-label="Floating label select example">
@@ -70,7 +97,7 @@
                 <label for="floatingSelect">Área Agropecuaria</label>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <div class="form-floating form-floating-outline" *ngIf="visibleAe">
                 <select class="form-select" id="aeSel" [(ngModel)]="aeModel" (change)="getEmp()"
                   aria-label="Floating label select example">
@@ -81,9 +108,20 @@
               </div>
             </div>
             <hr>
+            <div class="col-md-5">
+              <div class="form-floating form-floating-outline" *ngIf="visibleEmp">
+                <select class="form-select" id="aeSel" [(ngModel)]="empModel" (change)="getEmp()"
+                  aria-label="Floating label select example">
+                  <option value="" selected disabled>== Empadronador ==</option>
+                  <option *ngFor="let a of empResult" value="{{a.cod_empadronador}}">{{a.empadronador}}</option>
+                </select>
+                <label for="floatingSelect">Empadronador</label>
+              </div>
+            </div>
+            <hr>
             <div class="col-sm-2">
               <div class="btn btn-primary" (click)="searchValidador()">
-                <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCARs
+                <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCAR
               </div>
             </div>
             <div class="col-sm-2">
@@ -135,7 +173,7 @@
                   <label class="form-check-label" for="defaultCheck1"><i class="fa-solid fa-check-double"></i></label>
                 </div>
               </th>
-              <th>Nro</th>
+              <th>Nro </th>
               <th>Departamento</th>
               <th>Municipio</th>
               <th>Área Agropecuaria</th>
