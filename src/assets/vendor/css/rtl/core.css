@@ -657,7 +657,7 @@ progress {
 }
 @media (min-width: 1400px) {
   .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-    max-width: 1440px;
+    max-width: 1740px;
   }
 }
 .row {
@@ -13632,7 +13632,7 @@ html:not([dir=rtl]) .card .card-separator {
 }
 
 .fw-normal {
-  font-weight: 400 !important;  
+  font-weight: 400 !important;
 }
 
 .fw-medium {
