@@ -107,12 +107,12 @@
                     {{a.pre_pregunta}}
                   </div>
                 </td>
+                <td></td>
+                <td>{{a.obs_observacion}}</td>
                 <td>
-                  <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
-                  <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
+                  <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
+                  <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">{{a.descripcion}}</span>
                 </td>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td></td>
               </tr>
