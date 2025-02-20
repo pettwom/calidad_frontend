@@ -36,3 +36,19 @@ details{
   filter: invert() hue-rotate(20deg) saturate(1000%);
   width: 20px;
 }
+.contenedor-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contenedor-header marquee{
+  width: 500px;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+.contenedor-header img{
+  width: 35px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+}

@@ -1,10 +1,22 @@
 <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Inicio / </span> Asingación de Carga
+  <span class="text-muted fw-light">Inicio / </span> Asignación de Carga
 </h4>
 <div class="row">
   <div class="card">
-    <div class="card-header">
-      <h4>Filtrar Cuestionarios</h4>
+    <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
+    padding: 10px;">
+      <div class="contenedor-header">
+
+        <div>
+          <marquee>
+            <h3 style="color:#47874a; font-weight: bold;">Filtrar Cuestionarios</h3>
+          </marquee>
+        </div>
+        <div>
+          <div class="logos-header"> <img src="assets/images/LOGO PODA 1 PNG.png" alt="" width="30"></div>
+        </div>
+
+      </div>
     </div>
     <div class="card-body">
       <div class="contenedor">
@@ -141,9 +153,24 @@
 <br>
 <div class="row">
   <div class="card">
-    <div class="card-header">
-      <h4>Asignación</h4>
+    <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
+    padding: 10px;">
+
+
+      <div class="contenedor-header">
+
+        <div>
+          <marquee>
+            <h3 style="color:#47874a; font-weight: bold;">Asignación</h3>
+          </marquee>
+        </div>
+        <div>
+          <div class="logos-header"> <img src="assets/images/LOGO PODA 1 PNG.png" alt="" width="30"></div>
+        </div>
+
+      </div>
     </div>
+
     <div class="card-body">
       <div class="contenedor">
         <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios Técnicos de datos </span>
@@ -157,7 +184,8 @@
           <!-- <label for="floatingSelect">Seleccionar Usuario</label> -->
         </div>
         <hr>
-        <button class="btn btn-info" (click)="asignar()" [disabled]="btnDisabled" pTooltip="Asignar Usuarios" tooltipPosition="top">
+        <button class="btn btn-info" (click)="asignar()" [disabled]="btnDisabled" pTooltip="Asignar Usuarios"
+          tooltipPosition="top">
           <img class="img-button" src="assets/icon/asignacion.png" alt=""> &nbsp;&nbsp; Asignar
         </button>
       </div>
@@ -189,10 +217,11 @@
           <tbody>
             <tr *ngFor="let a of listCuest">
               <td>
-                <div class="form-check mt-3" *ngIf="a.estado_id != 2 && a.estado_id !=3" >
-                <input type="checkbox" class="form-check-input"  [(ngModel)]="a.selected" (change)="onSelectRow(a, i)" />
-                <label class="form-check-label" for="defaultCheck1"></label>
-              </div>
+                <div class="form-check mt-3" *ngIf="a.estado_id != 2 && a.estado_id !=3">
+                  <input type="checkbox" class="form-check-input" [(ngModel)]="a.selected"
+                    (change)="onSelectRow(a, i)" />
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
               </td>
               <!-- Checkbox por fila -->
               <td>{{a.nro}}</td>

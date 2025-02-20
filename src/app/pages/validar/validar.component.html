@@ -3,8 +3,9 @@
 </h4>
 <div class="row">
   <div class="card">
-    <div class="card-header" style="background-color: #d7e4cc;">
-      <h3>Cuestionarios asignados</h3>
+    <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
+    padding: 10px;">
+      <marquee><h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3></marquee>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -66,7 +67,7 @@
 </div>
 
 <p-dialog header="Alertas de cuestionario" [(visible)]="alertasModal" [modal]="true" [maximizable]="true"
-  style="width: 800px; background: #47874A !important; table-layout: fixed;">
+  style="width: 800px; table-layout: fixed;">
   <div class="card">
     <div class="card-header d-flex flex-wrap gap-3" style="background-color: #d7e4cc;">
       <div class="row">
