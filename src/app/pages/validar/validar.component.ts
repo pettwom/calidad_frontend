@@ -142,7 +142,9 @@ export class ValidarComponent implements OnInit {
     this.serviceService
       .get(`/validar/getAlertas/${fila.rep_id}`)
       .subscribe((res: any) => {
-        this.respuesta = res.data.rows
+        console.log(res.data,'getAlertas');
+
+        this.respuesta = res.data
       });
   }
 
@@ -167,7 +169,7 @@ export class ValidarComponent implements OnInit {
     //   .get(`/validar/getValidar/${id}`)
     //   .subscribe((res: any) => {
     //     this.textValidar = res.data[0].observacion;
-    //   }); 
+    //   });
   }
 
   almacenarValidacion(ids: number, tipo) {

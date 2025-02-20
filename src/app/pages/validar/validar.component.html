@@ -111,8 +111,23 @@
                 </div>
               </td>
               <td>
-                <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
-                <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
+                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
+                <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
+                  <i class="fa fa-triangle-exclamation"></i>
+                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
+                  {{a.descripcion}}
+                </span>
+              </td>
+              <td></td>
+              <td>{{a.obs_observacion}}</td>
+              <td></td>
+              <td>
+                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
+                <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
+                  <i class="fa fa-triangle-exclamation"></i>
+                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
+                  {{a.descripcion}}
+                </span>
               </td>
               <td>{{a.obs_observacion}}</td>
               <td>{{a.obs_justificacion}}</td>
