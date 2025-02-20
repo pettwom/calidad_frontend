@@ -5,7 +5,9 @@
   <div class="card">
     <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
     padding: 10px;">
-      <marquee><h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3></marquee>
+      <marquee>
+        <h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3>
+      </marquee>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -25,7 +27,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let a of listaSearch">
+            <tr *ngFor="let a of listaSearch" [ngClass]="getRowClass(a)">
               <td>{{a.nro}}</td>
               <td>{{a.depto}}</td>
               <td>{{a.mpio}}</td>
@@ -33,15 +35,15 @@
               <td>{{a.ae_unico}}</td>
               <td>{{a.cuestionario}}</td>
               <td>{{a.cue_titulo}}</td>
-              <td>
-                <span class="badge bg-label-primary" style="width: 100%;" *ngIf="a.estado_id == '8'">{{a.estado}}</span>
+              <td>{{a.estado}}
+                <!-- <span class="badge bg-label-primary" style="width: 100%;" *ngIf="a.estado_id == '8'">{{a.estado}}</span>
                 <span class="badge bg-label-danger" style="width: 100%;" *ngIf="a.estado_id == '4'">{{a.estado}}</span>
                 <span class="badge bg-label-info" style="width: 100%;" *ngIf="a.estado_id == '3'">{{a.estado}}</span>
                 <span class="badge bg-label-info" style="width: 100%;" *ngIf="a.estado_id == '5'">{{a.estado}}</span>
-                <span class="badge bg-label-secondary" *ngIf="a.estado_id == null">SIN PROCESAR</span>
+                <span class="badge bg-label-secondary" *ngIf="a.estado_id == null">SIN PROCESAR</span> -->
               </td>
               <td>
-                <button class="btn btn-icon btn-label-twitter" (click)="verCuest(a)" pTooltip="Ver Cuestionario"
+                <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Ver Cuestionario"
                   tooltipPosition="top">
                   <i class="fa-regular fa-eye"></i>
                 </button>
@@ -53,8 +55,8 @@
                   pTooltip="Observar Cuestionario" tooltipPosition="top">
                   <i class="fa-regular fa-exclamation-triangle"></i>
                 </button>
-                <button class="btn btn-label-slack" (click)="observarCuest(a.rep_id)" pTooltip="Enviar a jefatura"
-                  tooltipPosition="top" style="font-size: xx-small; width: 50px;">Enviar a jefatura
+                <button class="btn btn-label-slack" (click)="observarCuest(a.rep_id)" pTooltip="Enviar a jefatura para su revisión"
+                  tooltipPosition="top" style="font-size: xx-small; width: 70px; height: 35px;;">Enviar a jefatura
                   <i class="fa-regular"></i>
                 </button>
               </td>
@@ -96,7 +98,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let a of respuesta; let i = index">
+            <tr *ngFor="let a of respuesta; let i = index" [ngClass]="getRowClass(a)">
               <td>{{i+1}}</td>
               <td>
                 <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
@@ -112,10 +114,23 @@
                 <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
                 <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{a.obs_observacion}}</td>
+              <td>{{a.obs_justificacion}}</td>
+              <td>{{a.estado}}</td>
+              <td>
+                <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Aprobar"
+                  tooltipPosition="top">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+                <button class="btn btn-icon btn-label-success" (click)="almacenarValidacion(a.rep_id, 'validar')"
+                  pTooltip="Justificar" tooltipPosition="top">
+                  <i class="fa-regular fa-check-square"></i>
+                </button>
+                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id)"
+                  pTooltip="Observar" tooltipPosition="top">
+                  <i class="fa-regular fa-exclamation-triangle"></i>
+                </button>                
+              </td>
             </tr>
           </tbody>
         </table>
@@ -143,13 +158,16 @@
 
 
 <p-dialog header="Observar Cuestionario" [(visible)]="visibleObservar" [modal]="true" [maximizable]="true"
-  [style]="{'width': '700px', 'background-color': '#d7e4cc'}">
+  [style]="{'width': '700px'}">
   <div class="card">
     <div class="card-header d-flex flex-wrap gap-3" style="background-color: #d7e4cc;">
-      <label> <span class="fw-bold">Al observar el cuestionario, este quedará habilitado para la revisión del empadronador</span></label>
+      <label> <span class="fw-bold">Importante: Al observar el cuestionario, este quedará habilitado para la revisión
+          del empadronador.</span></label>
+      <label> <span class="fw-regular">Detalle claramente las observaciones de manera que el empadronador entienda las
+          acciones que debe realizar.</span></label>
     </div>
     <div class="card-body">
-      <div class="form-floating form-floating-outline mb-4">
+      <div class="form-floating form-floating-outline mb-6">
         <textarea class="form-control h-px-100" name="observacionCuest" [(ngModel)]="textObservar" id="observacionCuest"
           placeholder="Comentar aqui ... "></textarea>
         <label for="observacionCuest">Introduzca las observaciones para el cuestionario</label>

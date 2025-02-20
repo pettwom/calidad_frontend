@@ -240,3 +240,23 @@ content:"Cargando...";
   max-width: 250px;
   font-size: 12px;
 }
+
+.fila-corregido {
+  background-color: #fccb92 !important; /* naranja claro */
+}
+
+.fila-observado {
+  background-color: #f5beb5 !important; /* rojo claro */
+}
+
+.fila-pendiente {
+  background-color: #dbf0fd !important; /* Azul claro */
+}
+
+.fila-aprobado {
+  background-color: #bce8bc !important; /* verde claro */
+}
+
+tr {
+  transition: background-color 0.3s ease-in-out;
+}

@@ -234,4 +234,18 @@ export class ValidarComponent implements OnInit {
       });
     });
   }
+
+  getRowClass(a: any) {
+    switch (a.estado) {
+      case 'OBSERVADO': return 'fila-observado';
+      case 'PENDIENTE': return 'fila-pendiente';
+      case 'CORREGIDO-APK': return 'fila-corregido';
+      case 'JUSTIFICADO-APK': return 'fila-corregido';
+      case 'CORREGIDO-PODA': return 'fila-aprobado';
+      case 'JUSTIFICADO-PODA': return 'fila-aprobado';
+      case 'APROBADO': return 'fila-aprobado';
+      default: return ''; // Clase vacía si no hay coincidencia
+    }
+  }
+
 }

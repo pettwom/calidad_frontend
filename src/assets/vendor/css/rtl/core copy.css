@@ -1732,12 +1732,12 @@ progress {
   }
 }
 .table {
-  --bs-table-color: var(--bs-body-color);
+  --bs-table-color: #080808;
   --bs-table-bg: transparent;
   --bs-table-border-color: #eaeaec;
   --bs-table-accent-bg: transparent;
   --bs-table-striped-color: var(--bs-body-color);
-  --bs-table-striped-bg: rgba(76, 78, 100, 0.05);
+  --bs-table-striped-bg: rgba(7, 7, 7, 0.05);
   --bs-table-active-color: #828393;
   --bs-table-active-bg: rgba(102, 108, 255, 0.08);
   --bs-table-hover-color: var(--bs-body-color);

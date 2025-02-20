@@ -52,7 +52,7 @@
   --bs-body-font-size: 0.9375rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.47;
-  --bs-body-color: #828393;
+  --bs-body-color: #0c0c0c;
   --bs-body-bg: #f7f7f9;
   --bs-border-width: 1px;
   --bs-border-style: solid;
@@ -13779,7 +13779,7 @@ html:not([dir=rtl]) .card .card-separator {
 
 .text-body {
   --bs-text-opacity: 1;
-  color: #828393 !important;
+  color: black !important;
 }
 
 .text-muted {
