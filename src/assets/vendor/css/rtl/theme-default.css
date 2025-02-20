@@ -802,7 +802,7 @@ a:hover {
   color: #fff !important;
 }
 .select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {
-  border-width: 2px;
+  border-width: 1px;
   border-color: #5e9d45 !important;
 }
 
@@ -838,7 +838,7 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
   color: #fff !important;
 }
 .bootstrap-select .dropdown-toggle.show {
-  border-width: 2px;
+  border-width: 1px;
   border-color: #5e9d45;
 }
 

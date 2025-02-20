@@ -13632,7 +13632,7 @@ html:not([dir=rtl]) .card .card-separator {
 }
 
 .fw-normal {
-  font-weight: 400 !important;
+  font-weight: 400 !important;  
 }
 
 .fw-medium {

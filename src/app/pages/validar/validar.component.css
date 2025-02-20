@@ -214,3 +214,29 @@ content:"Cargando...";
     display: none;
   }
 }
+
+::ng-deep .tabla-alertas th:nth-child(1), .tabla-alertas td:nth-child(1) { width: 3%; }   /* NRO */
+::ng-deep .tabla-alertas th:nth-child(2), .tabla-alertas td:nth-child(2) { width: 5%; }  /* NRO PREGUNTA */
+::ng-deep .tabla-alertas th:nth-child(3), .tabla-alertas td:nth-child(3) { width: 30%; }  /* PREGUNTA */
+::ng-deep .tabla-alertas th:nth-child(4), .tabla-alertas td:nth-child(4) { width: 15%; }  /* RESPUESTA */
+::ng-deep .tabla-alertas th:nth-child(5), .tabla-alertas td:nth-child(5) { width: 20%; }  /* OBSERVACIONES */
+::ng-deep .tabla-alertas th:nth-child(6), .tabla-alertas td:nth-child(6) { width: 20%; }  /* JUSTIFICACION */
+::ng-deep .tabla-alertas th:nth-child(7), .tabla-alertas td:nth-child(7) { width: 7%; }  /* ESTADO */
+::ng-deep .tabla-alertas th:nth-child(8), .tabla-alertas td:nth-child(8) { width: 5%; }   /* OPCIONES */
+
+.tabla-alertas {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tabla-alertas th, .tabla-alertas td {
+  min-width: 15px !important;
+  max-width: 250px !important;
+}
+
+.pregunta-texto {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 250px;
+  font-size: 12px;
+}

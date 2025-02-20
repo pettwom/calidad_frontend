@@ -12,28 +12,10 @@ import Swal from 'sweetalert2';
 export class ValidarComponent implements OnInit {
   [x: string]: any;
   //variables
-  deptoSelect: any;
-  mpioSelect: any;
-  agSelect: any;
-  aeSelect: any;
-  empSelect: any;
-  deptoModel: any;
-  mpioModel: any;
-  agModel: any;
-  aeModel: any;
-  empModel: any;
-  visibleMpio: boolean = false;
-  visibleAg: boolean = false;
-  visibleAe: boolean = false;
-  depto: any;
-  mpios: any;
-  ag: any;
-  ae: any;
-  emp: any;
-  mpioResult: any;
-  agResult: any;
-  aeResult: any;
-  empResult: any;
+  departamento: any;
+  muicipio: any;
+  tipoCues: any;
+  codCues: any;
   listaSearch: any = [];
   dtOptions = {};
   dtOptionsAlert = {};
@@ -44,7 +26,6 @@ export class ValidarComponent implements OnInit {
   rep_id: any;
   textObservar: any;
   alertasModal: boolean;
-  resUbicacion: any;
   preguntas: any;
   respuestas: any;
   // construnctor
@@ -131,10 +112,6 @@ export class ValidarComponent implements OnInit {
         },
       ],
     };
-    this.deptoSelect = [''];
-    this.mpioSelect = [''];
-    this.agSelect = [''];
-    this.aeSelect = [''];
     this.depto = document.getElementById('deptoSel');
     this.listaSearch = [];
     this.searchValidador();
@@ -152,14 +129,18 @@ export class ValidarComponent implements OnInit {
         this.listaSearch = res.data;
       });
   }
-  
-  verCuest(id) {
+
+  verCuest(fila) {
     this.alertasModal = true;
-    console.log(id, '<=== rep_id');
-    this.rep_id = id;
+    console.log(fila.rep_id, '<=== rep_id');
+    this.rep_id = fila.rep_id;
+    this.departamento = fila.depto;
+    this.municipio = fila.mpio;
+    this.tipoCues = fila.cue_titulo;
+    this.codCues = fila.cuestionario;
     this.textValidar = '';
     this.serviceService
-      .get(`/validar/getAlertas/${id}`)
+      .get(`/validar/getAlertas/${fila.rep_id}`)
       .subscribe((res: any) => {
         this.respuesta = res.data.rows
       });

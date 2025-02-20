@@ -3,7 +3,7 @@
 </h4>
 <div class="row">
   <div class="card">
-    <div class="card-header">
+    <div class="card-header" style="background-color: #d7e4cc;">
       <h3>Cuestionarios asignados</h3>
     </div>
     <div class="card-body">
@@ -40,7 +40,7 @@
                 <span class="badge bg-label-secondary" *ngIf="a.estado_id == null">SIN PROCESAR</span>
               </td>
               <td>
-                <button class="btn btn-icon btn-label-twitter" (click)="verCuest(a.rep_id)" pTooltip="Ver Cuestionario"
+                <button class="btn btn-icon btn-label-twitter" (click)="verCuest(a)" pTooltip="Ver Cuestionario"
                   tooltipPosition="top">
                   <i class="fa-regular fa-eye"></i>
                 </button>
@@ -65,52 +65,62 @@
   </div>
 </div>
 
-<p-dialog header="Ver Cuestionario" [(visible)]="alertasModal" [modal]="true" [maximizable]="true"
-  [style]="{'width': '1200px'}">
-  <hr>
-  <div class="table-responsive" *ngIf="respuesta.length >0">
-    <table datatable [dtOptions]="dtOptionsAlert" class="table table-striped table-border border-hover">
-      <thead>
-        <tr>
-          <th>NRO</th>
-          <th>DEPARTAMENTO</th>
-          <th>MUNICIPIO</th>
-          <th>CUESTIONARIO</th>
-          <th>TIPO CUEST.</th>
-          <th>NRO PREGUNTA</th>
-          <!-- <th>PREGUNTA</th> -->
-          <th>OBSERVACIONES</th>
-          <th>JUSTIFICACION</th>
-          <th>OPCIONES</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let a of respuesta; let i = index">
-          <td>{{i+1}}</td>
-          <td>{{a.depto}}</td>
-          <td>{{a.mpio}}</td>
-          <td>{{a.cuestionario}}</td>
-          <td>{{a.cue_titulo}}</td>
-          <td>
-            <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
-              {{a.pre_numero_pregunta}}
-            </div>
-          </td>
-          <!-- <td>
-          <div class="badge bg-label-dark">
-            {{a.pre_pregunta}}
-          </div>
-        </td> -->
-          <td>
-            <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
-            <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+<p-dialog header="Alertas de cuestionario" [(visible)]="alertasModal" [modal]="true" [maximizable]="true"
+  style="width: 800px; background: #47874A !important; table-layout: fixed;">
+  <div class="card">
+    <div class="card-header d-flex flex-wrap gap-3" style="background-color: #d7e4cc;">
+      <div class="row">
+        <label class="fw-normal">Departamento: <span class="fw-bold">{{ departamento }}</span></label>
+        <label class="fw-normal">Municipio: <span class="fw-bold">{{ municipio }}</span></label>
+      </div>
+      <div class="row">
+        <label class="fw-normal">Tipo de cuestionario: <span class="fw-bold">{{ tipoCues }}</span></label>
+        <label class="fw-normal">Código de cuestionario: <span class="fw-bold">{{ codCues }}</span></label>
+      </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive" *ngIf="respuesta.length >0">
+          <table datatable [dtOptions]="dtOptionsAlert" class="table table-striped table-border border-hover tabla-alertas" style="table-layout: auto; ">
+            <thead>
+              <tr>
+                <th>NRO</th>
+                <th>NRO PREGUNTA</th>
+                <th>PREGUNTA</th>
+                <th>RESPUESTA</th>
+                <th>OBSERVACIONES</th>
+                <th>JUSTIFICACION</th>
+                <th>ESTADO</th>
+                <th>OPCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of respuesta; let i = index">
+                <td>{{i+1}}</td>
+                <td>
+                  <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
+                    {{a.pre_numero_pregunta}}
+                  </div>
+                </td>
+                <td>
+                  <div class="pregunta-texto">
+                    {{a.pre_pregunta}}
+                  </div>
+                </td>
+                <td>
+                  <span class="badge bg-label-success" *ngIf="a.respuesta == 'CORRECTO'">{{a.respuesta}}</span>
+                  <span class="badge bg-label-danger" *ngIf="a.respuesta != 'CORRECTO'">{{a.respuesta}}</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
   </div>
+
 </p-dialog>
 
 
@@ -131,7 +141,7 @@
 
 
 <p-dialog header="Observar Cuestionario" [(visible)]="visibleObservar" [modal]="true" [maximizable]="true"
-  [style]="{'width':  '700px'}">
+  style="background-color: #d7e4cc; width: 50%;">
   <div class="form-floating form-floating-outline mb-4">
     <textarea class="form-control h-px-100" name="observacionCuest" [(ngModel)]="textObservar" id="observacionCuest"
       placeholder="Comentar aqui ... "></textarea>
