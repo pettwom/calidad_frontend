@@ -8,6 +8,18 @@
       <marquee>
         <h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3>
       </marquee>
+      <div class="contenedor-header">
+
+        <div>
+          <marquee>
+            <h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3>
+          </marquee>
+        </div>
+        <div>
+          <div class="logos-header"> <img src="assets/images/LOGO PODA 1 PNG.png" alt="" width="30"></div>
+        </div>
+
+      </div>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -119,12 +131,12 @@
                 </span>
               </td>
               <td></td>
-              <td>{{a.obs_observacion}}</td>
+              <td class="pregunta-texto">{{a.obs_observacion}}</td>
               <td></td>
               <td>
                 <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
                 <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
-                  <i class="fa fa-triangle-exclamation"></i>
+                  <i class="fa fa-thin fa-triangle-exclamation"></i>
                   <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
                   {{a.descripcion}}
                 </span>

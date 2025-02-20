@@ -240,6 +240,22 @@ content:"Cargando...";
   max-width: 250px;
   font-size: 12px;
 }
+.contenedor-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contenedor-header marquee{
+  width: 500px;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+.contenedor-header img{
+  width: 35px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+}
 
 .fila-corregido {
   background-color: #fccb92 !important; /* naranja claro */
@@ -259,4 +275,41 @@ content:"Cargando...";
 
 tr {
   transition: background-color 0.3s ease-in-out;
+}
+
+.fila-corregido {
+  background-color: #fccb92 !important; /* naranja claro */
+}
+
+.fila-observado {
+  background-color: #f5beb5 !important; /* rojo claro */
+}
+
+.fila-pendiente {
+  background-color: #dbf0fd !important; /* Azul claro */
+}
+
+.fila-aprobado {
+  background-color: #bce8bc !important; /* verde claro */
+}
+
+tr {
+  transition: background-color 0.3s ease-in-out;
+.contenedor-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.contenedor-header marquee{
+  width: 500px;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+.contenedor-header img{
+  width: 35px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+}
+
 }
