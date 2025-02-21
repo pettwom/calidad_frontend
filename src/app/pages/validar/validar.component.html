@@ -5,11 +5,7 @@
   <div class="card">
     <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
     padding: 10px;">
-      <marquee>
-        <h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3>
-      </marquee>
       <div class="contenedor-header">
-
         <div>
           <marquee>
             <h3 style="color:#47874a; font-weight: bold;">Cuestionarios asignados</h3>
@@ -18,7 +14,6 @@
         <div>
           <div class="logos-header"> <img src="assets/images/LOGO PODA 1 PNG.png" alt="" width="30"></div>
         </div>
-
       </div>
     </div>
     <div class="card-body">
@@ -67,8 +62,9 @@
                   pTooltip="Observar Cuestionario" tooltipPosition="top">
                   <i class="fa-regular fa-exclamation-triangle"></i>
                 </button>
-                <button class="btn btn-label-slack" (click)="observarCuest(a.rep_id)" pTooltip="Enviar a jefatura para su revisión"
-                  tooltipPosition="top" style="font-size: xx-small; width: 70px; height: 35px;;">Enviar a jefatura
+                <button class="btn btn-label-facebook" (click)="observarCuest(a.rep_id)"
+                  pTooltip="Enviar a jefatura para su revisión" tooltipPosition="top"
+                  style="font-size: xx-small; width: 70px; height: 35px;;">Enviar a jefatura
                   <i class="fa-regular"></i>
                 </button>
               </td>
@@ -112,39 +108,29 @@
           <tbody>
             <tr *ngFor="let a of respuesta; let i = index" [ngClass]="getRowClass(a)">
               <td>{{i+1}}</td>
+              <td>{{a.pre_numero_pregunta}}</td>
               <td>
-                <div class="badge bg-label-dark" pTooltip="{{a.pre_pregunta}}" tooltipPosition="top">
-                  {{a.pre_numero_pregunta}}
-                </div>
-              </td>
-              <td>
-                <div class="pregunta-texto">
-                  {{a.pre_pregunta}}
-                </div>
-              </td>
-              <td>
-                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
-                <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
-                  <i class="fa fa-triangle-exclamation"></i>
-                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
-                  {{a.descripcion}}
-                </span>
+                <div class="pregunta-texto">{{a.pre_pregunta}} </div>
               </td>
               <td></td>
+              <!-- <td>
+                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
+                <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
+                  <i class="fa fa-triangle-exclamation"></i> -->
+                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
+                  <!-- {{a.descripcion}}
+                </span>
+              </td> -->
               <td class="pregunta-texto">{{a.obs_observacion}}</td>
               <td></td>
               <td>
                 <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
                 <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
                   <i class="fa fa-thin fa-triangle-exclamation"></i>
-                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
-                  {{a.descripcion}}
+                  {{a.estado}}
                 </span>
-              </td>
-              <td>{{a.obs_observacion}}</td>
-              <td>{{a.obs_justificacion}}</td>
-              <td>{{a.estado}}</td>
-              <td>
+              </td>          
+              <td> 
                 <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Aprobar"
                   tooltipPosition="top">
                   <i class="fa-regular fa-eye"></i>
@@ -153,10 +139,10 @@
                   pTooltip="Justificar" tooltipPosition="top">
                   <i class="fa-regular fa-check-square"></i>
                 </button>
-                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id)"
-                  pTooltip="Observar" tooltipPosition="top">
+                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id)" pTooltip="Observar"
+                  tooltipPosition="top">
                   <i class="fa-regular fa-exclamation-triangle"></i>
-                </button>                
+                </button>
               </td>
             </tr>
           </tbody>

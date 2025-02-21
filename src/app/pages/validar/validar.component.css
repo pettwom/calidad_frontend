@@ -215,14 +215,14 @@ content:"Cargando...";
   }
 }
 
-::ng-deep .tabla-alertas th:nth-child(1), .tabla-alertas td:nth-child(1) { width: 3%; }   /* NRO */
-::ng-deep .tabla-alertas th:nth-child(2), .tabla-alertas td:nth-child(2) { width: 5%; }  /* NRO PREGUNTA */
-::ng-deep .tabla-alertas th:nth-child(3), .tabla-alertas td:nth-child(3) { width: 30%; }  /* PREGUNTA */
-::ng-deep .tabla-alertas th:nth-child(4), .tabla-alertas td:nth-child(4) { width: 15%; }  /* RESPUESTA */
+::ng-deep .tabla-alertas th:nth-child(1), .tabla-alertas td:nth-child(1) { width: 2%; }   /* NRO */
+::ng-deep .tabla-alertas th:nth-child(2), .tabla-alertas td:nth-child(2) { width: 3%; }  /* NRO PREGUNTA */
+::ng-deep .tabla-alertas th:nth-child(3), .tabla-alertas td:nth-child(3) { width: 28%; }  /* PREGUNTA */
+::ng-deep .tabla-alertas th:nth-child(4), .tabla-alertas td:nth-child(4) { width: 10%; }  /* RESPUESTA */
 ::ng-deep .tabla-alertas th:nth-child(5), .tabla-alertas td:nth-child(5) { width: 20%; }  /* OBSERVACIONES */
 ::ng-deep .tabla-alertas th:nth-child(6), .tabla-alertas td:nth-child(6) { width: 20%; }  /* JUSTIFICACION */
-::ng-deep .tabla-alertas th:nth-child(7), .tabla-alertas td:nth-child(7) { width: 7%; }  /* ESTADO */
-::ng-deep .tabla-alertas th:nth-child(8), .tabla-alertas td:nth-child(8) { width: 5%; }   /* OPCIONES */
+::ng-deep .tabla-alertas th:nth-child(7), .tabla-alertas td:nth-child(7) { width: 5%; }  /* ESTADO */
+::ng-deep .tabla-alertas th:nth-child(8), .tabla-alertas td:nth-child(8) { width: 12%; }   /* OPCIONES */
 
 .tabla-alertas {
   table-layout: fixed;
@@ -277,24 +277,6 @@ tr {
   transition: background-color 0.3s ease-in-out;
 }
 
-.fila-corregido {
-  background-color: #fccb92 !important; /* naranja claro */
-}
-
-.fila-observado {
-  background-color: #f5beb5 !important; /* rojo claro */
-}
-
-.fila-pendiente {
-  background-color: #dbf0fd !important; /* Azul claro */
-}
-
-.fila-aprobado {
-  background-color: #bce8bc !important; /* verde claro */
-}
-
-tr {
-  transition: background-color 0.3s ease-in-out;
 .contenedor-header{
   display: flex;
   flex-direction: row;
@@ -310,6 +292,4 @@ tr {
 .contenedor-header img{
   width: 35px;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
-}
-
 }

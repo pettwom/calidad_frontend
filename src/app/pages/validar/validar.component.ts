@@ -139,12 +139,21 @@ export class ValidarComponent implements OnInit {
     this.tipoCues = fila.cue_titulo;
     this.codCues = fila.cuestionario;
     this.textValidar = '';
+    console.log('getAlertas');
     this.serviceService
       .get(`/validar/getAlertas/${fila.rep_id}`)
       .subscribe((res: any) => {
-        console.log(res.data,'getAlertas');
+        if (res.data)
+          this.respuesta = res.data ? res.data : []
+        else
+          this.alertasModal = false;
+          Swal.fire({
+            title: res.title,
+            icon: res.icon,
+            text: res.text,
+            timer: 2500
+          })
 
-        this.respuesta = res.data
       });
   }
 
@@ -210,7 +219,7 @@ export class ValidarComponent implements OnInit {
               showConfirmButton: false,
             });
           });
-          this.searchValidador();
+        this.searchValidador();
       } else {
         if (tipo == 'validar') {
           this.visibleValidar = false;
