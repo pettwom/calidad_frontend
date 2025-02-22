@@ -261,6 +261,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
           mpio_id: this.mpioModel,
           fecha_asignacion: new Date(),
         };
+
         // console.log(this.formAsignar, '<==== Asignar');
 
         this.serviceService
@@ -276,6 +277,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
             });
           });
         this.seleccionados = [];
+        this.searchValidador()
       }
     });
   }
@@ -338,6 +340,11 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
         console.log('Tipo de respuesta:', typeof res.data, res.data);
         this.selectDisabled = false;
         this.listCuest = res.data;
+        setTimeout(() => {
+          document.getElementById('resAsignacion')?.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }, 100);
       });
   }
 

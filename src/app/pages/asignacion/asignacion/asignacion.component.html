@@ -34,7 +34,7 @@
           </div> -->
           <div class="form-check form-check-dark col-md-2">
             <input name="customRadioInfo" class="form-check-input" type="radio" value="depto" id="depto"
-              (change)="radioValue($event)" checked="">
+              (change)="radioValue($event)">
             <label class="form-check-label" for="customRadioInfo"> Departamento </label>
           </div>
           <div class="form-check form-check-info col-md-2">
@@ -122,7 +122,7 @@
             <hr>
             <div class="col-md-5">
               <div class="form-floating form-floating-outline" *ngIf="visibleEmp">
-                <select class="form-select" id="aeSel" [(ngModel)]="empModel" (change)="getEmp()"
+                <select class="form-select" id="empSel" [(ngModel)]="empModel"
                   aria-label="Floating label select example">
                   <option value="" selected disabled>== Empadronador ==</option>
                   <option *ngFor="let a of empResult" value="{{a.cod_empadronador}}">{{a.empadronador}}</option>
@@ -173,7 +173,7 @@
 
     <div class="card-body">
       <div class="contenedor">
-        <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios Técnicos de datos </span>
+        <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios a Asignar </span>
         <br>
         <div class="form-floating form-floating-outline">
           <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled" id="select2"
@@ -192,7 +192,7 @@
       <hr>
       <div class="table-responsive">
         <table *ngIf="listCuest.length > 1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-          class="table table-border table-striped">
+          class="table table-border table-striped" id="resAsignacion">
           <thead>
             <tr>
               <th>
@@ -239,10 +239,10 @@
               <td>{{a.fecha_asig}}</td>
               <td>
                 <span *ngIf="a.estado_id == 2" class="badge bg-success">
-                  {{a.estado}}
+                  {{a.descripcion}}
                 </span>
                 <span *ngIf="a.estado_id == 3" class="badge bg-warning">
-                  {{a.estado}}
+                  {{a.descripcion}}
                 </span>
               </td>
             </tr>
