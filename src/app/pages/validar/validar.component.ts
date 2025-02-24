@@ -250,11 +250,12 @@ export class ValidarComponent implements OnInit {
     switch (a.estado) {
       case 'OBSERVADO': return 'fila-observado';
       case 'PENDIENTE': return 'fila-pendiente';
-      case 'CORREGIDO-APK': return 'fila-corregido';
-      case 'JUSTIFICADO-APK': return 'fila-corregido';
+      case 'CORREGIDO-APK': return 'fila-pendiente';
+      case 'JUSTIFICADO-APK': return 'fila-pendiente';
       case 'CORREGIDO-PODA': return 'fila-aprobado';
       case 'JUSTIFICADO-PODA': return 'fila-aprobado';
       case 'APROBADO': return 'fila-aprobado';
+      case 'TRANSFERIDO': return 'fila-transferido';
       default: return ''; // Clase vacía si no hay coincidencia
     }
   }
