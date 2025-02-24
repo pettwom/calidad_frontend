@@ -136,15 +136,17 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     }
   }
   getDepto() {
+    this.deptoModel = ''
     this.serviceService.get(`/validar/getDeptos`).subscribe((res: any) => {
       // console.log(res.data);
       this.deptoOption = res.data;
+
     });
   }
   getMpio() {
-    this.mpioResult = '';
+    this.mpioResult = [''];
     console.log(this.depto.value, 'depto');
-
+    this.mpioModel = '';
     this.serviceService
       .get(`/validar/getMpio/${this.depto.value}`)
       .subscribe((res: any) => {
@@ -154,7 +156,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       });
   }
   getCom() {
-    this.comResult = {};
+    this.comResult = [''];
+    this.comModel = '';
     this.serviceService
       .get(`/validar/getCom/${this.deptoModel}/${this.mpioModel}`)
       // .get(`/validar/getCom/${this.depto.value}/${this.mpios.value}`)
@@ -171,7 +174,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     // console.log(this.depto.value, 'depto');
     // console.log(this.mpios.value, 'mpios');
     // console.log(this.com.value, 'com');
-    this.agResult = '';
+    this.agResult = [''];
+    this.agModel = '';
     this.serviceService
       .get(
         `/validar/getAg/${this.deptoModel}/${this.mpioModel}/${this.comModel}`
@@ -187,7 +191,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       });
   }
   getAe() {
-    this.aeResult = '';
+    this.aeResult = [''];
+    this.aeModel = '';
     this.serviceService
       .get(
         `/validar/getAe/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}`
@@ -201,6 +206,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       });
   }
   getEmp() {
+    this.empModel= '';
     this.ae = document.getElementById('aeSel');
     this.consulta();
   }
@@ -212,7 +218,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.ag = this.agModel?this.agModel:null;
     this.ae = this.aeModel?this.aeModel:null;
     this.listaSearch = [''];
-    this.empResult = '';
+    this.empResult = [''];
     // console.log(this.depto,this.mpio,this.com,this.ag,this.ae);
     this.serviceService
       .get(`/validar/getEmp/${this.depto}/${this.mpio}/${this.com}/${this.ag}/${this.ae}`)
