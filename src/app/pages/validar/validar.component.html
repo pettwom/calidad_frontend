@@ -113,14 +113,6 @@
                 <div class="pregunta-texto">{{a.pre_pregunta}} </div>
               </td>
               <td></td>
-              <!-- <td>
-                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
-                <span class="badge bg-label-danger" *ngIf="a.estado_id == 4">
-                  <i class="fa fa-triangle-exclamation"></i> -->
-                  <!-- <img src="assets/icon/Alert.png" alt="" width="15"> -->
-                  <!-- {{a.descripcion}}
-                </span>
-              </td> -->
               <td class="pregunta-texto">{{a.obs_observacion}}</td>
               <td></td>
               <td>
@@ -129,8 +121,8 @@
                   <i class="fa fa-thin fa-triangle-exclamation"></i>
                   {{a.estado}}
                 </span>
-              </td>          
-              <td> 
+              </td>
+              <td>
                 <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Aprobar"
                   tooltipPosition="top">
                   <i class="fa-regular fa-eye"></i>

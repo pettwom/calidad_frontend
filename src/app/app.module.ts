@@ -34,6 +34,7 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { ValidarComponent } from './pages/validar/validar.component';
 import { AsignacionComponent } from './pages/asignacion/asignacion/asignacion.component';
 import { ReasignacionComponent } from './pages/asignacion/reasignacion/reasignacion.component';
+import { TraspasoComponent } from './pages/asignacion/traspaso/traspaso.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,7 @@ import { ReasignacionComponent } from './pages/asignacion/reasignacion/reasignac
     ValidarComponent,
     AsignacionComponent,
     ReasignacionComponent,
+    TraspasoComponent,
   ],
   imports: [
     BrowserModule,

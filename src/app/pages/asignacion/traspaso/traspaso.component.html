@@ -1,0 +1,50 @@
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Inicio / </span> Traspaso
+</h4>
+<div class="row">
+  <div class="card">
+    <div class="card-header" style="background-color: #d7e4cc; margin: 0 -12px;
+    padding: 10px;">
+      <div class="contenedor-header">
+
+        <div>
+          <marquee>
+            <h3 style="color:#47874a; font-weight: bold;">Traspaso Cuestionario Observado</h3>
+          </marquee>
+        </div>
+        <div>
+          <div class="logos-header"> <img src="assets/images/LOGO PODA 1 PNG.png" alt="" width="30"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-hover" style="width: 100%;"
+          >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Departamento</th>
+              <th>Municipio</th>
+              <th>Área Agropecuaria</th>
+              <th>Área Enumerada</th>
+              <th>Código Cuest.</th>
+              <th>Tipo Cuest.</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of listaSearch">
+              <td>
+              </td>
+              <td>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ import { NotificacionesComponent } from './pages/notificaciones/notificaciones.c
 import { ValidarComponent } from './pages/validar/validar.component';
 import { AsignacionComponent } from './pages/asignacion/asignacion/asignacion.component';
 import { ReasignacionComponent } from './pages/asignacion/reasignacion/reasignacion.component';
+import { TraspasoComponent } from './pages/asignacion/traspaso/traspaso.component';
 
 /********* */
 
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'asignacion', component: AsignacionComponent},
       { path: 'reasignacion', component: ReasignacionComponent },
       { path: 'reasignacion', component: ReasignacionComponent },
+      { path: 'traspaso', component: TraspasoComponent },
       { path: 'home', component: HomeComponent },
     ]
   },
