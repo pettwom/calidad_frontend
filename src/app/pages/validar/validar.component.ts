@@ -29,16 +29,16 @@ export class ValidarComponent implements OnInit {
   preguntas: any;
   respuestas: any;
   // construnctor
-  constructor(private serviceService: ServicesService) { }
+  constructor(private serviceService: ServicesService) {}
   // funcion inicial
   ngOnInit(): void {
     this.dtOptions = {
       paging: true,
       processing: true,
       language: LanguageApp.spanish_datatables,
-      searching: true
+      searching: true,
     };
-    this.respuesta = []
+    this.respuesta = [];
     this.dtOptionsAlert = {
       paging: true,
       processing: true,
@@ -122,9 +122,7 @@ export class ValidarComponent implements OnInit {
   searchValidador() {
     this.listaSearch = [];
     this.serviceService
-      .get(
-        `/validar/getListadoCuest/`
-      )
+      .get(`/validar/getListadoCuest/`)
       .subscribe((res: any) => {
         this.listaSearch = res.data;
       });
@@ -143,17 +141,14 @@ export class ValidarComponent implements OnInit {
     this.serviceService
       .get(`/validar/getAlertas/${fila.rep_id}`)
       .subscribe((res: any) => {
-        if (res.data)
-          this.respuesta = res.data ? res.data : []
-        else
-          this.alertasModal = false;
-          Swal.fire({
-            title: res.title,
-            icon: res.icon,
-            text: res.text,
-            timer: 2500
-          })
-
+        if (res.data) this.respuesta = res.data ? res.data : [];
+        else this.alertasModal = false;
+        Swal.fire({
+          title: res.title,
+          icon: res.icon,
+          text: res.text,
+          timer: 2500,
+        });
       });
   }
 
@@ -169,48 +164,91 @@ export class ValidarComponent implements OnInit {
       });
   }
 
-  observarCuest(id) {
+  observarCuest(id, tipo) {
+    this.tipo_submit = tipo;
     this.visibleObservar = true;
     this.textObservar = '';
     this.rep_id = id;
-    //this.almacenarValidacion(id, 'observar')
-    // this.serviceService
-    //   .get(`/validar/getValidar/${id}`)
-    //   .subscribe((res: any) => {
-    //     this.textValidar = res.data[0].observacion;
-    //   });
+    if (tipo == 'observar') {
+      this.titulo = 'Observar Cuestionario';
+      this.tipo_submit= 4;
+      this.textArea =
+        'Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
+      this.subTextArea =
+        'Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
+      // this.almacenarValidacion(id, 'observar');
+      // this.serviceService
+      //   .get(`/validar/getValidar/${id}`)
+      //   .subscribe((res: any) => {
+      //     this.textValidar = res.data[0].observacion;
+      //   });
+    } else {
+      this.titulo = 'Enviar a Jefatura';
+      this.tipo_submit= 13;
+      this.textArea =
+        'Importante: El cuestionario sera enviado a la Jefatura de Temática, para su revisión';
+      this.subTextArea =
+        'Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
+      // this.serviceService.post('/validar/postSaveJefatura')
+    }
   }
+  // aprobarCuest(rep_id){
+  //   this.serviceService.post('/validar/aprobarCuest',{'rep_id':rep_id})
+  //   .subscribe(res => {
+  //     Swal.fire({
+  //       title: 'Éxito!',
+  //       text: 'El cuestionario ha sido aprobado.',
+  //       icon:'success',
+  //       timer: 2500,
+  //     });
+  //     this.searchValidador();
+  //   })
+  // }
 
   almacenarValidacion(ids: number, tipo) {
     // console.log(this.rep_id);
-    let texto
-    if (tipo == 'validar') {
-      this.visibleValidar = false;
-      texto = 'Desea validar este cuestionario ?';
-      this.rep_id = ids;
-    } else {
-      this.visibleObservar = false;
-      texto = 'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
+    this.rep_id = ids?ids:this.rep_id;
+    // this.tipo_submit = '';
+    this.visibleValidar = false;
+    this.visibleObservar = false;
+    this.alertasModal = false;
+    switch (this.tipo_submit) {
+      case 'validar'.trim():
+        this.visibleValidar = false;
+        this.texto = 'Desea validar este cuestionario ?';
+        this.tipo_submit = 7;
+        break;
+      case 4:
+        this.visibleObservar = false;
+        this.tipo_submit = 4;
+        this.texto =
+          'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
+        break;
+      case 13:
+        this.tipo_submit = 13;
+        break;
     }
+
 
     Swal.fire({
       title: '¿Está seguro?',
       icon: 'info',
-      text: `${texto}`,
+      text: `${this.texto}`,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, continuar'
+      confirmButtonText: 'Si, continuar',
     }).then((result) => {
       if (result.isConfirmed) {
         // console.log(this.rep_id);
         this.serviceService
           .post(`/validar/save-validar`, {
-            tipo: tipo,
+            tipo: this.tipo_submit,
             ids: this.rep_id,
-            dato: this.textObservar
+            dato: this.textObservar,
           })
           .subscribe((res: any) => {
+            this.searchValidador();
             Swal.fire({
               title: res.title,
               icon: res.icon,
@@ -219,12 +257,11 @@ export class ValidarComponent implements OnInit {
               showConfirmButton: false,
             });
           });
-        this.searchValidador();
       } else {
         if (tipo == 'validar') {
-          this.visibleValidar = false;
+          this.visibleValidar = true;
         } else {
-          this.visibleObservar = false;
+          this.visibleObservar = true;
         }
       }
     });
@@ -248,16 +285,24 @@ export class ValidarComponent implements OnInit {
 
   getRowClass(a: any) {
     switch (a.estado) {
-      case 'OBSERVADO': return 'fila-observado';
-      case 'PENDIENTE': return 'fila-pendiente';
-      case 'CORREGIDO-APK': return 'fila-pendiente';
-      case 'JUSTIFICADO-APK': return 'fila-pendiente';
-      case 'CORREGIDO-PODA': return 'fila-aprobado';
-      case 'JUSTIFICADO-PODA': return 'fila-aprobado';
-      case 'APROBADO': return 'fila-aprobado';
-      case 'TRANSFERIDO': return 'fila-transferido';
-      default: return ''; // Clase vacía si no hay coincidencia
+      case 'OBSERVADO':
+        return 'fila-observado';
+      // case 'PENDIENTE':
+      //   return 'fila-pendiente';
+      // case 'CORREGIDO-APK':
+      //   return 'fila-pendiente';
+      // case 'JUSTIFICADO-APK':
+      //   return 'fila-pendiente';
+      // case 'CORREGIDO-PODA':
+      //   return 'fila-aprobado';
+      // case 'JUSTIFICADO-PODA':
+      //   return 'fila-aprobado';
+      // case 'APROBADO':
+      //   return 'fila-aprobado';
+      // case 'TRANSFERIDO':
+      //   return 'fila-transferido';
+      default:
+        return ''; // Clase vacía si no hay coincidencia
     }
   }
-
 }

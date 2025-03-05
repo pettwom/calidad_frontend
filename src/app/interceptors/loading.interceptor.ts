@@ -15,7 +15,14 @@ export class LoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
      // Verificar si es una solicitud de WebSocket (por ejemplo, contiene "ws" o "socket")
-     const isWebSocketRequest = request.url.includes('notificacion') || request.url.startsWith('ws://') || request.url.startsWith('wss://');
+     console.log(request.url,'<=== include');
+     const isWebSocketRequest =
+     request.url.includes('notificacion') ||
+     request.url.includes('listarCuestionarios') ||
+     request.url.includes('asignarUsuario') ||
+     request.url.includes('traslado') ||
+     request.url.startsWith('ws://') ||
+     request.url.startsWith('wss://');
 
      if (isWebSocketRequest) {
       //  console.log('Solicitud WebSocket excluida del interceptor:', request.url);

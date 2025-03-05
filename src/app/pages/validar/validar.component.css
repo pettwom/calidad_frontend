@@ -258,11 +258,11 @@ content:"Cargando...";
 }
 
 .fila-observado {
-  background-color: #fac8c0 !important; /* rojo claro */
+  background-color: #fac0c0 !important; /* rojo claro */
 }
 
 .fila-pendiente {
-  background-color: #f8ce9e !important; /* naranja claro */
+  background-color: #fcdcfa !important; /* naranja claro */
 }
 
 .fila-aprobado {
@@ -295,4 +295,12 @@ tr {
 .contenedor-header img{
   width: 35px;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+}
+.badge-pendiente{
+  background-color: #fcdcfa !important;
+    color: #8b40bd !important;
+}
+.badge-transferido{
+  background-color: #dcf2ff !important;
+    color: #52baff !important;
 }

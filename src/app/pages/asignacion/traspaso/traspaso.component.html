@@ -19,30 +19,78 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" class="table table-hover" style="width: 100%;"
-          >
+        <table datatable [dtOptions]="dtOptions" class="table table-hover" style="width: 100%;">
           <thead>
             <tr>
               <th>#</th>
               <th>Departamento</th>
               <th>Municipio</th>
+              <th>Comunidad</th>
               <th>Área Agropecuaria</th>
               <th>Área Enumerada</th>
               <th>Código Cuest.</th>
               <th>Tipo Cuest.</th>
               <th>Estado</th>
-              <th>Opciones</th>
+              <th colspan="2" style="text-align: center;">Opciones</th>
+
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let a of listaSearch">
+            <tr *ngFor="let a of listaSearch" [ngClass]="rowColor(a.id_estado)">
+              <td>{{a.nro}}</td>
+              <td>{{a.depto}}
+              </td>
               <td>
+                {{a.mpio}}
+              </td>
+              <td>{{a.comunidad}}</td>
+              <td>{{a.ag_unico}}</td>
+              <td>{{a.ae_unico}}</td>
+              <td>{{a.cod_cuest}}</td>
+              <td>{{a.cue_titulo}}</td>
+              <td>
+                <div class="badge bg-label-danger" *ngIf="a.id_estado == 4"><i
+                    class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;{{a.estado}}</div>
+                <div class="badge bg-label-info" *ngIf="a.id_estado != 4">{{a.estado}}</div>
               </td>
               <td>
 
+                <div class="row">
+                  <div class="">
+                    <div pTooltip="Asignarme" tooltipPosition="top"
+                      class="form-check custom-option custom-option-label custom-option-basic checked" style="border: 2px solid #2ca1bb!important" (click)="asignarme(a.id)"
+                      *ngIf="disabledAsigname?'true':'null'">
+                      <label class="form-check-info custom-option-content" for="customCheckTemp5">
+                        <input class="form-check-input" type="checkbox"  value="" id="{{a.rep_id}}" >
+                        <span class="custom-option-header">
+                          <span class="h6 mb-0">
+                            <i class="fa-solid fa-person-walking-arrow-loop-left"></i>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- <button class="btn btn-primary" type="button"><i class="fa-solid fa-person-walking-arrow-loop-left"></i> &nbsp;&nbsp;Asignarme</button> -->
+              </td>
+              <td>
+                <div class="">
+                  <div class="form-floating form-floating-outline" *ngIf="rolesJefatura == 15">
+                    <select class="form-select" [(ngModel)]="selUsuario" id="floatingSelect" aria-label="Floating label select example">
+                      <option value="" disabled>== Seleccionar ==</option>
+
+                      <option *ngFor="let a of usuariosCalidad" value="{{a.id_usuario}}">{{a.nombres}}</option>
+                    </select>
+                    <label for="floatingSelect">Asignar</label>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
+          <tfoot *ngIf="listaSearch.length == 0">
+            <div>No hay Datos disponibles para mostrar</div>
+          </tfoot>
         </table>
       </div>
     </div>

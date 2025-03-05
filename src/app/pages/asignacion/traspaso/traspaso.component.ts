@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
 import { ServicesService } from 'src/app/Services/services.sevice';
+import { SocketService } from 'src/app/Services/socket.service';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-traspaso',
@@ -11,10 +13,21 @@ import Swal from 'sweetalert2';
 export class TraspasoComponent implements OnInit {
   listaSearch: any = [];
   dtOptions = {};
+  rolesJefatura: any;
+  disabledAsigname: any;
+  usuariosCalidad: any;
+  selUsuario: any;
+  notificationSub: Subscription;
+  notifications: any;
+
+  constructor(
+    private serviceService: ServicesService,
+    private socketService: SocketService
+  ) {}
   ngOnInit(): void {
     this.dtOptions = {
       paging: true,
-      processing: true,
+      processing: false,
       language: LanguageApp.spanish_datatables,
       searching: true,
       dom: 'Bfrtip', // Para incluir los botones
@@ -85,5 +98,90 @@ export class TraspasoComponent implements OnInit {
         },
       ],
     };
+    this.selUsuario = '';
+    this.listaCuestionarios();
+    this.listadoUsuario();
+    setInterval(() => {
+      if (localStorage.length != 0) {
+        // console.log(localStorage.length != 0);
+        this.listaCuestionarios();
+        this.listadoUsuario();
+        this.notificationSub = this.socketService
+          .onNotification()
+          .subscribe((notification) => {
+            // console.log('Notificación recibida:', notification);
+            this.notifications.push(notification);
+          });
+
+        // Cargar notificaciones iniciales desde REST
+
+        // this.serviceService.get(`/dashboard/notificacion`).subscribe((data) => {
+        //   // console.log(data, '<===data app.main.compopnents');
+        //   this.observaciones = this.notificaciones.concat(data);
+        // });
+      }
+    }, 1000);
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.notificationSub) {
+      this.notificationSub.unsubscribe();
+    }
+    this.socketService.disconnect();
+  }
+
+  rowColor(id_estado) {
+    switch (id_estado) {
+      case 4:
+        return 'row-danger';
+    }
+  }
+
+  listaCuestionarios() {
+    this.rolesJefatura = localStorage.getItem('id_rol');
+    this.serviceService
+      .get(`/transferencia/listarCuestionarios`)
+      .subscribe((res: any) => {
+        if (res.data.length > 0) {
+          this.listaSearch = res.data;
+        } else {
+          Swal.fire('No hay cuestionarios disponibles', '', 'info');
+        }
+      });
+  }
+
+  listadoUsuario(){
+    this.serviceService.get(`/transferencia/asignarUsuario`)
+    .subscribe((res: any) => {
+      this.usuariosCalidad = res.data;
+    })
+  }
+  asignarme(id) {
+    Swal.fire({
+      title: '¿Estás seguro de que deseas Asignarse este cuestionario?',
+      text: 'Una vez Asignado este cuestionario, nadie mas lo podra ver hasta que lo apruebe',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, asignar',
+      cancelButtonText: 'No, asignar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.serviceService
+          .post(`/transferencia/asigname`, { ids: id })
+          .subscribe((res: any) => {
+            this.disabledAsigname = '';
+            Swal.fire({
+              title: res.title,
+              text: res.text,
+              icon: res.icon,
+              showConfirmButton: false,
+              timer: 2500,
+            });
+          });
+      }
+    });
   }
 }

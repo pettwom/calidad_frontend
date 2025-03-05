@@ -14,3 +14,14 @@
   width: 35px;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
+.row-danger{
+  background-color: rgb(253, 182, 182,.1);
+}
+.custom-option.custom-option-label.checked{
+  background-color: rgb(165 217 253 / 12%);
+  color: #2ca1bb;
+}
+
+.custom-option.custom-option-label.checked .custom-option-header span, .custom-option.custom-option-label.checked .custom-option-title{
+  color: #2ca1bb;
+}
