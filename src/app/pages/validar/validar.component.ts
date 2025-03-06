@@ -124,6 +124,8 @@ export class ValidarComponent implements OnInit {
     this.serviceService
       .get(`/validar/getListadoCuest/`)
       .subscribe((res: any) => {
+        console.log(res.data,'<=== resdata');
+
         this.listaSearch = res.data;
       });
   }

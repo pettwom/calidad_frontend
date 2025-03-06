@@ -51,7 +51,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   textValidar: any;
   rep_id: any;
   textObservar: any;
-  listCuest: any = {};
+  listCuest: any = [''] ;
   // dtTrigger: any;
   btnDisabled: boolean = true;
   i: number;
@@ -60,6 +60,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   selectDisabled: boolean = true;
   formAsignar: any = {};
   mpio: any;
+
 
   constructor(
     private serviceService: ServicesService,
@@ -283,7 +284,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
             });
           });
         this.seleccionados = [];
-        this.searchValidador()
+        this.searchValidador(2)
       }
     });
   }
@@ -330,27 +331,29 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
         break;
     }
   }
-  searchValidador() {
+  searchValidador(accion) {
     this.deptoModel = this.deptoModel ? this.deptoModel : null;
     this.mpioModel = this.mpioModel ? this.mpioModel : null;
     this.comModel = this.comModel ? this.comModel : null;
     this.agModel = this.agModel ? this.agModel : null;
     this.aeModel = this.aeModel ? this.aeModel : null;
     this.empModel = this.empModel ? this.empModel : null;
-    this.listCuest = '';
+    this.listCuest = [''];
     this.serviceService
       .get(
-        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}/${this.aeModel}/${this.empModel}`
+        `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}/${this.aeModel}/${this.empModel}/${accion}`
       )
       .subscribe((res: any) => {
-        console.log('Tipo de respuesta:', typeof res.data, res.data);
+        // console.log('Tipo de respuesta:', typeof res.data, res.data);
         this.selectDisabled = false;
-        this.listCuest = res.data;
+
         setTimeout(() => {
           document.getElementById('resAsignacion')?.scrollIntoView({
             behavior: 'smooth'
           });
         }, 100);
+        this.listCuest = res.data;
+        console.log(this.listCuest, 'resdata');
       });
   }
 

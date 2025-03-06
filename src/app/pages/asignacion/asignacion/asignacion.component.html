@@ -132,7 +132,7 @@
             </div>
             <hr>
             <div class="col-sm-2">
-              <div class="btn btn-primary" (click)="searchValidador()">
+              <div class="btn btn-primary" (click)="searchValidador(1)">
                 <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCAR
               </div>
             </div>
@@ -191,7 +191,7 @@
       </div>
       <hr>
       <div class="table-responsive">
-        <table *ngIf="listCuest.length > 1" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+        <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
           class="table table-border table-striped" id="resAsignacion">
           <thead>
             <tr>
@@ -215,34 +215,36 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let a of listCuest">
+            <tr *ngFor="let b of listCuest">
               <td>
-                <div class="form-check mt-3" *ngIf="a.estado_id != 2 && a.estado_id !=3">
-                  <input type="checkbox" class="form-check-input" [(ngModel)]="a.selected"
-                    (change)="onSelectRow(a, i)" />
+                <div class="form-check mt-3" *ngIf="b.estado_id != 2 && b.estado_id !=3">
+                  <input type="checkbox" class="form-check-input" [(ngModel)]="b.selected"
+                    (change)="onSelectRow(b, i)" />
                   <label class="form-check-label" for="defaultCheck1"></label>
                 </div>
               </td>
               <!-- Checkbox por fila -->
-              <td>{{a.nro}}</td>
-              <td>{{a.depto}}</td>
-              <td>{{a.mpio}}</td>
-              <td>{{a.ag_unico}}</td>
-              <td>{{a.ae_unico}}</td>
-              <td>{{a.empadronador}}</td>
-              <td>{{a.cod_cuest}}</td>
+              <td>{{b.nro}}</td>
+              <td>{{b.depto}}</td>
+              <td>{{b.mpio}}</td>
+              <td>{{b.ag_unico}}</td>
+              <td>{{b.ae_unico}}</td>
+              <td>{{b.empadronador}}</td>
+              <td>{{b.cod_cuest}}</td>
               <td>
-                <span class="badge bg-info" *ngIf="a.nombre != '  '">
-                  {{a.nombre}}
+                <span class="badge bg-info" *ngIf="b.nombre != ''">
+                  {{b.nombre}}
                 </span>
               </td>
-              <td>{{a.fecha_asig}}</td>
+              <td></td>
+              <td>{{b.fecha_asig}}</td>
               <td>
-                <span *ngIf="a.estado_id == 2" class="badge bg-success">
-                  {{a.descripcion}}
+
+                <span *ngIf="b.estado_id == 2" class="badge bg-success">
+                  {{b.descripcion}}
                 </span>
-                <span *ngIf="a.estado_id == 3" class="badge bg-warning">
-                  {{a.descripcion}}
+                <span *ngIf="b.estado_id == 3" class="badge bg-warning">
+                  {{b.descripcion}}
                 </span>
               </td>
             </tr>
