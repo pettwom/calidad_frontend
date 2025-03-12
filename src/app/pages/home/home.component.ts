@@ -14,6 +14,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  datosEst: any;
+  obs: any;
+  aprob: any;
+  pend: any;
 
   constructor(
     private router: Router,
@@ -32,6 +36,23 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.serviceService.get(`/home/getEstadisticas`).subscribe((res:any)=>{
+      this.datosEst = res.text[0];
+      console.log(this.datosEst.observado ,'<==0 estado');
+
+      setInterval(() => {
+       this.obs = this.datosEst.observado
+      }, 10); // Cada 10ms
+      setInterval(() => {
+       this.aprob = this.datosEst.aprobado
+      }, 10); // Cada 10ms
+      setInterval(() => {
+       this.pend = this.datosEst.pendiente
+      }, 10); // Cada 10ms
+    })
+
+
+
 
   }
 

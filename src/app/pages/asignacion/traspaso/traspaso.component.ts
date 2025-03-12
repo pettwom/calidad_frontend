@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./traspaso.component.css'],
 })
 export class TraspasoComponent implements OnInit {
-  listaSearch: any = [];
+  listaSearchTrans: any = [];
   dtOptions = {};
   rolesJefatura: any;
   disabledAsigname: any;
@@ -27,9 +27,9 @@ export class TraspasoComponent implements OnInit {
   ngOnInit(): void {
     this.dtOptions = {
       paging: true,
-      processing: false,
-      language: LanguageApp.spanish_datatables,
       searching: true,
+      language: LanguageApp.spanish_datatables,
+      processing: false,
       dom: 'Bfrtip', // Para incluir los botones
       buttons: [
         {
@@ -45,7 +45,7 @@ export class TraspasoComponent implements OnInit {
           className: 'btn btn-info',
           exportOptions: {
             // Especificar las columnas que quieres exportar por índice
-            columns: [0, 1, 2, 3, 4, 5, 6, 7], // Solo exportar las columnas "Nombre" (índice 0) y "Edad" (índice 1)
+            columns: [0, 1, 2, 3, 4, 5, 6, 7,8,9], // Solo exportar las columnas "Nombre" (índice 0) y "Edad" (índice 1)
           },
           customize: function (xlsx) {
             let sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -84,7 +84,7 @@ export class TraspasoComponent implements OnInit {
             const autofilter = sheet.getElementsByTagName('autoFilter');
             if (autofilter.length === 0) {
               const autoFilter = document.createElement('autoFilter');
-              autoFilter.setAttribute('ref', 'A2:H2'); // Definir el rango de columnas para el filtro
+              autoFilter.setAttribute('ref', 'A2:J2'); // Definir el rango de columnas para el filtro
 
               // Asegúrate de insertarlo en la estructura correcta del XML (dentro de <worksheet>).
               let worksheetNode = sheet.getElementsByTagName('worksheet')[0];
@@ -98,29 +98,19 @@ export class TraspasoComponent implements OnInit {
         },
       ],
     };
+    this.listaSearchTrans = ['']
     this.selUsuario = '';
-    this.listaCuestionarios();
-    this.listadoUsuario();
     setInterval(() => {
       if (localStorage.length != 0) {
-        // console.log(localStorage.length != 0);
         this.listaCuestionarios();
         this.listadoUsuario();
         this.notificationSub = this.socketService
           .onNotification()
           .subscribe((notification) => {
-            // console.log('Notificación recibida:', notification);
             this.notifications.push(notification);
           });
-
-        // Cargar notificaciones iniciales desde REST
-
-        // this.serviceService.get(`/dashboard/notificacion`).subscribe((data) => {
-        //   // console.log(data, '<===data app.main.compopnents');
-        //   this.observaciones = this.notificaciones.concat(data);
-        // });
       }
-    }, 1000);
+    }, 5000);
   }
 
 
@@ -140,14 +130,18 @@ export class TraspasoComponent implements OnInit {
 
   listaCuestionarios() {
     this.rolesJefatura = localStorage.getItem('id_rol');
+    this.listaSearchTrans = ['']
     this.serviceService
       .get(`/transferencia/listarCuestionarios`)
       .subscribe((res: any) => {
-        if (res.data.length > 0) {
-          this.listaSearch = res.data;
-        } else {
-          Swal.fire('No hay cuestionarios disponibles', '', 'info');
-        }
+        this.listaSearchTrans = res.data;
+        // if (res.data.length > 0) {
+        //   this.listaSearch = res.data;
+        // } else {
+        //   Swal.fire('No hay cuestionarios disponibles', '', 'info');
+        // }
+        console.log(this.listaSearchTrans,'<==== pruebva');
+
       });
   }
 

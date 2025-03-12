@@ -106,11 +106,23 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.listCuest.forEach((item) => {
       item.selected = isChecked; // Marcar todas las filas según el estado del checkbox
       this.seleccionados.push(item.rep_id);
+      console.log(item.selected );
+
+      if(item.selected == true ){
+        this.selectDisabled = false;
+        // this.btnDisabled = false;
+      }else{
+        this.selectDisabled = true;
+        // this.btnDisabled = true;
+      }
     });
   }
   onSelectRow(row: any, index: number): void {
-    console.log(row);
-
+    if(row.selected == true) {
+      this.selectDisabled = false;
+    }else{
+      this.selectDisabled = true;
+    }
     this.seleccionados.push(row.rep_id);
   }
   getSelectedRows(): any[] {
@@ -125,9 +137,13 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       });
       $('#select2').on('change', (event: any) => {
         const selectedValue = $(event.target).val();
+        console.log(selectedValue.length,'<=== select');
+
         if (selectedValue.length > 0) {
+          this.selectDisabled = false;
           this.btnDisabled = false;
         } else {
+          this.selectDisabled = true;
           this.btnDisabled = true;
         }
         // Aquí puedes realizar otras acciones con el valor seleccionado
@@ -194,11 +210,12 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   getAe() {
     this.aeResult = [''];
     this.aeModel = '';
+
     this.serviceService
-      .get(
-        `/validar/getAe/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}`
-      )
-      .subscribe((res: any) => {
+    .get(
+      `/validar/getAe/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}`
+    )
+    .subscribe((res: any) => {
         this.aeResult = res.data;
         // this.ag = document.getElementById('agSel');
         // this.consulta(this.depto.value, this.mpios.value, this.ag.value);
@@ -275,6 +292,8 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
           .post(`/validar/saveAsignar`, this.formAsignar)
           .subscribe((res: any) => {
             // this.searchValidador()
+            this.searchValidador(2)
+            this.seleccionados = [''];
             Swal.fire({
               icon: res.icon,
               title: res.title,
@@ -283,8 +302,6 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
               timer: 2000,
             });
           });
-        this.seleccionados = [];
-        this.searchValidador(2)
       }
     });
   }
@@ -339,13 +356,15 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.aeModel = this.aeModel ? this.aeModel : null;
     this.empModel = this.empModel ? this.empModel : null;
     this.listCuest = [''];
+    console.log(`${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}/${this.aeModel}/${this.empModel}/${accion}`);
+
     this.serviceService
       .get(
         `/validar/getListado/${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}/${this.aeModel}/${this.empModel}/${accion}`
       )
       .subscribe((res: any) => {
         // console.log('Tipo de respuesta:', typeof res.data, res.data);
-        this.selectDisabled = false;
+        this.selectDisabled = true;
 
         setTimeout(() => {
           document.getElementById('resAsignacion')?.scrollIntoView({

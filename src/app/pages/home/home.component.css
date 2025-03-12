@@ -33,6 +33,7 @@
   background: linear-gradient(
     143deg,
     rgba(71, 100, 135, 1) 0%,
+
     rgba(71, 100, 135, 1) 35%,
     rgba(135, 71, 132, 1) 100%
   );
@@ -58,7 +59,7 @@
   font-size: 50px;
   display: inline;
   clear: both;
-  width: 40%;
+  width: 35%;
   transition: all 0.5s ease;
   text-shadow: 3px 7px 7px rgba(8, 8, 8, 0.8);
 }
@@ -68,14 +69,31 @@
   width: 100%;
 }
 .cantidad {
-  font-size: 25px;
-  width: 40%;
-  display: block;
-  align-content: end;
-  margin-bottom: 10px;
+
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+
+}
+.cant_total{
+
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+
+}
+.cajaTotales {
+  font-size: 20px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: 2;
+  justify-content: center;
+  align-items: center;
 }
 .grafico {
-  width: 20%;
+  width: 25%;
+  /* margin-left: 15px; */
 }
 
 .mdi::before,

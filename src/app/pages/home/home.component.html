@@ -3,5 +3,52 @@
 </h4>
 
 <div class="row">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="caja conContrato">
+        <div class="titulo">CUESTIONARIOS OBSERVADOS</div>
+        <div class="contenedor_datos">
+          <div class="porcentaje">{{obs.porcentaje}} %</div>
+          <div class="cajaTotales">
+            <div class="cantidad">{{obs.count}} <b>Cuestionarios</b></div>
+            <div class="cant_total">{{obs.total}} <b>Total</b></div>
+          </div>
+          <div class="avatar-initial bg-label-info rounded grafico">
+            <i class="mdi mdi-trending-up"></i>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="col-md-4">
+      <div class="caja sinContrato">
+        <div class="titulo">CUESTIONARIOS APROBADOS</div>
+        <div class="contenedor_datos">
+          <div class="porcentaje">{{aprob.porcentaje}} %</div>
+          <div class="cajaTotales">
+            <div class="cantidad">{{aprob.count}} <b>Cuestionarios</b></div>
+            <div class="cant_total">{{aprob.total}} <b>Total</b></div>
+          </div>
+          <div class="avatar-initial bg-label-warning rounded grafico">
+            <i class="mdi mdi-poll"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="caja total">
+        <div class="titulo">PENDIENTES</div>
+        <div class="contenedor_datos">
+          <div class="porcentaje">{{pend.porcentaje}} %</div>
+          <div class="cajaTotales">
+            <div class="cantidad">{{pend.count}} <b>Cuestionarios</b></div>
+            <div class="cant_total">{{pend.total}} <b>Total</b></div>
+          </div>
+          <div class="avatar-initial bg-label-danger rounded grafico">
+            <i class="mdi mdi-chart-bell-curve"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

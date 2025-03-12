@@ -59,19 +59,24 @@
                 <span class="badge bg-label-secondary" *ngIf="a.estado_id == null">SIN PROCESAR</span> -->
               </td>
               <td>
-                <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Ver Cuestionario"
+                <button class="btn btn-icon btn-label-warning" (click)="verCuest(a)" pTooltip="Ver Cuestionario" *ngIf="a.estado_id != 13"
                   tooltipPosition="top">
                   <i class="fa fa-eye"></i>
                 </button>
-                <button class="btn btn-icon btn-label-success" (click)="almacenarValidacion(a.rep_id, 'validar')"
+                <button class="btn btn-icon btn-label-success" (click)="modalCuest(a.rep_id, 'validar')" *ngIf="a.estado_id != 13"
                   pTooltip="Aprobar Cuestionario" tooltipPosition="top">
                   <i class="fa fa-check-square"></i>
                 </button>
-                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id,'observar')"
+                <button class="btn btn-icon btn-label-google-plus" (click)="modalCuest(a.rep_id,'observar')" *ngIf="a.estado_id != 13"
                   pTooltip="Observar Cuestionario" tooltipPosition="top">
                   <i class="fa fa-exclamation-triangle"></i>
                 </button>
-                <button class="btn btn-label-facebook" (click)="observarCuest(a.rep_id,'jefatura')"
+                <!-- <button class="btn btn-label-facebook" (click)="observarCuest(a.rep_id,'jefatura')"
+                  pTooltip="Enviar a jefatura para su revisión" tooltipPosition="top"
+                  style="font-size: xx-small; width: 85px; height: 35px;;">Enviar a jefatura
+                  <i class="fa fa-external-link" style="margin-left: 10px;"></i>
+                </button> -->
+                <button class="btn btn-label-facebook" (click)="modalCuest(a.rep_id,'jefatura')"
                   pTooltip="Enviar a jefatura para su revisión" tooltipPosition="top"
                   style="font-size: xx-small; width: 85px; height: 35px;;">Enviar a jefatura
                   <i class="fa fa-external-link" style="margin-left: 10px;"></i>
@@ -84,6 +89,8 @@
     </div>
   </div>
 </div>
+
+<!-- ***********************************************  MODAL PREGUNTAS ***********************************************  -->
 
 <p-dialog header="Alertas de cuestionario" [(visible)]="alertasModal" [modal]="true" [maximizable]="true"
   style="width: 800px; table-layout: fixed;">
@@ -107,7 +114,8 @@
               <th>NRO</th>
               <th>NRO PREGUNTA</th>
               <th>PREGUNTA</th>
-              <th>RESPUESTA</th>
+              <th>RESPUESTA VALIDACION</th>
+              <th>RESPUESTA COSECHA</th>
               <th>OBSERVACIONES</th>
               <th>JUSTIFICACION</th>
               <th>ESTADO</th>
@@ -121,12 +129,13 @@
               <td>
                 <div class="pregunta-texto">{{a.pre_pregunta}} </div>
               </td>
-              <td></td>
+              <td>{{a.res_validacion}}</td>
+              <td>{{a.res_respuesta}}</td>
               <td class="pregunta-texto">{{a.obs_observacion}}</td>
-              <td></td>
+              <td class="pregunta-texto">{{a.obs_justificacion}}</td>
               <td>
-                <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span>
-                <span class="badge bg-label-danger" *ngIf="a.estado_id == 5">
+                <!-- <span class="badge bg-label-success" *ngIf="a.estado_id != 4">{{a.descripcion}}</span> -->
+                <span class="badge bg-label-danger" *ngIf="a.estado_id == 5 || a.estado_id == 4">
                   <i class="fa fa-thin fa-triangle-exclamation"></i>
                   {{a.estado}}
                 </span>
@@ -136,14 +145,18 @@
                   tooltipPosition="top">
                   <i class="fa fa-check-square"></i>
                 </button> -->
-                <button class="btn btn-icon btn-label-success" (click)="almacenarValidacion(a.rep_id, 'validar')"
+
+                <!-- <button class="btn btn-icon btn-label-success" (click)="almacenarValidacion()" -->
+                <button class="btn btn-icon btn-label-success" (click)="modalCuest(a.rep_id,'validarPreg', a.pre_numero_pregunta)"
+
                   pTooltip="Justificar" tooltipPosition="top">
                   <i class="fa fa-thumb-tack"></i>
                 </button>
-                <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id,'1')" pTooltip="Observar"
+                <!-- <button class="btn btn-icon btn-label-google-plus" (click)="observarCuest(a.rep_id,'1')" pTooltip="Observar" -->
+                <!-- <button class="btn btn-icon btn-label-google-plus" (click)="modalCuest(a.rep_id,'observarPreg', a.pre_numero_pregunta)" pTooltip="Observar"
                   tooltipPosition="top">
                   <i class="fa fa-bug"></i>
-                </button>
+                </button> -->
               </td>
             </tr>
           </tbody>
@@ -153,26 +166,36 @@
   </div>
 
 </p-dialog>
+<!-- **********************************************  FIN MODAL PREGUNTAS ********************************************* -->
 
-
-<p-dialog header="Aprobar Cuestionario" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
+<p-dialog [header]="titulo" [(visible)]="visibleValidar" [modal]="true" [maximizable]="true"
   [style]="{'width': '700px'}">
   <hr>
-  <div class="form-floating form-floating-outline mb-4">
-    <textarea class="form-control h-px-100" name="textValidar" [(ngModel)]="textValidar" id="detalleVerificacion"
-      placeholder="Comentar Aqui..."></textarea>
-    <label for="detalleVerificacion">Detalle de Verificación</label>
+  <div class="card">
+    <div class="card-header  d-flex flex-wrap gap-3" style="background-color: #d7e4cc;">
+      <label> <span class="fw-bold">{{textArea}}</span></label>
+      <label> <span class="fw-regular">{{subTextArea}}</span></label>
+    </div>
+    <div class="card-body">
+      <div class="form-floating form-floating-outline mb-4">
+        <textarea class="form-control h-px-100" name="textValidar" [(ngModel)]="textValidar" id="detalleVerificacion"
+          placeholder="Comentar Aqui..."></textarea>
+        <label for="detalleVerificacion">Detalle de Verificación</label>
+      </div>
+
+      <button class="btn btn-success" (click)="almacenarValidacion()" [disabled]="!textValidar || textValidar.trim() === ''">
+        <i class="fa-regular fa-floppy-disk"></i>
+        &nbsp;&nbsp;
+        Validar
+      </button>
+    </div>
   </div>
-  <br>
-  <hr>
-  <br>
-  <button class="btn btn-success" (click)="almacenarValidacion(a.rep_id,'validar')"><i
-      class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;Validar</button>
 </p-dialog>
 
 
 <p-dialog [header]="titulo" [(visible)]="visibleObservar" [modal]="true" [maximizable]="true"
   [style]="{'width': '700px'}">
+  <hr>
   <div class="card">
     <div class="card-header d-flex flex-wrap gap-3" style="background-color: #d7e4cc;">
       <label> <span class="fw-bold">{{textArea}}</span></label>
@@ -185,9 +208,11 @@
         <label for="observacionCuest">Introduzca las observaciones para el cuestionario</label>
       </div>
       <hr>
-      <button class="btn btn-danger" [disabled]="!textObservar || textObservar.trim() === ''"
-        (click)="almacenarValidacion(id,tipo_submit)"><i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;
-        Observar</button>
+      <button [class]="clases" [disabled]="!textObservar || textObservar.trim() === ''"
+        (click)="almacenarValidacion()">
+        <i class="fa-regular fa-floppy-disk"></i>&nbsp;&nbsp;
+        {{tituloBoton}}
+      </button>
     </div>
   </div>
 </p-dialog>

@@ -19,42 +19,41 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" class="table table-hover" style="width: 100%;">
+        <table datatable [dtOptions]="dtOptions" *ngIf="listaSearchTrans.length > 0"  class="table table-hover" style="width: 100%;">
           <thead>
             <tr>
-              <th>#</th>
+              <th># NRO</th>
               <th>Departamento</th>
               <th>Municipio</th>
               <th>Comunidad</th>
               <th>Área Agropecuaria</th>
               <th>Área Enumerada</th>
+              <th>Empadronador</th>
               <th>Código Cuest.</th>
               <th>Tipo Cuest.</th>
               <th>Estado</th>
-              <th colspan="2" style="text-align: center;">Opciones</th>
+              <th  style="text-align: center;">Opciones</th>
+              <th  style="text-align: center;">Opciones</th>
 
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let a of listaSearch" [ngClass]="rowColor(a.id_estado)">
+            <tr *ngFor="let a of listaSearchTrans" [ngClass]="rowColor(a.id_estado)">
               <td>{{a.nro}}</td>
-              <td>{{a.depto}}
-              </td>
-              <td>
-                {{a.mpio}}
-              </td>
+              <td>{{a.depto}}</td>
+              <td>{{a.mpio}}</td>
               <td>{{a.comunidad}}</td>
               <td>{{a.ag_unico}}</td>
               <td>{{a.ae_unico}}</td>
+              <td>{{a.empadronador}}</td>
               <td>{{a.cod_cuest}}</td>
               <td>{{a.cue_titulo}}</td>
               <td>
                 <div class="badge bg-label-danger" *ngIf="a.id_estado == 4"><i
-                    class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;{{a.estado}}</div>
-                <div class="badge bg-label-info" *ngIf="a.id_estado != 4">{{a.estado}}</div>
+                    class="fa-solid fa-triangle-exclamation"></i>&nbsp;&nbsp;{{a.descripcion}}</div>
+                <div class="badge bg-label-info" *ngIf="a.id_estado != 4">{{a.descripcion}}</div>
               </td>
               <td>
-
                 <div class="row">
                   <div class="">
                     <div pTooltip="Asignarme" tooltipPosition="top"
@@ -88,9 +87,9 @@
               </td>
             </tr>
           </tbody>
-          <tfoot *ngIf="listaSearch.length == 0">
+          <!-- <tfoot *ngIf="listaSearch.length == 0">
             <div>No hay Datos disponibles para mostrar</div>
-          </tfoot>
+          </tfoot> -->
         </table>
       </div>
     </div>

@@ -176,7 +176,7 @@
         <span> <i class="fa-solid fa-magnifying-glass"></i> Usuarios a Asignar </span>
         <br>
         <div class="form-floating form-floating-outline">
-          <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled" id="select2"
+          <select [(ngModel)]="userId" class="select_user form-control" [disabled]="selectDisabled?true:false" id="select2"
             aria-label="Floating label select example" multiple="multiple">
             <option disabled>== Seleccionar Usuario ==</option>
             <option *ngFor="let a of listUser" value="{{a.id_usuario}}">{{a.nombres}} </option>
@@ -229,14 +229,13 @@
               <td>{{b.mpio}}</td>
               <td>{{b.ag_unico}}</td>
               <td>{{b.ae_unico}}</td>
-              <td>{{b.empadronador}}</td>
               <td>{{b.cod_cuest}}</td>
+              <td>{{b.empadronador}}</td>
               <td>
                 <span class="badge bg-info" *ngIf="b.nombre != ''">
                   {{b.nombre}}
                 </span>
               </td>
-              <td></td>
               <td>{{b.fecha_asig}}</td>
               <td>
 
