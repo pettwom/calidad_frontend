@@ -5,12 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration development ",
     "test": "ng test"
   },
   "private": true,
   "dependencies": {
     "@amcharts/amcharts3-angular": "^3.0.6",
+    "@amcharts/amcharts4": "^4.10.40",
     "@amcharts/amcharts5": "^5.10.8",
     "@angular/animations": "^16.2.0",
     "@angular/common": "^16.2.0",

@@ -28,6 +28,9 @@ export class ValidarComponent implements OnInit {
   alertasModal: boolean;
   preguntas: any;
   respuestas: any;
+  disabledActButton: boolean = true;
+  botonesDeshabilitados: { [key: number]: boolean } = {};
+  observacionBoolean: any;
   // construnctor
   constructor(private serviceService: ServicesService) {}
   // funcion inicial
@@ -112,6 +115,7 @@ export class ValidarComponent implements OnInit {
         },
       ],
     };
+
     this.depto = document.getElementById('deptoSel');
     this.listaSearch = [];
     this.searchValidador();
@@ -124,34 +128,37 @@ export class ValidarComponent implements OnInit {
     this.serviceService
       .get(`/validar/getListadoCuest/`)
       .subscribe((res: any) => {
-        this.listaSearch = res.data;
+        this.listaSearch = res.res;
+        //   // this.botonesDeshabilitados[a.rep_id] =
       });
   }
 
   verCuest(fila) {
+
     this.alertasModal = true;
     // console.log(fila.rep_id, '<=== rep_id');
+    this.disabledActButton = false;
     this.rep_id = fila.rep_id;
     this.departamento = fila.depto;
     this.municipio = fila.mpio;
     this.tipoCues = fila.cue_titulo;
     this.codCues = fila.cuestionario;
+    this.empadronador = fila.empadronador;
     this.textValidar = '';
-    // console.log('getAlertas');
+    this.respuesta = [];
     this.serviceService
       .get(`/validar/getAlertas/${fila.rep_id}`)
       .subscribe((res: any) => {
-        console.log(res.data,'getAlertas resData');
-
         if (res.data) this.respuesta = res.data ? res.data : [];
         else this.alertasModal = false;
-        if (!res.data){
+        this.searchValidador();
+        if (!res.data) {
           Swal.fire({
             title: res.title,
             icon: res.icon,
             text: res.text,
             timer: 2500,
-            showConfirmButton: false
+            showConfirmButton: false,
           });
         }
       });
@@ -176,7 +183,7 @@ export class ValidarComponent implements OnInit {
     this.rep_id = id;
     if (tipo == 'observar') {
       this.titulo = 'Observar Cuestionario';
-      this.tipo_submit= 4;
+      this.tipo_submit = 4;
       this.textArea =
         'Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
       this.subTextArea =
@@ -189,7 +196,7 @@ export class ValidarComponent implements OnInit {
       //   });
     } else {
       this.titulo = 'Enviar a Jefatura';
-      this.tipo_submit= 13;
+      this.tipo_submit = 13;
       this.textArea =
         'Importante: El cuestionario sera enviado a la Jefatura de Temática, para su revisión';
       this.subTextArea =
@@ -210,85 +217,113 @@ export class ValidarComponent implements OnInit {
   //   })
   // }
 
-  modalCuest(ids:number, tipo, num_preg = null){
-    this.rep_id = ids?ids:this.rep_id;
+  modalCuest(ids: number, tipo, num_preg = null, obs = null, pre_id = null) {
+    this.rep_id = ids ? ids : this.rep_id;
+
+    this.obs = obs;
     this.visibleValidar = false;
     this.visibleObservar = false;
-    this.alertasModal = false;
+    this.pre_id= pre_id;
+
     switch (tipo) {
       case 'validar':
         this.textValidar = '';
         this.visibleObservar = false;
         this.visibleValidar = true;
-        this.alertModal = false;
+        // this.alertModal = false;
         this.titulo = 'Validar Cuestionario';
-        this.textArea = 'Importante: Al validar el cuestionario, este ya no podra verse en su bandeja de entrada.';
-        this.subTextArea ='Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
-        this.texto = 'Esta Seguro de Validar este cuestionario, ya que tiene observaciones en las preguntas ?';
-        this.tipoRep = '1' // 1 = cuestionario, 2=pregunta
+        this.textArea =
+          'Importante: Al validar el cuestionario, este ya no podra verse en su bandeja de entrada.';
+        this.subTextArea =
+          'Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
+        this.texto =
+          'Esta Seguro de Validar este cuestionario, ya que tiene observaciones en las preguntas ?';
+        this.tipoRep = '1'; // 1 = cuestionario, 2=pregunta
         this.tipo_submit = 7;
         break;
       case 'observar':
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
-        this.alertModal = false;
+        // this.alertModal = false;
         this.titulo = 'Observar Cuestionario';
-        this.textArea ='Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
-        this.subTextArea ='Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
-        this.texto ='Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
-        this.tipoRep = '1' // 1 = cuestionario, 2=pregunta
+        this.textArea =
+          'Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
+        this.subTextArea =
+          'Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
+        this.texto =
+          'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
+        this.tipoRep = '1'; // 1 = cuestionario, 2=pregunta
         this.tipo_submit = 4;
         this.tituloBoton = 'Observar';
         this.clases = 'btn btn-danger';
         break;
       case 'jefatura':
-          this.textObservar = '';
-          this.visibleObservar = true;
-          this.visibleValidar = false;
-          this.titulo = 'Transferencia a Jefatura de Temática';
-          this.textArea ='Importante: El cuestionario sera enviado a la Jefatura de Temática, para su revisión';
-          this.subTextArea ='Detalle claramente las observaciones de manera que el personal de temática entienda las acciones que debe revisar.';
-          this.texto ='Detalle claramente las observaciones de manera que el personal de temática entienda las acciones que debe revisar.';
-          this.tituloBoton = 'Transferir';
-          this.tipoRep = '1' // 1 = cuestionario, 2=pregunta
-          this.clases = 'btn btn-info';
-          this.tipo_submit = 13;
+        this.textObservar = '';
+        this.visibleObservar = true;
+        this.visibleValidar = false;
+        this.titulo = 'Transferencia a Jefatura de Temática';
+        this.textArea =
+          'Importante: El cuestionario sera enviado a la Jefatura de Temática, para su revisión';
+        this.subTextArea =
+          'Detalle claramente las observaciones de manera que el personal de temática entienda las acciones que debe revisar.';
+        this.texto =
+          'Detalle claramente las observaciones de manera que el personal de temática entienda las acciones que debe revisar.';
+        this.tituloBoton = 'Transferir';
+        this.tipoRep = '1'; // 1 = cuestionario, 2=pregunta
+        this.clases = 'btn btn-info';
+        this.tipo_submit = 13;
         break;
       case 'validarPreg':
-          this.textObservar = '';
-          this.visibleObservar = true;
-          this.visibleValidar = false;
-          this.titulo = 'Validar Pregunta';
-          this.textArea ='Importante: La pregunta sera validada y desaparecera de su bandeja';
-          this.subTextArea ='Detalle claramente la justificación, de manera que el personal de temática entienda la razon de la aprobación.';
-          this.texto ='Detalle claramente la justificación de manera que el personal de temática entienda la razón de la aprobación.';
-          this.tituloBoton = 'Transferir';
-          this.tipoRep = '2' // 1 = cuestionario, 2=pregunta
-          this.clases = 'btn btn-success';
-          this.tipo_submit = 7;
-          this.preg = num_preg;
+        this.obs_id = obs ? obs : this.obs_id;
+        this.textObservar = '';
+        this.visibleObservar = true;
+        this.visibleValidar = false;
+        this.titulo = 'Validar Pregunta';
+        this.textArea =
+          'Importante: La pregunta sera validada y desaparecera de su bandeja';
+        this.subTextArea =
+          'Detalle claramente la justificación, de manera que el personal de temática entienda la razon de la aprobación.';
+        this.texto =
+          'Detalle claramente la justificación de manera que el personal de temática entienda la razón de la aprobación.';
+        this.tituloBoton = 'Validar';
+        this.tipoRep = '2'; // 1 = cuestionario, 2=pregunta
+        this.clases = 'btn btn-success';
+        this.tipo_submit = 7;
+        this.preg = num_preg;
         break;
       case 'observarPreg':
-          this.textObservar = '';
-          this.visibleObservar = true;
-          this.visibleValidar = false;
-          this.titulo = 'Observación de la pregunta';
-          this.textArea ='Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
-          this.subTextArea ='Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
-          this.texto ='Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
-          this.tituloBoton = 'Transferir';
-          this.tipoRep = '2' // 1 = cuestionario, 2=pregunta
-          this.clases = 'btn btn-danger';
-          this.tipo_submit = 4;
-          this.preg = num_preg;
+        this.obs_id = obs ? obs : this.obs_id;
+        this.textObservar = '';
+        this.visibleObservar = true;
+        this.visibleValidar = false;
+        this.titulo = 'Observación de la pregunta';
+        this.textArea =
+          'Importante: Al observar el cuestionario, este quedará habilitado para la revisión del empadronador.';
+        this.subTextArea =
+          'Detalle claramente las observaciones de manera que el empadronador entienda las acciones que debe realizar.';
+        this.texto =
+          'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
+        this.tituloBoton = 'observar';
+        this.tipoRep = '2'; // 1 = cuestionario, 2=pregunta
+        this.clases = 'btn btn-danger';
+        this.serviceService
+          .get(`/validar/getObservacion/${this.obs_id}`)
+          .subscribe((res: any) => {
+            this.textObservar = res.data[0].obs_observacion;
+          });
+        this.accion = 'edit';
+        this.tipo_submit = 4;
+        this.preg = num_preg;
         break;
     }
   }
   almacenarValidacion() {
-    this.visibleValidar = false;
-    this.visibleObservar = false;
-    this.alertasModal = false;
+    // this.visibleValidar = false;
+    // this.visibleObservar = false;
+    // this.alertasModal = false;
+console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.tipo_submit, this.tipoRep, this.obs);
+
 
     Swal.fire({
       title: '¿Está seguro?',
@@ -300,19 +335,37 @@ export class ValidarComponent implements OnInit {
       confirmButtonText: 'Si, continuar',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log({tipo: this.tipo_submit,
-          ids: this.rep_id,
-          dato: this.textObservar?this.textObservar:this.textValidar});
+        this.respuesta =[];
         this.serviceService
           .post(`/validar/save-validar`, {
             tipo: this.tipo_submit,
             ids: this.rep_id,
-            dato: this.textObservar?this.textObservar:this.textValidar,
+            dato: this.textObservar ? this.textObservar : this.textValidar,
             tipoRep: this.tipoRep,
-            preg: this.preg?this.preg:''
+            preg: this.preg ? this.preg : '',
+            accion: this.accion ? this.accion : '',
+            obs: this.obs_id ? this.obs_id : '',
+            pre_id: this.pre_id?this.pre_id:''
           })
           .subscribe((res: any) => {
             this.searchValidador();
+            this.serviceService
+              .get(`/validar/getAlertas/${this.rep_id}`)
+              .subscribe((res: any) => {
+
+                if (res.data) this.respuesta = res.data ? res.data : [];
+                else this.alertasModal = false;
+                this.botonesDeshabilitados[this.respuesta[0].rep_id] = false;
+                if (!res.data) {
+                  Swal.fire({
+                    title: res.title,
+                    icon: res.icon,
+                    text: res.text,
+                    timer: 3500,
+                    showConfirmButton: false,
+                  });
+                }
+              });
             Swal.fire({
               title: res.title,
               icon: res.icon,
@@ -320,13 +373,9 @@ export class ValidarComponent implements OnInit {
               timer: 2500,
               showConfirmButton: false,
             });
+            this.visibleObservar = false;
+            this.visibleValidar = false;
           });
-      } else {
-        // if (tipo == 'validar') {
-        //   this.visibleValidar = true;
-        // } else {
-        //   this.visibleObservar = true;
-        // }
       }
     });
   }

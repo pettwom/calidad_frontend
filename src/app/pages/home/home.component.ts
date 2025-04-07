@@ -8,6 +8,7 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
 import { ServicesService } from 'src/app/Services/services.sevice';
 import { Subscription } from 'rxjs';
+import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
 
 @Component({
   templateUrl: './home.component.html',
@@ -18,7 +19,13 @@ export class HomeComponent implements OnInit {
   obs: any;
   aprob: any;
   pend: any;
-
+  dtOptions = {};
+  aprobadosList: any;
+  observadosList: any;
+  transferidosList: any;
+  alertasAprobdos: any;
+  alertasObservado: any;
+  alertasTransferido: any;
   constructor(
     private router: Router,
     private serviceService: ServicesService,
@@ -36,26 +43,69 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.serviceService.get(`/home/getEstadisticas`).subscribe((res:any)=>{
+    this.dtOptions = {
+      paging: true,
+      processing: true,
+      language: LanguageApp.spanish_datatables,
+      searching: true,
+    };
+    this.serviceService.get(`/home/getEstadisticas`).subscribe((res: any) => {
       this.datosEst = res.text[0];
-      console.log(this.datosEst.observado ,'<==0 estado');
+      console.log(this.datosEst.observado, '<==0 estado');
 
       setInterval(() => {
-       this.obs = this.datosEst.observado
+        this.obs = this.datosEst.observado;
       }, 10); // Cada 10ms
       setInterval(() => {
-       this.aprob = this.datosEst.aprobado
+        this.aprob = this.datosEst.aprobado;
       }, 10); // Cada 10ms
       setInterval(() => {
-       this.pend = this.datosEst.pendiente
+        this.pend = this.datosEst.pendiente;
       }, 10); // Cada 10ms
-    })
-
-
-
-
+    });
+    this.alertasAprobdos = false;
+    this.alertasObservado = false;
+    this.alertasTransferido = false;
+this.aprobadosList = '';
+this.observadosList = '';
+this.transferidosList = '';
+this.getAprobados();
+this.getObservados();
+this.getTransferidos();
   }
 
-  ngAfterViewInit() {
+  getAprobados() {
+    this.serviceService.get(`/home/getAprobados`).subscribe((res: any) => {
+      this.aprobadosList = res.data;
+      console.log(this.aprobadosList);
+      
+    });
   }
+  getObservados() {
+    this.serviceService.get(`/home/getObservados`).subscribe((res: any) => {
+      this.observadosList = res.data;
+    });
+  }
+  getTransferidos() {
+    this.serviceService.get(`/home/getTransferidos`).subscribe((res: any) => {
+      this.transferidosList = res.data;
+    });
+  }
+  divModal(tipo) {
+    console.log(tipo);
+    
+    switch (tipo) {
+      case 'aprobado':
+        this.alertasAprobdos = true;
+        break;
+      case 'observado':
+        this.alertasObservado = true;
+        break;
+      case 'transferido':
+        this.alertasTransferido = true;
+        break;
+    }
+  }
+
+  ngAfterViewInit() {}
 }

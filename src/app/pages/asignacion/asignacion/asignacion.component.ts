@@ -60,7 +60,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   selectDisabled: boolean = true;
   formAsignar: any = {};
   mpio: any;
-
+  disabled_btnBuscar: boolean = true;
 
   constructor(
     private serviceService: ServicesService,
@@ -157,7 +157,6 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.serviceService.get(`/validar/getDeptos`).subscribe((res: any) => {
       // console.log(res.data);
       this.deptoOption = res.data;
-
     });
   }
   getMpio() {
@@ -225,6 +224,9 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
   }
   getEmp() {
     this.empModel= '';
+
+    console.log(this.disabled_btnBuscar );
+
     this.ae = document.getElementById('aeSel');
     this.consulta();
   }
@@ -242,7 +244,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       .get(`/validar/getEmp/${this.depto}/${this.mpio}/${this.com}/${this.ag}/${this.ae}`)
       .subscribe((res: any) => {
         console.log(res.data,'<=== data');
-
+        this.disabled_btnBuscar = false;
         if (res.data.length == 0) {
           Swal.fire({
             icon: 'info',
@@ -278,11 +280,17 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       confirmButtonColor: '#3085d6',
     }).then((resultado) => {
       if (resultado.isConfirmed) {
+        console.log(this.deptoModel, this.mpioModel, this.comModel, this.agModel, this.aeModel, this.empModel, '<== datos');
+
         this.formAsignar = {
           rep_id: this.seleccionados,
           user_id: variable,
           depto_id: this.deptoModel,
           mpio_id: this.mpioModel,
+          com_id: this.comModel,
+          ag_id: this.agModel,
+          ae_id: this.aeModel,
+          emp_id: this.empModel,
           fecha_asignacion: new Date(),
         };
 

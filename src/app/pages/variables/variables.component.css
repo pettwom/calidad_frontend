@@ -1,0 +1,6 @@
+.swal2-container {
+  z-index: 99999999999 !important; /* Asegúrate de que sea mayor que el de p-dialog */
+}
+div:where(.swal2-container) {
+  z-index: 99999999999 !important; /* Asegúrate de que sea mayor que el de p-dialog */
+}

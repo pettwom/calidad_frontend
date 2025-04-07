@@ -35,6 +35,7 @@ import { ValidarComponent } from './pages/validar/validar.component';
 import { AsignacionComponent } from './pages/asignacion/asignacion/asignacion.component';
 import { ReasignacionComponent } from './pages/asignacion/reasignacion/reasignacion.component';
 import { TraspasoComponent } from './pages/asignacion/traspaso/traspaso.component';
+import { VariablesComponent } from './pages/variables/variables.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { TraspasoComponent } from './pages/asignacion/traspaso/traspaso.componen
     AsignacionComponent,
     ReasignacionComponent,
     TraspasoComponent,
+    VariablesComponent,
   ],
   imports: [
     BrowserModule,

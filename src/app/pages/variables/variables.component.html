@@ -1,0 +1,178 @@
+<h4 class="fw-bold py-3 mb-4">
+  <span class="text-muted fw-light">Inicio / </span> Verificar Variables
+</h4>
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h4>
+        <i class="fa-solid fa-spell-check"></i>&nbsp;
+        Verificar Variables
+      </h4>
+    </div>
+    <div class="card-body">
+      <div class="cont-add">
+        <div class="col-4">
+          <button class="btn btn-dark" pTooltip="Añadir Validación" tooltipPosition="top" (click)="modalVal('add')">
+            <i class="fa fa-plus-circle"></i>&nbsp;
+            Añadir
+          </button>
+        </div>
+      </div>
+      <hr>
+      <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" class="table table-hover table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Num. Preg</th>
+              <th>Departamento</th>
+              <th>Municipio</th>
+              <th>Rubro</th>
+              <th>Actividad</th>
+              <th>Num. Cabezas</th>
+              <th>Prod. Max.</th>
+              <th>Sup. Max.</th>
+              <th>Rend. Max.</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let a of getList">
+              <td>{{a.nro}}</td>
+              <td>{{a.pre_numero_pregunta}}</td>
+              <td>{{a.depto}}</td>
+              <td>{{a.mpio}}</td>
+              <td>{{a.rubro}}</td>
+              <td>{{a.actividad}}</td>
+              <td>{{a.num_cabezas}}</td>
+              <td>{{a.sup_max}}</td>
+              <td>{{a.prod_max}}</td>
+              <td>{{a.rend_max}}</td>
+              <td>
+                <span *ngIf="a.estado == 1" class="badge bg-label-success">Activo</span>
+                <span *ngIf="a.estado == 2" class="badge bg-label-danger">Inactivo</span>
+              </td>
+              <td>
+                <button class="btn btn-info" pTooltip="Editar" tooltipPosition="top"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button class="btn btn-danger" pTooltip="Eliminar" tooltipPosition="top"><i class="fa-solid fa-trash-arrow-up"></i></button>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog [header]="titulo" [(visible)]="visibleModal" [modal]="true" [maximizable]="true" style="width: 800px;">
+  <div class="card-body">
+    <hr>
+    <div class="row">
+      <div class="col-3">
+        <div class="form-floating form-floating-outline">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+            [(ngModel)]="numPregModel">
+            <option disabled value="">== Seleccionar ==</option>
+            <option *ngFor="let a of num_preg_dato" value="{{a.pre_numero_pregunta}}">{{a.pre_numero_pregunta}}</option>
+          </select>
+          <label for="floatingSelect">Num. Preg</label>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-floating form-floating-outline">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+            [(ngModel)]="deptoModel" (change)="mpio_function()">
+            <option disabled value="">== Seleccionar ==</option>
+            <option *ngFor="let a of depto_dato" value="{{a.depto}}">{{a.depto}}</option>
+          </select>
+          <label for="floatingSelect">Departamento</label>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-floating form-floating-outline">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+            [(ngModel)]="mpioModel">
+            <option disabled value="">== Seleccionar ==</option>
+            <option *ngFor="let a of mpio_dato" value="{{a.municipio}}">{{a.municipio}}</option>
+          </select>
+          <label for="floatingSelect">Municipio</label>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-floating form-floating-outline">
+          <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+            [(ngModel)]="rubroModel">
+            <option disabled value="">== Seleccionar ==</option>
+            <option *ngFor="let a of rubro_dato" value="{{a.rubro}}">{{a.rubro}}</option>
+          </select>
+          <label for="floatingSelect">Rubro</label>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-8">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="fa-solid fa-person-digging"></i></span>
+          <div class="form-floating form-floating-outline">
+            <input type="text" [(ngModel)]="act_model" class="form-control" id="basic-addon11" placeholder="Coloque aqui la actividad ..."
+              aria-label="Username" aria-describedby="basic-addon11">
+            <label for="basic-addon11">Actividad</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider">
+      <div class="divider-text">Datos</div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+          <div class="form-floating form-floating-outline">
+            <input type="number" [(ngModel)]="num_cabeza_model" class="form-control" id="basic-addon11" placeholder="Escriba aqui ..."
+              aria-label="Username" aria-describedby="basic-addon11">
+            <label for="basic-addon11">Num Cabezas</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+          <div class="form-floating form-floating-outline">
+            <input type="number" [(ngModel)]="prod_model" class="form-control" id="basic-addon11" placeholder="Escriba aqui ..."
+              aria-label="Username" aria-describedby="basic-addon11">
+            <label for="basic-addon11">Producción</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+          <div class="form-floating form-floating-outline">
+            <input type="number"  [(ngModel)]="sup_model"  class="form-control" id="basic-addon11" placeholder="Escriba aqui ..."
+              aria-label="Username" aria-describedby="basic-addon11">
+            <label for="basic-addon11">Superficie</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group input-group-merge">
+          <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
+          <div class="form-floating form-floating-outline">
+            <input type="number" [(ngModel)]="rend_model"  class="form-control" id="basic-addon11" placeholder="Escriba aqui ..."
+              aria-label="Username" aria-describedby="basic-addon11">
+            <label for="basic-addon11">Rendimiento</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-5 col-offset-3">
+        <button class="btn btn-info" pTooltip="Almacenar" tooltipPosition="top" (click)="almacenar()"><i class="fa fa-save"></i>&nbsp;Almacenar</button>
+      </div>
+    </div>
+  </div>
+</p-dialog>

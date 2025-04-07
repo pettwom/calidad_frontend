@@ -132,15 +132,13 @@
             </div>
             <hr>
             <div class="col-sm-2">
-              <div class="btn btn-primary" (click)="searchValidador(1)">
-                <i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCAR
-              </div>
+              <button class="btn btn-primary" (click)="searchValidador(1)" [disabled]="disabled_btnBuscar?true:false"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;&nbsp; BUSCAR</button>
             </div>
-            <div class="col-sm-2">
+            <!-- <div class="col-sm-2">
               <div class="btn btn-info" (click)="limiarDatos()">
                 <i class="fa fa-solid fa-broom"></i>&nbsp;&nbsp; LIMPIAR
               </div>
-            </div>
+            </div> -->
           </div>
         </details>
 

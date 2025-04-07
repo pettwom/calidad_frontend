@@ -4,24 +4,10 @@
 
 <div class="row">
   <div class="row">
-    <div class="col-md-4">
-      <div class="caja conContrato">
-        <div class="titulo">CUESTIONARIOS OBSERVADOS</div>
-        <div class="contenedor_datos">
-          <div class="porcentaje">{{obs.porcentaje}} %</div>
-          <div class="cajaTotales">
-            <div class="cantidad">{{obs.count}} <b>Cuestionarios</b></div>
-            <div class="cant_total">{{obs.total}} <b>Total</b></div>
-          </div>
-          <div class="avatar-initial bg-label-info rounded grafico">
-            <i class="mdi mdi-trending-up"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <div class="col-md-4">
-      <div class="caja sinContrato">
+      <div class="caja conContrato" (click)="divModal('aprobado')">
         <div class="titulo">CUESTIONARIOS APROBADOS</div>
         <div class="contenedor_datos">
           <div class="porcentaje">{{aprob.porcentaje}} %</div>
@@ -35,8 +21,9 @@
         </div>
       </div>
     </div>
+
     <div class="col-md-4">
-      <div class="caja total">
+      <div class="caja sinContrato"  (click)="divModal('transferido')">
         <div class="titulo">PENDIENTES</div>
         <div class="contenedor_datos">
           <div class="porcentaje">{{pend.porcentaje}} %</div>
@@ -50,5 +37,153 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="caja total" (click)="divModal('observado')">
+        <div class="titulo">CUESTIONARIOS OBSERVADOS</div>
+        <div class="contenedor_datos">
+          <div class="porcentaje">{{obs.porcentaje}} %</div>
+          <div class="cajaTotales">
+            <div class="cantidad">{{obs.count}} <b>Cuestionarios</b></div>
+            <div class="cant_total">{{obs.total}} <b>Total</b></div>
+          </div>
+          <div class="avatar-initial bg-label-info rounded grafico">
+            <i class="mdi mdi-trending-up"></i>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+<p-dialog header="Cuestionarios Aprobados" [(visible)]="alertasAprobdos" [modal]="true" [maximizable]="true"
+  style="width: 800px; table-layout: fixed;">
+  <div class="row">
+    <div class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table [dtOptions]='dtOptions' *ngIf="aprobadosList.length >0" datatable class="table table-hover table-striped table-border table-success">
+            <thead>
+              <tr>
+                <th>DEPARTAMENTO</th>
+                <th>MUNICIPIO</th>
+                <th>AREA AGROPECUARIA</th>
+                <th>AREA ENUMERADA</th>
+                <th>EMPADRONADOR</th>
+                <th>CUESTIONARIO</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of aprobadosList ">
+                <td>{{a.depto}}</td>
+                <td>{{a.mpio}}</td>
+                <td>{{a.ag_unico}}</td>
+                <td>{{a.ae_unico}}</td>
+                <td>{{a.empadronador}}</td>
+                <td>{{a.cod_cuest}}</td>
+                <td>
+                  <div class="badge bg-label-danger" *ngIf="a.descripcion == 'OBSERVADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-info" *ngIf="a.descripcion == 'REVISION CALIDAD'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-dark" *ngIf="a.descripcion == 'FINALIZADO'">{{a.descripcion}}</div>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Cuestionarios Observados" [(visible)]="alertasObservado" [modal]="true" [maximizable]="true"
+  style="width: 800px; table-layout: fixed;">
+  <div class="row">
+    <div class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table [dtOptions]='dtOptions' *ngIf="observadosList.length >0" datatable class="table table-hover table-striped table-border table-danger">
+            <thead>
+              <tr>
+                <th>DEPARTAMENTO</th>
+                <th>MUNICIPIO</th>
+                <th>AREA AGROPECUARIA</th>
+                <th>AREA ENUMERADA</th>
+                <th>EMPADRONADOR</th>
+                <th>CUESTIONARIO</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of observadosList ">
+                <td>{{a.depto}}</td>
+                <td>{{a.mpio}}</td>
+                <td>{{a.ag_unico}}</td>
+                <td>{{a.ae_unico}}</td>
+                <td>{{a.empadronador}}</td>
+                <td>{{a.cod_cuest}}</td>
+                <td>
+                  <div class="badge bg-label-danger" *ngIf="a.descripcion == 'OBSERVADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-info" *ngIf="a.descripcion == 'REVISION CALIDAD'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-dark" *ngIf="a.descripcion == 'FINALIZADO'">{{a.descripcion}}</div>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+</p-dialog>
+<p-dialog header="Cuestionarios Transferidos" [(visible)]="alertasTransferido" [modal]="true" [maximizable]="true"
+  style="width: 800px; table-layout: fixed;">
+  <div class="row">
+    <div class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table [dtOptions]='dtOptions' *ngIf="transferidosList.length >0" datatable class="table table-hover table-striped table-border table-info">
+            <thead>
+              <tr>
+                <th>DEPARTAMENTO</th>
+                <th>MUNICIPIO</th>
+                <th>AREA AGROPECUARIA</th>
+                <th>AREA ENUMERADA</th>
+                <th>EMPADRONADOR</th>
+                <th>CUESTIONARIO</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of transferidosList ">
+                <td>{{a.depto}}</td>
+                <td>{{a.mpio}}</td>
+                <td>{{a.ag_unico}}</td>
+                <td>{{a.ae_unico}}</td>
+                <td>{{a.empadronador}}</td>
+                <td>{{a.cod_cuest}}</td>
+                <td>
+                  <div class="badge bg-label-danger" *ngIf="a.descripcion == 'OBSERVADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-info" *ngIf="a.descripcion == 'REVISION CALIDAD'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-dark" *ngIf="a.descripcion == 'FINALIZADO'">{{a.descripcion}}</div>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </div>
+</p-dialog>
+
+
+
+

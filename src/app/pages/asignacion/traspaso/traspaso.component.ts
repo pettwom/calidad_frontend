@@ -110,7 +110,7 @@ export class TraspasoComponent implements OnInit {
             this.notifications.push(notification);
           });
       }
-    }, 5000);
+    }, 3000);
   }
 
 
