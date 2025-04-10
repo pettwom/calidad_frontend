@@ -8,6 +8,10 @@ body > .swal2-container {
 
 .swal2-container.swal2-shown {
    z-index: 999999 !important;
+  }
+div:where(.swal2-container){
+  z-index: 999999 !important;
+
 }
 .contenedor{
   border-left: 3px solid rgb(94, 157, 69);

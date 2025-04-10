@@ -133,7 +133,7 @@
 
       </div> -->
       <div class="table-responsive" >
-      <table datatable [dtOptions]="dtOptionsAlert" *ngIf="respuesta.length > 0"
+      <table datatable [dtOptions]="dtOptionsAlert" [dtTrigger]="dtTrigger" *ngIf="respuesta.length > 0"
           class="table table-striped table-border border-hover tabla-alertas" style="table-layout: auto; ">
           <thead>
             <tr>
@@ -144,8 +144,8 @@
               <th>CULTIVO</th>
               <th>OBSERVACIONES</th>
               <th>JUSTIFICACION</th>
-              <th>RESPUESTA COSECHA</th>
               <th>RESPUESTA VALIDACION</th>
+              <th>RESPUESTA COSECHA</th>
               <th>ESTADO</th>
               <th>OPCIONES</th>
             </tr>

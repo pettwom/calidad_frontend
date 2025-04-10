@@ -40,6 +40,7 @@ export class ValidarComponent implements OnInit {
       processing: true,
       language: LanguageApp.spanish_datatables,
       searching: true,
+      fixedHeader: true
     };
     this.respuesta = [];
     this.dtOptionsAlert = {
@@ -47,6 +48,7 @@ export class ValidarComponent implements OnInit {
       processing: true,
       language: LanguageApp.spanish_datatables,
       searching: true,
+      fixedHeader: true,
       dom: 'Bfrtip', // Para incluir los botones
       buttons: [
         {
@@ -227,6 +229,7 @@ export class ValidarComponent implements OnInit {
 
     switch (tipo) {
       case 'validar':
+        this.obs_id = '';
         this.textValidar = '';
         this.visibleObservar = false;
         this.visibleValidar = true;
@@ -242,6 +245,7 @@ export class ValidarComponent implements OnInit {
         this.tipo_submit = 7;
         break;
       case 'observar':
+        this.obs_id = '';
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
@@ -259,6 +263,7 @@ export class ValidarComponent implements OnInit {
         this.clases = 'btn btn-danger';
         break;
       case 'jefatura':
+        this.obs_id = '';
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
@@ -275,7 +280,8 @@ export class ValidarComponent implements OnInit {
         this.tipo_submit = 13;
         break;
       case 'validarPreg':
-        this.obs_id = obs ? obs : this.obs_id;
+        this.obs_id = this.obs_id;
+        this.obs = this.obs;
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
@@ -293,7 +299,9 @@ export class ValidarComponent implements OnInit {
         this.preg = num_preg;
         break;
       case 'observarPreg':
-        this.obs_id = obs ? obs : this.obs_id;
+        this.obs_id =  this.obs_id;
+        this.obs =  this.obs;
+        // this.obs_id = obs ? obs : this.obs_id;
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
