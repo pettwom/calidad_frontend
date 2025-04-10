@@ -72,6 +72,11 @@
                 <th>AREA ENUMERADA</th>
                 <th>EMPADRONADOR</th>
                 <th>CUESTIONARIO</th>
+                <th>SINCRONIZACION</th>
+                <th>TECNICO CALIDAD</th>
+                <th>FECHA ASIGNACION</th>
+                <th>INICIO REVISION</th>
+                <th>FECHA APROBACION</th>
                 <th>ESTADO</th>
               </tr>
             </thead>
@@ -83,6 +88,11 @@
                 <td>{{a.ae_unico}}</td>
                 <td>{{a.empadronador}}</td>
                 <td>{{a.cod_cuest}}</td>
+                <td>{{a.fecha_sincronizacion}}</td>
+                <td>{{a.tecnico_calidad}}</td>
+                <td>{{a.fecha_asignacion}}</td>
+                <td>{{a.fecha_inicio}}</td>
+                <td>{{a.fecha_aprobacion}}</td>
                 <td>
                   <div class="badge bg-label-danger" *ngIf="a.descripcion == 'OBSERVADO'">{{a.descripcion}}</div>
                   <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO'">{{a.descripcion}}</div>
