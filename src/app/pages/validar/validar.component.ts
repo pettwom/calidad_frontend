@@ -219,7 +219,7 @@ export class ValidarComponent implements OnInit {
   //   })
   // }
 
-  modalCuest(ids: number, tipo, num_preg = null, obs = null, pre_id = null) {
+  modalCuest(ids: number, tipo, num_preg = null, obs = null, pre_id = null, cultivo = null) {
     this.rep_id = ids ? ids : this.rep_id;
 
     this.obs = obs;
@@ -297,9 +297,10 @@ export class ValidarComponent implements OnInit {
         this.clases = 'btn btn-success';
         this.tipo_submit = 7;
         this.preg = num_preg;
+        this.cultivo = cultivo;
         break;
       case 'observarPreg':
-        this.obs_id =  this.obs_id;
+        this.obs_id =  this.obs;
         this.obs =  this.obs;
         // this.obs_id = obs ? obs : this.obs_id;
         this.textObservar = '';
@@ -321,6 +322,7 @@ export class ValidarComponent implements OnInit {
             this.textObservar = res.data[0].obs_observacion;
           });
         this.accion = 'edit';
+        this.cultivo = cultivo;
         this.tipo_submit = 4;
         this.preg = num_preg;
         break;
@@ -353,7 +355,8 @@ console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.ti
             preg: this.preg ? this.preg : '',
             accion: this.accion ? this.accion : '',
             obs: this.obs_id ? this.obs_id : '',
-            pre_id: this.pre_id?this.pre_id:''
+            pre_id: this.pre_id?this.pre_id:'',
+            cultivo: this.cultivo? this.cultivo: ''
           })
           .subscribe((res: any) => {
             this.searchValidador();
