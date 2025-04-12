@@ -52,3 +52,11 @@ details{
   width: 35px;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
 }
+.badge-pendiente{
+  background-color: #fcdcfa !important;
+    color: #8b40bd !important;
+}
+.badge-transferido{
+  background-color: #dcf2ff !important;
+    color: #52baff !important;
+}

@@ -208,14 +208,14 @@
               <th>Empadronador</th>
               <th>Asignado</th>
               <th>Fecha</th>
-              <th>Estado</th>
+              <th>Estado Cuest.</th>
 
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let b of listCuest">
               <td>
-                <div class="form-check mt-3" *ngIf="b.estado_id != 2 && b.estado_id !=3">
+                <div class="form-check mt-3" *ngIf="b.estado_id ==3">
                   <input type="checkbox" class="form-check-input" [(ngModel)]="b.selected"
                     (change)="onSelectRow(b, i)" />
                   <label class="form-check-label" for="defaultCheck1"></label>
@@ -237,10 +237,25 @@
               <td>{{b.fecha_asig}}</td>
               <td>
 
-                <span *ngIf="b.estado_id == 2" class="badge bg-success">
+                <span *ngIf="b.estado_id == 2" class="badge bg-label-dark">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 3" class="badge bg-warning">
+                <span *ngIf="b.estado_id == 3" class="badge bg-label-dark">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.estado_id == 4" class="badge bg-label-danger">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.estado_id == 5" class="badge badge-pendiente">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.estado_id == 7" class="badge bg-label-success">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.estado_id == 8 && b.estado_id == 10" class="badge badge-pendiente">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.estado_id == 13 " class="badge badge-transferido">
                   {{b.descripcion}}
                 </span>
               </td>

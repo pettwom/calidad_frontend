@@ -1,16 +1,22 @@
-body > .swal2-container {
-  z-index: 999999 !important;
+/* body > .swal2-container {
+  z-index: 99999 !important;
 }
 
 #swal2-container {
-  z-index: 999999 !important;
+  z-index: 99999 !important;
 }
 
 .swal2-container.swal2-shown {
-   z-index: 999999 !important;
-  }
-div:where(.swal2-container){
-  z-index: 999999 !important;
+   z-index: 99999 !important;
+  } */
+/* div:where(.swal2-container){
+  z-index: 99999 !important;
+} */
+div:where(.swal2-container) {
+  z-index:99999!important;
+}
+.swal2-container {
+  z-index:99999!important;
 
 }
 .contenedor{
