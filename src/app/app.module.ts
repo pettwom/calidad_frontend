@@ -36,6 +36,8 @@ import { AsignacionComponent } from './pages/asignacion/asignacion/asignacion.co
 import { ReasignacionComponent } from './pages/asignacion/reasignacion/reasignacion.component';
 import { TraspasoComponent } from './pages/asignacion/traspaso/traspaso.component';
 import { VariablesComponent } from './pages/variables/variables.component';
+import { ChartModule } from 'angular-highcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { VariablesComponent } from './pages/variables/variables.component';
     ReasignacionComponent,
     TraspasoComponent,
     VariablesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { VariablesComponent } from './pages/variables/variables.component';
     WebcamModule,
     TooltipModule,
     NgxDropzoneModule,
+    ChartModule,
     RouterModule.forRoot([]), // Aquí se configura el enrutamiento
     NgMultiSelectDropDownModule.forRoot()
   ],
@@ -75,6 +79,6 @@ import { VariablesComponent } from './pages/variables/variables.component';
       multi: true
     }],
 
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
+    bootstrap: [AppComponent]
+  })
+  export class AppModule {}

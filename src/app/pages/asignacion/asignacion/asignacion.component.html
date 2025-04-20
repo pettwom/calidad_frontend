@@ -215,7 +215,8 @@
           <tbody>
             <tr *ngFor="let b of listCuest">
               <td>
-                <div class="form-check mt-3" *ngIf="b.estado_id ==3">
+                {{b.estado_id}}
+                <div class="form-check mt-3" *ngIf="b.id_estado == 17">
                   <input type="checkbox" class="form-check-input" [(ngModel)]="b.selected"
                     (change)="onSelectRow(b, i)" />
                   <label class="form-check-label" for="defaultCheck1"></label>
@@ -237,25 +238,28 @@
               <td>{{b.fecha_asig}}</td>
               <td>
 
-                <span *ngIf="b.estado_id == 2" class="badge bg-label-dark">
+                <span *ngIf="b.id_estado == 2" class="badge bg-label-dark">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 3" class="badge bg-label-dark">
+                <span *ngIf="b.id_estado == 3" class="badge bg-label-dark">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 4" class="badge bg-label-danger">
+                <span *ngIf="b.id_estado == 4" class="badge bg-label-danger">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 5" class="badge badge-pendiente">
+                <span *ngIf="b.id_estado == 5" class="badge badge-pendiente">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 7" class="badge bg-label-success">
+                <span *ngIf="b.id_estado == 7" class="badge bg-label-success">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 8 && b.estado_id == 10" class="badge badge-pendiente">
+                <span *ngIf="b.id_estado == 8 && b.id_estado == 10" class="badge badge-pendiente">
                   {{b.descripcion}}
                 </span>
-                <span *ngIf="b.estado_id == 13 " class="badge badge-transferido">
+                <span *ngIf="b.id_estado == 13 " class="badge badge-transferido">
+                  {{b.descripcion}}
+                </span>
+                <span *ngIf="b.id_estado == 17 " class="badge bg-label-success">
                   {{b.descripcion}}
                 </span>
               </td>

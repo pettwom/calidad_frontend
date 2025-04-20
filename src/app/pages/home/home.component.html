@@ -23,7 +23,7 @@
     </div>
 
     <div class="col-md-4">
-      <div class="caja sinContrato"  (click)="divModal('transferido')">
+      <div class="caja sinContrato" (click)="divModal('transferido')">
         <div class="titulo">PENDIENTES</div>
         <div class="contenedor_datos">
           <div class="porcentaje">{{pend.porcentaje}} %</div>
@@ -55,15 +55,26 @@
     </div>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-6">
+    <div class="card card-border-shadow-danger">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <!-- <div id="chartdiv" style="width: 100%; height: 500px;"></div> -->
+        <div [chart]="chart" style="width: 100%; height: 500px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
 <p-dialog header="Cuestionarios Aprobados" [(visible)]="alertasAprobdos" [modal]="true" [maximizable]="true"
-  style="width: 800px; table-layout: fixed;">
+  [style]="{ width: '100rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <div class="row">
     <div class="card">
       <div class="card-header"></div>
       <div class="card-body">
         <div class="table-responsive">
-          <table [dtOptions]='dtOptions' *ngIf="aprobadosList.length >0" datatable class="table table-hover table-striped table-border table-success">
+          <table [dtOptions]='dtOptions' *ngIf="aprobadosList.length >0" datatable
+            class="table table-hover table-striped table-border table-success">
             <thead>
               <tr>
                 <th>NRO</th>
@@ -71,9 +82,9 @@
                 <th>MUNICIPIO</th>
                 <th>AREA AGROPECUARIA</th>
                 <th>AREA ENUMERADA</th>
-                <th>EMPADRONADOR</th>
                 <th>CUESTIONARIO</th>
-                <th>TECNICO CALIDAD</th>
+                <th>EMPADRONADOR</th>
+                <th>TÉCNICO CALIDAD</th>
                 <th>INICIO REVISION</th>
                 <th>FECHA APROBACION</th>
                 <th>ESTADO</th>
@@ -86,16 +97,17 @@
                 <td>{{a.mpio}}</td>
                 <td>{{a.ag_unico}}</td>
                 <td>{{a.ae_unico}}</td>
-                <td>{{a.empadronador}}</td>
                 <td>{{a.cod_cuest}}</td>
+                <td>{{a.empadronador}}</td>
                 <td>{{a.tecnico_calidad}}</td>
                 <td>{{a.fecha_inicio_calidad}}</td>
-                <td>{{a.fecha_fin_calidad}}</td>
+                <td>{{a.fecha_aprobacion_calidad}}</td>
                 <td>
                   <div class="badge bg-label-danger" *ngIf="a.descripcion == 'OBSERVADO'">{{a.descripcion}}</div>
-                  <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-success" *ngIf="a.descripcion == 'APROBADO CALIDAD'">{{a.descripcion}}</div>
                   <div class="badge bg-label-info" *ngIf="a.descripcion == 'REVISION CALIDAD'">{{a.descripcion}}</div>
                   <div class="badge bg-label-dark" *ngIf="a.descripcion == 'FINALIZADO'">{{a.descripcion}}</div>
+                  <div class="badge bg-label-info" *ngIf="a.descripcion == 'APROBACIóN DIRECTA'">{{a.descripcion}}</div>
 
                 </td>
               </tr>
@@ -103,8 +115,8 @@
           </table>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </p-dialog>
 
 <p-dialog header="Cuestionarios Observados" [(visible)]="alertasObservado" [modal]="true" [maximizable]="true"
@@ -114,7 +126,8 @@
       <div class="card-header"></div>
       <div class="card-body">
         <div class="table-responsive">
-          <table [dtOptions]='dtOptions' *ngIf="observadosList.length >0" datatable class="table table-hover table-striped table-border table-danger">
+          <table [dtOptions]='dtOptions' *ngIf="observadosList.length >0" datatable
+            class="table table-hover table-striped table-border table-danger">
             <thead>
               <tr>
                 <th>DEPARTAMENTO</th>
@@ -146,8 +159,8 @@
           </table>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </p-dialog>
 <p-dialog header="Cuestionarios Transferidos" [(visible)]="alertasTransferido" [modal]="true" [maximizable]="true"
   style="width: 800px; table-layout: fixed;">
@@ -156,7 +169,8 @@
       <div class="card-header"></div>
       <div class="card-body">
         <div class="table-responsive">
-          <table [dtOptions]='dtOptions' *ngIf="transferidosList.length >0" datatable class="table table-hover table-striped table-border table-info">
+          <table [dtOptions]='dtOptions' *ngIf="transferidosList.length >0" datatable
+            class="table table-hover table-striped table-border table-info">
             <thead>
               <tr>
                 <th>DEPARTAMENTO</th>
@@ -188,10 +202,6 @@
           </table>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </p-dialog>
-
-
-
-
