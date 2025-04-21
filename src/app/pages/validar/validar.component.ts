@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonDomButtonEl } from 'datatables.net';
+import { keepProps } from 'highcharts';
 import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
 import { ServicesService } from 'src/app/Services/services.sevice';
 import Swal from 'sweetalert2';
@@ -221,6 +222,7 @@ export class ValidarComponent implements OnInit {
 
   modalCuest(ids: number, tipo, num_preg = null, obs = null, pre_id = null, cultivo = null) {
     this.rep_id = ids ? ids : this.rep_id;
+    console.log(obs, '=== obs');
 
     this.obs = obs;
     this.visibleValidar = false;
@@ -280,8 +282,8 @@ export class ValidarComponent implements OnInit {
         this.tipo_submit = 13;
         break;
       case 'validarPreg':
-        this.obs_id = this.obs_id;
-        this.obs = this.obs;
+        this.obs_id = this.obs;
+        // this.obs = this.obs;
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
@@ -300,7 +302,7 @@ export class ValidarComponent implements OnInit {
         this.cultivo = cultivo;
         break;
       case 'observarPreg':
-        this.obs_id =  this.obs;
+        // this.obs_id =  this.obs;
         this.obs =  this.obs;
         // this.obs_id = obs ? obs : this.obs_id;
         this.textObservar = '';
@@ -317,7 +319,7 @@ export class ValidarComponent implements OnInit {
         this.tipoRep = '2'; // 1 = cuestionario, 2=pregunta
         this.clases = 'btn btn-danger';
         this.serviceService
-          .get(`/validar/getObservacion/${this.obs_id}`)
+          .get(`/validar/getObservacion/${this.obs}`)
           .subscribe((res: any) => {
             this.textObservar = res.data[0].obs_observacion;
           });
@@ -354,7 +356,7 @@ console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.ti
             tipoRep: this.tipoRep,
             preg: this.preg ? this.preg : '',
             accion: this.accion ? this.accion : '',
-            obs: this.obs_id ? this.obs_id : '',
+            obs: this.obs? this.obs : '',
             pre_id: this.pre_id?this.pre_id:'',
             cultivo: this.cultivo? this.cultivo: ''
           })
