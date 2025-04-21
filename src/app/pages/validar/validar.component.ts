@@ -331,9 +331,7 @@ export class ValidarComponent implements OnInit {
     }
   }
   almacenarValidacion() {
-    // this.visibleValidar = false;
-    // this.visibleObservar = false;
-    // this.alertasModal = false;
+
 console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.tipo_submit, this.tipoRep, this.obs);
 
 
