@@ -160,8 +160,11 @@ export class ValidarComponent implements OnInit {
             title: res.title,
             icon: res.icon,
             text: res.text,
-            timer: 2500,
+            timer: 1500,
             showConfirmButton: false,
+            willOpen: (el) => {
+              el.parentElement!.style.zIndex = '99999';
+            }
           });
         }
       });
@@ -232,6 +235,7 @@ export class ValidarComponent implements OnInit {
     switch (tipo) {
       case 'validar':
         this.obs_id = '';
+        this.pre_id = ''
         this.textValidar = '';
         this.visibleObservar = false;
         this.visibleValidar = true;
@@ -245,9 +249,11 @@ export class ValidarComponent implements OnInit {
           'Esta Seguro de Validar este cuestionario, ya que tiene observaciones en las preguntas ?';
         this.tipoRep = '1'; // 1 = cuestionario, 2=pregunta
         this.tipo_submit = 7;
+        this.pre_id = '';
         break;
       case 'observar':
         this.obs_id = '';
+        this.pre_id = ''
         this.textObservar = '';
         this.visibleObservar = true;
         this.visibleValidar = false;
@@ -260,6 +266,7 @@ export class ValidarComponent implements OnInit {
         this.texto =
           'Una vez que observe este cuestionario será habilitado para la revisión del empadronador';
         this.tipoRep = '1'; // 1 = cuestionario, 2=pregunta
+        this.pre_id = '';
         this.tipo_submit = 4;
         this.tituloBoton = 'Observar';
         this.clases = 'btn btn-danger';
@@ -343,6 +350,9 @@ console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.ti
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, continuar',
+      willOpen: (el) => {
+        el.parentElement!.style.zIndex = '99999';
+      }
     }).then((result) => {
       if (result.isConfirmed) {
         this.respuesta =[];
@@ -372,8 +382,11 @@ console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.ti
                     title: res.title,
                     icon: res.icon,
                     text: res.text,
-                    timer: 3500,
+                    timer: 1500,
                     showConfirmButton: false,
+                    willOpen: (el) => {
+                      el.parentElement!.style.zIndex = '99999';
+                    }
                   });
                 }
               });
@@ -381,8 +394,11 @@ console.log('datos validacion ===>',this.preg, this.pre_id, this.rep_id, this.ti
               title: res.title,
               icon: res.icon,
               html: res.text,
-              timer: 2500,
+              timer: 1500,
               showConfirmButton: false,
+              willOpen: (el) => {
+                el.parentElement!.style.zIndex = '99999';
+              }
             });
             this.visibleObservar = false;
             this.visibleValidar = false;

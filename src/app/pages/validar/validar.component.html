@@ -137,6 +137,7 @@
           class="table table-striped table-border border-hover tabla-alertas" style="table-layout: auto; ">
           <thead>
             <tr>
+              <th>ID</th>
               <th>PARCELA</th>
               <th>CORRELATIVO</th>
               <th>NRO. PREGUNTA</th>
@@ -152,6 +153,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let a of respuesta" [ngClass]="getRowClass(a)">
+              <td>{{a.obs_id}}</td>
               <td>
                 <div *ngIf="a.parcela is not null" class="alert alert-success alert-dismissible" role="alert">
                   <h5 class="alert-heading d-flex align-items-center">

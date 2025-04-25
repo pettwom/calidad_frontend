@@ -271,7 +271,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     console.log(this.seleccionados, '<=== variable');
 
     variable = variable.toString().split("'")[1];
-    // console.log(variable, 'variable');
+    console.log(variable, 'variable');
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Esta acción puede modificar la información del validador',
@@ -363,7 +363,7 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
     this.agModel = this.agModel ? this.agModel : null;
     this.aeModel = this.aeModel ? this.aeModel : null;
     this.empModel = this.empModel ? this.empModel : null;
-    this.listCuest = [''];
+
     console.log(`${this.deptoModel}/${this.mpioModel}/${this.comModel}/${this.agModel}/${this.aeModel}/${this.empModel}/${accion}`);
 
     this.serviceService
@@ -372,6 +372,10 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res: any) => {
         // console.log('Tipo de respuesta:', typeof res.data, res.data);
+        this.listCuest = res.data;
+
+        console.log(this.listCuest, 'resdata');
+
         this.selectDisabled = true;
 
         setTimeout(() => {
@@ -379,8 +383,6 @@ export class AsignacionComponent implements OnInit, AfterViewInit {
             behavior: 'smooth'
           });
         }, 100);
-        this.listCuest = res.data;
-        console.log(this.listCuest, 'resdata');
       });
   }
 

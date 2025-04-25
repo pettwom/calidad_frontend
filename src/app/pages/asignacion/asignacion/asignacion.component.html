@@ -215,8 +215,7 @@
           <tbody>
             <tr *ngFor="let b of listCuest">
               <td>
-                {{b.estado_id}}
-                <div class="form-check mt-3" *ngIf="b.id_estado == 17">
+                <div class="form-check mt-3" *ngIf="b.id_estado_asig == 0">
                   <input type="checkbox" class="form-check-input" [(ngModel)]="b.selected"
                     (change)="onSelectRow(b, i)" />
                   <label class="form-check-label" for="defaultCheck1"></label>

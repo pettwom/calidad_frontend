@@ -10,6 +10,9 @@ import { Chart } from 'angular-highcharts';
 import { ServicesService } from 'src/app/Services/services.sevice';
 import { Subscription } from 'rxjs';
 import { LanguageApp } from 'src/app/interfaces/datatablesLanguage';
+import * as Highcharts from 'highcharts';
+import 'highcharts/highcharts-3d'; // Esto ya modifica Highcharts internamente
+// Highcharts3D(Highcharts);
 
 @Component({
   templateUrl: './home.component.html',
@@ -29,6 +32,9 @@ export class HomeComponent implements OnInit {
   alertasObservado: any;
   alertasTransferido: any;
   dataGraf: any;
+  chartCobertura: Chart;
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOptions: Highcharts.Options = {};
 
   constructor(
     private router: Router,
@@ -158,9 +164,57 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  // graficoCobertura() {
+  //   this.chartOptions = {
+  //     chart: {
+  //       type: 'column',
+  //       options3d: {
+  //         enabled: true,
+  //         alpha: 15,
+  //         beta: 15,
+  //         depth: 50,
+  //         viewDistance: 25
+  //       }
+  //     },
+  //     title: {
+  //       text: 'Sold passenger cars in Norway by brand, May 2024'
+  //     },
+  //     xAxis: {
+  //       type: 'category'
+  //     },
+  //     yAxis: {
+  //       title: { text: '' }
+  //     },
+  //     tooltip: {
+  //       headerFormat: '<b>{point.key}</b><br>',
+  //       pointFormat: 'Cars sold: {point.y}'
+  //     },
+  //     legend: { enabled: false },
+  //     plotOptions: {
+  //       column: { depth: 25 }
+  //     },
+  //     series: [{
+  //       type: 'column',
+  //       colorByPoint: true,
+  //       data: [
+  //         ['Toyota', 1795],
+  //         ['Volkswagen', 1242],
+  //         ['Volvo', 1074],
+  //         ['Tesla', 832],
+  //         ['Hyundai', 593],
+  //         ['MG', 509],
+  //         ['Skoda', 471],
+  //         ['BMW', 442],
+  //         ['Ford', 385],
+  //         ['Nissan', 371]
+  //       ]
+  //     }]
+  //   };
+  // }
+
   graficos(data) {
     const self = this; // Para usarlo en el render
-let customLabel: any = null;
+    let customLabel: any = null;
     this.chart = new Chart({
       chart: {
         type: 'pie',
@@ -176,18 +230,21 @@ let customLabel: any = null;
                   color: '#000',
                   textAlign: 'center',
                   marginLeft: '-18%',
-                  marginTop: '-2%'
+                  marginTop: '-2%',
                 })
                 .add();
             }
 
             const x = series.center[0] + chart.plotLeft;
-            const y = series.center[1] + chart.plotTop - (customLabel.getBBox().height / 2);
+            const y =
+              series.center[1] +
+              chart.plotTop -
+              customLabel.getBBox().height / 2;
 
             customLabel.attr({ x, y });
             customLabel.css({ fontSize: `${series.center[2] / 12}px` });
-          }
-        }
+          },
+        },
       },
       title: {
         useHTML: true,
@@ -195,18 +252,18 @@ let customLabel: any = null;
         align: 'center',
       },
       subtitle: {
-        text: ''
+        text: '',
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.y}</b>'
+        pointFormat: '{series.name}: <b>{point.y}</b>',
       },
       accessibility: {
         point: {
-          valueSuffix: '%'
-        }
+          valueSuffix: '%',
+        },
       },
       legend: {
-        enabled: false
+        enabled: false,
       },
       plotOptions: {
         pie: {
@@ -218,17 +275,19 @@ let customLabel: any = null;
             enabled: true,
             format: '<b>{point.name}</b>: {point.y}',
             style: {
-              fontSize: '13px'
-            }
-          }
-        }
+              fontSize: '13px',
+            },
+          },
+        },
       },
-      series: [{
-        type: 'pie',
-        name: 'Cuestionarios',
-        // colorByPoint: true,
-        data: data
-      }]
+      series: [
+        {
+          type: 'pie',
+          name: 'Cuestionarios',
+          // colorByPoint: true,
+          data: data,
+        },
+      ],
     });
   }
 
